@@ -1,0 +1,538 @@
+/* DeskLark Studio -- Content Hub (long-tail guides)
+   Shared stylesheet for the hub index and all guide articles. Brand palette
+   matches every web tool and the Pinterest pin-card system
+   (build/marketing/pinterest/make_pin_cards.py):
+   teal #132F32 / teal-light #2C544E / cream #F8F5EF / gold #C9A24B
+   / ink #221F1C / gray #55504A / rose #9C5B62 (wedding accent) /
+   accent #8C6A1F (cash-stuffing/AI-disclosure accent, used sparingly here
+   only where a specific guide's family calls for it) / warn #B3261E with
+   warn-bg #FBEAE8 (tax/legal disclaimer boxes, same convention as the
+   freelancer and AI-disclosure calculators).
+
+   This file is intentionally a single shared stylesheet referenced by every
+   guide via a relative "../styles.css" link (one level up from each guide's
+   own folder) rather than a per-guide copy -- these pages are editorial
+   content meant to deploy together as one section of one site, unlike the
+   four calculators, which are each independently deployable tools that
+   happen to share a look. No external fonts, no CDN, no JS frameworks:
+   every page that loads this file remains a single same-origin document
+   plus this one same-origin stylesheet. */
+
+:root {
+  --teal: #132F32;
+  --teal-light: #2C544E;
+  --cream: #F8F5EF;
+  --cream-dim: #EFEAE0;
+  --gold: #C9A24B;
+  --ink: #221F1C;
+  --gray: #55504A;
+  --rose: #9C5B62;
+  --accent: #8C6A1F;
+  --warn: #B3261E;
+  --warn-bg: #FBEAE8;
+  --rule: #DAD3C4;
+  --radius: 10px;
+  --max-w: 720px;
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--teal);
+  line-height: 1.25;
+  margin: 1.4em 0 0.5em;
+}
+h1 { margin-top: 0; font-size: clamp(1.6rem, 5vw, 2.3rem); }
+h2 { font-size: clamp(1.25rem, 4vw, 1.55rem); }
+h3 { font-size: clamp(1.05rem, 3vw, 1.2rem); }
+
+p { margin: 0 0 1em; }
+ul, ol { margin: 0 0 1em; padding-left: 1.3em; }
+li { margin-bottom: 0.4em; }
+
+a { color: var(--teal-light); }
+a:hover, a:focus { color: var(--teal); }
+
+/* Inline prose links need a non-color distinguishing cue (axe-core
+   "link-in-text-block", WCAG 1.4.1) -- underline them wherever they sit
+   inside a run of ordinary text. Card/button-style links (hub cards, promo
+   cards, breadcrumb, the tool link under each hub family heading) are
+   already visually distinct by shape/position, not by color alone, so they
+   keep no-underline for the calculators' existing look. */
+.article-body a,
+.lede a,
+.quote-source a,
+.related-links a,
+.breadcrumb a {
+  text-decoration: underline;
+}
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--teal);
+  color: var(--cream);
+  padding: 10px 16px;
+  z-index: 100;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--rose);
+  outline-offset: 2px;
+}
+
+/* ---------- header / footer ---------- */
+
+.site-header {
+  background: var(--teal);
+  color: var(--cream);
+  padding: 22px 0;
+}
+.site-header .wordmark {
+  font-family: Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 4px;
+  color: var(--cream);
+}
+.site-header .tagline {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #C9C4B8;
+}
+
+.site-footer {
+  background: var(--teal);
+  color: #C9C4B8;
+  margin-top: 48px;
+  padding: 24px 0 32px;
+  font-size: 0.85rem;
+}
+.site-footer p { margin: 0 0 6px; }
+.footer-fine { color: #9c9686; }
+
+/* Cross-site interlink nav -- same convention as the 4 web tools' own
+   styles.css (e.g. web-tools/wedding-budget-calculator/styles.css). */
+.site-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.site-links a {
+  color: #E4DCC4;
+  text-decoration: none;
+}
+.site-links a:hover, .site-links a:focus {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+/* ---------- breadcrumb ---------- */
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin: 20px 0 0;
+}
+.breadcrumb a { color: var(--teal-light); }
+
+/* ---------- article layout ---------- */
+
+main.wrap { padding-top: 16px; padding-bottom: 12px; }
+
+article header.article-hero { margin-bottom: 28px; }
+
+.article-meta {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin: 0 0 10px;
+}
+
+.article-hero .lede {
+  color: var(--gray);
+  font-size: 1.05rem;
+  max-width: 62ch;
+}
+
+.article-body { margin-bottom: 40px; }
+.article-body h2:first-child { margin-top: 0; }
+
+/* Informational callout -- neutral, teal-accented (contrast with the
+   warn-red disclaimer box, which is reserved for real regulatory/legal
+   caveats, same convention as the calculators). */
+.callout {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--teal-light);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 18px;
+  margin: 20px 0;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout .callout-label {
+  margin: 0 0 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  color: var(--teal-light);
+}
+
+/* Disclaimer box -- reused verbatim convention from the freelancer and
+   AI-disclosure calculators: real regulatory/legal caveats get the same
+   visual urgency as an error state, not a quiet footnote. */
+.disclaimer-box {
+  margin: 20px 0;
+  border: 1.5px solid var(--warn);
+  background: var(--warn-bg);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.disclaimer-box .db-label {
+  margin: 0 0 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.78rem;
+  color: var(--warn);
+}
+.disclaimer-box .db-text { margin: 0; color: var(--ink); font-size: 0.9rem; }
+
+/* Verbatim-quote box -- reused from the AI-disclosure generator: a quoted
+   source sentence gets a distinct visual treatment from ordinary prose so
+   readers can see at a glance what is a direct quote versus our own
+   summary. */
+.quote-box {
+  margin: 0 0 10px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--gold);
+  background: var(--cream-dim);
+  border-radius: 0 8px 8px 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--teal);
+  font-size: 1.02rem;
+}
+.quote-source {
+  color: var(--gray);
+  font-size: 0.85rem;
+  margin: 0 0 20px;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 0 0 1.2em;
+}
+.article-body th, .article-body td {
+  text-align: left;
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+}
+.article-body thead th {
+  background: var(--teal);
+  color: var(--cream);
+}
+.table-scroll { overflow-x: auto; border-radius: var(--radius); }
+
+/* ---------- related links / promo cards (shared with the calculators) ---------- */
+
+.related-links {
+  margin: 24px 0;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.related-links h3 { margin-top: 0; }
+.related-links ul { margin-bottom: 0; padding-left: 1.1em; }
+
+.promo-intro { color: var(--gray); }
+
+.promo-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.promo-card {
+  display: block;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 18px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+.promo-card:hover, .promo-card:focus-visible {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.promo-card h3 { color: var(--teal); margin-top: 0; }
+.promo-card p { color: var(--gray); font-size: 0.92rem; }
+
+.promo-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--rose);
+  margin-bottom: 6px;
+}
+
+.promo-cta {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--teal-light);
+}
+
+/* Inert "not live yet" promo cards -- same convention as the 4 web tools'
+   own styles.css (e.g. web-tools/cash-stuffing-calculator/styles.css):
+   a disabled-looking div (not a real <a href>) so a not-yet-published
+   product never renders as a clickable, 404-on-click link. */
+.promo-card--soon {
+  background: var(--cream-dim);
+  cursor: default;
+}
+.promo-card--soon:hover, .promo-card--soon:focus-visible {
+  transform: none;
+  border-color: var(--rule);
+}
+.promo-cta--disabled {
+  color: var(--gray);
+}
+
+@media (min-width: 620px) {
+  .promo-cards { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- hub page ---------- */
+
+.hub-intro .lede {
+  color: var(--gray);
+  font-size: 1.05rem;
+  max-width: 64ch;
+}
+
+.family-section { margin: 32px 0; }
+.family-section h2 {
+  border-bottom: 2px solid var(--rule);
+  padding-bottom: 8px;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.hub-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+.hub-card:hover, .hub-card:focus-visible {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.hub-card h3 { margin: 0 0 6px; color: var(--teal); }
+.hub-card p { margin: 0; color: var(--gray); font-size: 0.92rem; }
+.hub-card .hub-cta { display: inline-block; margin-top: 8px; font-weight: 700; color: var(--teal-light); font-size: 0.88rem; }
+
+.hub-tool-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+@media (min-width: 640px) {
+  :root { font-size: 17px; }
+  .hub-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 860px) {
+  :root { --max-w: 760px; }
+}
+
+/* ---------- catalog lookbook page ---------- */
+/* Reuses the hub's family-section / family heading rules above; adds a
+   product-card grid with an image, price, and season badge. Only this page
+   (build/web-content/catalog/) uses these classes. */
+
+.catalog-family-intro {
+  color: var(--gray);
+  font-size: 0.95rem;
+  max-width: 66ch;
+  margin: 4px 0 14px;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.catalog-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+.catalog-card:hover, .catalog-card:focus-visible {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.catalog-card--live { border-color: var(--teal-light); }
+.catalog-card--soon { cursor: default; }
+.catalog-card--soon:hover, .catalog-card--soon:focus-visible {
+  transform: none;
+  border-color: var(--rule);
+}
+
+.catalog-card-media {
+  position: relative;
+  background: var(--cream-dim);
+  line-height: 0;
+}
+.catalog-card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.catalog-live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--teal);
+  color: var(--cream);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.catalog-soon-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--rule);
+  color: var(--gray);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.catalog-card-body { padding: 14px 16px 16px; }
+
+.catalog-kind {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.catalog-card-body h3 { margin: 0 0 6px; color: var(--teal); }
+
+.catalog-desc {
+  color: var(--gray);
+  font-size: 0.88rem;
+  margin: 0 0 12px;
+}
+
+.catalog-meta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.catalog-price {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--teal);
+}
+
+.catalog-season {
+  font-size: 0.78rem;
+  color: var(--gray);
+  text-align: right;
+}
+
+.catalog-cta {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--teal-light);
+  font-size: 0.88rem;
+}
+.catalog-cta--disabled {
+  color: var(--gray);
+}
+
+@media (min-width: 560px) {
+  .catalog-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 900px) {
+  .catalog-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
