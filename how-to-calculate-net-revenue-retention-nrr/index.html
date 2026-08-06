@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Calculate Net Revenue Retention (NRR) by Hand, With a Worked Example | DeskLark Studio</title>
+<meta name="description" content="NRR and GRR use almost the same inputs but answer different questions, and the difference is easy to get wrong -- new-customer MRR sneaking into the expansion line, or annual contracts thrown in unnormalized. A worked-example walkthrough of both formulas and the mistakes that quietly break them.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/how-to-calculate-net-revenue-retention-nrr/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Calculate Net Revenue Retention (NRR) by Hand, With a Worked Example">
+<meta property="og:description" content="The NRR and GRR formulas, a worked example with real arithmetic, and the four mistakes that most often break the calculation.">
+<meta property="og:url" content="https://guides.desklark.com/how-to-calculate-net-revenue-retention-nrr/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Calculate Net Revenue Retention (NRR) by Hand, With a Worked Example">
+<meta name="twitter:description" content="The NRR and GRR formulas, a worked example, and the mistakes that most often break the calculation.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Calculate Net Revenue Retention (NRR) by Hand, With a Worked Example",
+  "description": "A walkthrough of the NRR and GRR formulas with a worked numeric example, plus the four most common mistakes that quietly break the calculation (new-business MRR counted as expansion, reactivated customers, unnormalized contract values, mismatched period lengths).",
+  "datePublished": "2026-08-06",
+  "dateModified": "2026-08-06",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/how-to-calculate-net-revenue-retention-nrr/" }
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free planning tools, plus printables for the parts a calculator can't do alone.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; Business &amp; rental finance</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>How to Calculate Net Revenue Retention (NRR) by Hand, With a Worked Example</h1>
+      <p class="article-meta">Business &amp; rental finance guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        NRR and GRR use almost the same four inputs, which is exactly why they're easy to mix up. This walks
+        through both formulas with a full worked example, then the four ways the calculation most often
+        quietly breaks -- before those mistakes make it into a board deck.
+      </p>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>What NRR measures, and what it deliberately excludes</h2>
+      <p>
+        Net Revenue Retention tracks a single cohort: the customers who were already paying you at the start
+        of a period. It follows what happened to <em>their</em> revenue by the end of the period -- expansion
+        (upsells, added seats, plan upgrades), contraction (downgrades), and churn (cancellations) -- and
+        deliberately excludes anything from customers who signed up during the period. That exclusion is the
+        entire point: NRR is meant to answer "is our existing base growing or shrinking," a question that a
+        blended revenue-growth number can't answer on its own, because new sales can mask a leaking base.
+      </p>
+
+      <h2>The formula</h2>
+      <p>
+        NRR = (Starting MRR + Expansion MRR &minus; Contraction MRR &minus; Churned MRR) &divide; Starting MRR
+        &times; 100
+      </p>
+      <ul>
+        <li><strong>Starting MRR</strong> -- the sum of monthly recurring revenue from customers who were active on day one of the period. This number gets locked in before anything else is calculated.</li>
+        <li><strong>Expansion MRR</strong> -- new MRR added by that same starting cohort: seat additions, plan upgrades, add-on purchases.</li>
+        <li><strong>Contraction MRR</strong> -- MRR lost from that cohort downgrading while staying active.</li>
+        <li><strong>Churned MRR</strong> -- MRR lost from that cohort canceling entirely.</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout-label">A worked example</p>
+        <p>
+          Say your starting cohort's combined MRR on the first of the month is $50,000. Over the month, that
+          same cohort adds $6,000 in expansion (upgrades and added seats), loses $1,500 to contraction
+          (downgrades), and loses $4,000 to churn (cancellations).
+        </p>
+        <p>
+          NRR = (50,000 + 6,000 &minus; 1,500 &minus; 4,000) &divide; 50,000 &times; 100 = 50,500 &divide;
+          50,000 &times; 100 = <strong>101%</strong>
+        </p>
+        <p>
+          These numbers are an illustration of the mechanic, not a benchmark or a recommendation for what
+          your own NRR should be -- your own starting base, expansion rate, and churn will be different.
+        </p>
+      </div>
+
+      <h2>NRR vs. GRR: same inputs, a different question</h2>
+      <p>
+        GRR = (Starting MRR &minus; Contraction MRR &minus; Churned MRR) &divide; Starting MRR &times; 100 --
+        the same formula with expansion left out entirely, which also means GRR can never exceed 100%. Using
+        the same example above: GRR = (50,000 &minus; 1,500 &minus; 4,000) &divide; 50,000 &times; 100 =
+        44,500 &divide; 50,000 &times; 100 = <strong>89%</strong>.
+      </p>
+      <p>
+        GRR answers "how much of what we had would we keep with zero upsells" -- a floor number, and a
+        cleaner read on churn and downgrade pressure on its own, without upsell performance blending in and
+        potentially hiding it. NRR answers "including upsells, is the existing base bigger or smaller than it
+        was" -- which is why the same underlying month can show a GRR in the high 80s and an NRR just over
+        100% at the same time. Neither number is more "correct" than the other; they're answering different
+        questions from the same four inputs.
+      </p>
+
+      <h2>Mistake 1: letting new-business MRR leak into the expansion line</h2>
+      <p>
+        Only revenue growth from the <em>starting</em> cohort counts as expansion. A brand-new customer's
+        first payment is new-business MRR, not expansion -- even if that signup happens in the same month
+        and even if the sales team categorizes it under the same pipeline stage as an upsell internally. If
+        new-business MRR gets folded into the expansion line, NRR comes out inflated and stops meaning what
+        it's supposed to mean.
+      </p>
+
+      <h2>Mistake 2: mishandling a reactivated customer</h2>
+      <p>
+        A customer who churned two months ago and comes back this month isn't "still in the starting cohort"
+        -- they left. Reactivated revenue belongs in new-business MRR for the period they return, the same as
+        any other new signup, not folded back into the original cohort's expansion or treated as if the
+        churn never happened.
+      </p>
+
+      <h2>Mistake 3: mixing annual and monthly contract values without normalizing</h2>
+      <p>
+        An annual contract has to be converted to its monthly-equivalent value before it goes into any of the
+        four inputs. Counting a full annual contract as a single lump MRR jump the month it's signed (rather
+        than dividing it into twelve monthly-equivalent dollars) will spike expansion or new-business MRR
+        that month and distort every ratio calculated from it.
+      </p>
+
+      <h2>Mistake 4: comparing NRR across different period lengths</h2>
+      <p>
+        A monthly NRR and an annual NRR are not the same number and can't be compared directly, even when
+        they're built from the same underlying data -- compounding effects across twelve months produce a
+        materially different result than any single month's figure. Deciding on a period length up front,
+        and sticking to it when comparing NRR month over month or quarter over quarter, is what keeps the
+        trend line meaningful.
+      </p>
+
+      <h2>Why this needs a frozen starting-cohort snapshot every period</h2>
+      <p>
+        NRR and GRR are only meaningful if "starting cohort" means the exact same list of customers every
+        time the calculation runs. That means locking in the day-one MRR snapshot before doing anything else
+        for that period, rather than letting a mid-period signup or an early cancellation quietly shift who
+        counts as "starting." A spreadsheet that keeps last period's frozen snapshot next to the current
+        period's inputs, rather than recalculating the starting list live each time, is the difference
+        between a number you can trust month over month and one that silently redefines itself every time
+        someone recalculates it.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../how-to-calculate-ecommerce-profit-margin-after-fees/">How to calculate your real e-commerce profit margin after fees</a> -- a different business, the same underlying discipline: look past the top-line number to what's actually happening underneath it.</li>
+        <li><a href="../how-to-track-airbnb-profit-across-multiple-properties/">How to track Airbnb profit across multiple properties</a> -- the portfolio version of the same idea: a combined total can hide what any one part is actually doing.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want this calculated automatically from your own numbers?</h2>
+      <p class="promo-intro">This guide covers the formulas by hand. This workbook runs them for you, every month.</p>
+      <div class="promo-cards">
+        <!-- SaaS Metrics & NRR Dashboard -- CONFIRMED LIVE, listing ID 4546844459
+             (metrics.md live-listing table; URL slug confirmed via Etsy's own search
+             API in etsy/discoverability-probe-2026-08-06.raw.json). Real link, not a placeholder. -->
+        <a class="promo-card" href="https://www.etsy.com/listing/4546844459/saas-metrics-dashboard-nrr-mrr-churn">
+          <p class="promo-eyebrow">Excel &amp; Google Sheets template &middot; $39 instant download</p>
+          <h3>SaaS Metrics &amp; NRR Dashboard</h3>
+          <p>A 6-tab workbook that calculates NRR, GRR, the full MRR waterfall, LTV:CAC, and CAC payback automatically from 24 months of inputs you already track -- the same formulas this guide walks through, built and ready.</p>
+          <span class="promo-cta">View on Etsy &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">General business information, not financial, accounting, or investment advice. The worked example uses illustrative numbers, not a benchmark for your own metrics.</p>
+  </div>
+</footer>
+
+</body>
+</html>
