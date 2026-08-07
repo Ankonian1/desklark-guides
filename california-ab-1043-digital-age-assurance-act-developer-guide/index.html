@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers | DeskLark Studio</title>
+<meta name="description" content="California's AB 1043 (Digital Age Assurance Act) is operative January 1, 2027, with a grace period to July 1, 2027 -- and it works differently from Texas/Utah/Louisiana's app-store laws. What developers actually need to check, with primary-source dates.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/california-ab-1043-digital-age-assurance-act-developer-guide/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers">
+<meta property="og:description" content="AB 1043 is operative January 1, 2027, with a grace period to July 1, 2027. It's a different legal shape from the Texas/Utah/Louisiana app-store laws -- here's what that actually means for your build.">
+<meta property="og:url" content="https://guides.desklark.com/california-ab-1043-digital-age-assurance-act-developer-guide/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers">
+<meta name="twitter:description" content="AB 1043 is operative January 1, 2027, with a grace period to July 1, 2027 -- and it's a different legal shape from the other app age-verification laws. What to check first.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers",
+  "description": "California's AB 1043 (Digital Age Assurance Act) is operative January 1, 2027, with a grace period to July 1, 2027 -- and it works differently from Texas/Utah/Louisiana's app-store laws. What developers actually need to check, with primary-source dates.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-08-07",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/california-ab-1043-digital-age-assurance-act-developer-guide/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers", "item": "https://guides.desklark.com/california-ab-1043-digital-age-assurance-act-developer-guide/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free planning tools, plus printables for the parts a calculator can't do alone.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; App age-verification law</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>California AB 1043 Explained: The Digital Age Assurance Act Deadline for App Developers</h1>
+      <p class="article-meta">App age-verification law guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        California's Digital Age Assurance Act (AB 1043) is operative January 1, 2027, with a grace period
+        to July 1, 2027 for certain accounts and apps. If you've already looked at Texas, Utah, or
+        Louisiana's app-store laws and assumed AB 1043 is "the same thing, California version," that
+        assumption is worth double-checking: AB 1043 is built on a different legal foundation, and it has
+        its own date test tied to when you last updated your app. Every date and mechanic below was checked
+        against the bill's own legislative text as of August 6, 2026.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Not Legal Advice</p>
+        <p class="db-text">This is general information, not legal advice, and not affiliated with, endorsed by, or reviewed by Apple, Google, or the State of California. State legislatures amend these laws; always confirm current dates against the bill's own legislative-tracking page before making a compliance decision.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>What AB 1043 actually requires</h2>
+      <p>
+        AB 1043 requires operating-system providers -- practically speaking, Apple and Google -- to build
+        an age-signal-sharing mechanism. App developers who request and receive that signal are then
+        required to use it to provide age-appropriate experiences. If you've read anything about Apple's
+        Declared Age Range API or Google's Play Age Signals API already, the developer-facing mechanic here
+        -- request a signal, act on it -- will look familiar, because it's functionally similar to what
+        those APIs already do for the Texas/Utah/Louisiana laws.
+      </p>
+      <p>
+        What's genuinely different is the legal basis. AB 1043 is a data-privacy-style statute enforced
+        through California's Attorney General and its existing consumer-protection apparatus, not a
+        deceptive-trade-practices statute layered onto app-store operation the way Texas's SB 2420 is.
+        Don't assume that satisfying the Texas/Utah/Louisiana requirement automatically satisfies AB 1043
+        -- the API call may end up looking similar, but the statute you're actually complying with, and the
+        enforcement channel behind it, is not the same one.
+      </p>
+
+      <h2>The timeline: operative January 1, 2027, grace to July 1, 2027</h2>
+      <p>
+        AB 1043 was signed and chaptered on <strong>October 13, 2025</strong>. It becomes operative on
+        <strong>January 1, 2027</strong>. A grace period extends that to <strong>July 1, 2027</strong>, but
+        only for two specific situations, and it's worth reading them as a real test rather than a blanket
+        six-month extension:
+      </p>
+      <ul>
+        <li><strong>Devices and accounts where setup completed before January 1, 2027.</strong> If a
+          user's device or account was already set up before the operative date, you get the extra six
+          months on that user.</li>
+        <li><strong>Apps last updated on or after January 1, 2026, for users whose devices received the app
+          before the operative date.</strong> This is the one worth reading twice: the grace period for
+          those pre-existing installs depends on your app's own update history, specifically whether you
+          shipped an update on or after January 1, 2026. Developers who genuinely don't know their last
+          shipped update date relative to that threshold should check their App Store Connect / Play
+          Console release history now, not in December 2026.</li>
+      </ul>
+
+      <h2>Why the "last updated" test matters more than it looks like it does</h2>
+      <p>
+        Most compliance deadlines are pure calendar dates: everyone hits the same date, no matter what they
+        did before it. AB 1043's grace period isn't purely a calendar date for the pre-existing-install
+        case -- it's conditioned on your own release history. Two developers with functionally identical
+        apps and identical California user bases can land in different grace-period buckets purely because
+        one of them shipped a routine update in, say, November 2025 and the other shipped one in February
+        2026. If you maintain an app with a slow release cadence, or one that's effectively in
+        maintenance-only mode, this is a genuine reason to check your actual last-update date against the
+        January 1, 2026 threshold now, rather than assuming the grace period automatically covers you.
+      </p>
+
+      <div class="callout">
+        <p class="callout-label">Don't reuse your Texas/Utah/Louisiana compliance work without checking</p>
+        <p>
+          The build shape looks similar -- request an age signal from the platform, act on the result -- and
+          for many teams the underlying API call (Apple's Declared Age Range API, Google's Play Age
+          Signals API) genuinely will be shared infrastructure. But "the API call is shared" is not the
+          same claim as "the compliance obligation is satisfied." AB 1043 is a separate statute with its
+          own operative date, its own grace-period test, and its own enforcement channel (California AG /
+          consumer-protection, not DTPA-style). Verify the mapping explicitly rather than assuming 1:1
+          coverage from your other-state build.
+        </p>
+      </div>
+
+      <h2>What to check now</h2>
+      <ul>
+        <li><strong>Confirm you have California users.</strong> If you distribute nationally, you almost
+          certainly do.</li>
+        <li><strong>Find your app's actual last-update date</strong> and check it against January 1, 2026
+          -- this determines your grace-period bucket for pre-existing installs, per the mechanic above.</li>
+        <li><strong>Don't assume your Texas/Utah/Louisiana API integration automatically satisfies AB
+          1043.</strong> The developer-facing call may be reusable; the compliance obligation is a separate
+          statute. Confirm rather than assume.</li>
+        <li><strong>Build toward January 1, 2027, not July 1, 2027.</strong> The grace period is narrow and
+          conditional, not a blanket six-month delay for everyone -- treat the earlier date as your real
+          target.</li>
+        <li>For the actual Apple/Google API mechanics once you know you need them, see our companion guide
+          comparing the Declared Age Range API and Play Age Signals API.</li>
+      </ul>
+
+      <h2>How to re-verify this yourself</h2>
+      <p>
+        Do this before you rely on any date here for a real compliance decision, and repeat it roughly
+        every 60&ndash;90 days while the operative date is still in the future:
+      </p>
+      <ol>
+        <li>Check the California Legislature's own bill page for AB 1043 (bill number
+          <code>202520260AB1043</code> on leginfo.legislature.ca.gov) directly, not just a law-firm
+          summary of it -- the bill page is the actual primary source for the current, controlling date.</li>
+        <li>Search <code>"AB 1043" amendment 2026</code> or <code>2027</code> -- both Utah's and
+          Louisiana's ASAA deadlines moved by amendment after this kind of law was originally enacted; that
+          pattern is worth checking for AB 1043 too, even though no such amendment has surfaced as of this
+          writing.</li>
+        <li>Cross-check Apple's and Google's own developer-news pages against the date you just found --
+          our companion state-by-state guide documents a real case where Apple's own page ran months out of
+          date on a different state's deadline. Don't assume platform documentation and state law are
+          synchronized.</li>
+        <li>Note the publish date of anything you read, including this article. A compliance date sourced
+          from an undated blog post is not verified -- it's a guess with a citation attached.</li>
+      </ol>
+
+      <p class="quote-source">
+        Sources checked directly for this article: the California Legislature's own bill page for AB 1043
+        (leginfo.legislature.ca.gov, bill 202520260AB1043); cross-checked against the IEEE Standards
+        Association's summary and Alston &amp; Bird's "California Enacts Digital Age Verification Law."
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../app-age-verification-laws-by-state/">App age-verification laws: which states apply to your app and when</a> &mdash; the full four-state overview, including Texas, Utah, and Louisiana.</li>
+        <li><a href="../utah-louisiana-app-store-accountability-act-enforcement-differences/">Utah vs. Louisiana: how two 2027 deadlines enforce completely differently</a> &mdash; the two "App Store Accountability Act" family states, contrasted.</li>
+        <li><a href="../apple-declared-age-range-vs-google-play-age-signals/">Apple Declared Age Range API vs. Google Play Age Signals</a> &mdash; the build steps once you know a state applies to you.</li>
+        <li><a href="https://disclosure.desklark.com/">Free Etsy AI-Disclosure Statement Generator</a> &mdash; from the same studio, for sellers rather than app developers.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want the full multi-state kit, not just California?</h2>
+      <p class="promo-intro">This article covers AB 1043 specifically. The compliance kit below adds Texas, Utah, and Louisiana's matrices plus concrete API/policy build steps -- but isn't published yet.</p>
+      <div class="promo-cards">
+        <!-- BUILD NOTE: ASAA Developer Compliance Kit -- built and reviewer-approved
+             (ventures/asaa-compliance-kit/build/kit/), publish is owner-gated on
+             Gumroad and not live as of this writing (tasks.md: "cleared for the
+             owner's Gumroad-publish decision"). Replace GUMROAD_URL once live,
+             same convention as the AI-disclosure kit's own promo cards. -->
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">Gumroad &middot; $59 instant download &middot; Coming soon</p>
+          <h3>The ASAA Developer Compliance Kit</h3>
+          <p>A state-by-state applicability matrix with primary-source citations, concrete Apple Declared Age Range / Significant Change API integration steps, concrete Google Play Age Signals integration steps, and copy-paste privacy-policy and consent-flow templates. Educational, not legal advice.</p>
+          <span class="promo-cta promo-cta--disabled">In the works</span>
+        </div>
+        <a class="promo-card" href="https://disclosure.desklark.com/">
+          <p class="promo-eyebrow">Free tool &middot; No signup, nothing collected</p>
+          <h3>Etsy AI-Disclosure Statement Generator</h3>
+          <p>From the same studio: if you also run (or help run) an Etsy shop, this generates the exact disclosure sentence Etsy's own policy requires for AI-assisted listings.</p>
+          <span class="promo-cta">Open the generator &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">Not legal advice. Not affiliated with, endorsed by, sponsored by, or reviewed by Apple, Google, or the State of California. Confirm current dates against the bill's own legislative-tracking page before relying on any date here.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently | DeskLark Studio</title>
+<meta name="description" content="Utah (May 6, 2027) and Louisiana (July 1, 2027) both delayed their App Store Accountability Act deadlines by a year -- but one dropped AG enforcement for a private right of action, and the other kept AG-only enforcement. Primary-source dates and what changes for developers.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/utah-louisiana-app-store-accountability-act-enforcement-differences/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently">
+<meta property="og:description" content="Utah and Louisiana both pushed their ASAA deadlines to 2027 -- but their enforcement mechanisms are now opposites. Here's what that actually changes for developers building toward both.">
+<meta property="og:url" content="https://guides.desklark.com/utah-louisiana-app-store-accountability-act-enforcement-differences/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently">
+<meta name="twitter:description" content="Utah dropped AG enforcement for a private right of action. Louisiana kept AG-only enforcement and added a family-account exception. What that means for a multi-state build.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently",
+  "description": "Utah (May 6, 2027) and Louisiana (July 1, 2027) both delayed their App Store Accountability Act deadlines by a year -- but one dropped AG enforcement for a private right of action, and the other kept AG-only enforcement. Primary-source dates and what changes for developers.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-08-07",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/utah-louisiana-app-store-accountability-act-enforcement-differences/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently", "item": "https://guides.desklark.com/utah-louisiana-app-store-accountability-act-enforcement-differences/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free planning tools, plus printables for the parts a calculator can't do alone.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; App age-verification law</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>Utah vs. Louisiana: How Two 2027 App Store Accountability Act Deadlines Enforce Differently</h1>
+      <p class="article-meta">App age-verification law guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        Utah and Louisiana both passed an "App Store Accountability Act," both delayed their original
+        dates by a year via amendment, and both now land in 2027 -- May 6 for Utah, July 1 for Louisiana.
+        It would be reasonable to assume that means one compliance build covers both. It doesn't: the two
+        amendments moved enforcement in opposite directions, and Louisiana's reenactment made substantive
+        changes Utah's never touched. Treating them as one problem is the specific mistake this article is
+        for. Every date and mechanic below was checked against a primary source as of August 6, 2026.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Not Legal Advice</p>
+        <p class="db-text">This is general information, not legal advice, and not affiliated with, endorsed by, or reviewed by Apple, Google, or the states of Utah or Louisiana. State legislatures amend these laws; always confirm current dates against each state's own bill-tracking page before making a compliance decision.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>The short version: same deadline family, opposite enforcement shape</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">&nbsp;</th><th scope="col">Utah (HB 498 amendment)</th><th scope="col">Louisiana (HB 977 reenactment)</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Compliance date</th><td>May 6, 2027 (delayed 1 year from May 6, 2026)</td><td>July 1, 2027 (delayed 1 year from July 1, 2026)</td></tr>
+            <tr><th scope="row">Enforcement</th><td>Private right of action only &mdash; AG authority removed</td><td>Louisiana AG only &mdash; no private right of action</td></tr>
+            <tr><th scope="row">Statutory remedy</th><td>Greater of actual damages or $1,000/violation, plus litigation costs</td><td>N/A &mdash; enforcement is regulatory, not plaintiff-driven</td></tr>
+            <tr><th scope="row">Substantive change in the amendment</th><td>Enforcement mechanism only</td><td>Reliance rule, family-account exception, narrowed dual-source verification, removed emergency-services carveout</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Utah: enforcement moved from a regulator to individual plaintiffs</h2>
+      <p>
+        Utah's App Store Accountability Act originally set a compliance date of May 6, 2026. HB 498 delayed
+        that by one year, to <strong>May 6, 2027</strong> -- and, in the same amendment, removed the Utah
+        Attorney General's enforcement authority entirely. Following that change, the Computer &amp;
+        Communications Industry Association (CCIA) voluntarily dismissed its constitutional challenge on
+        April 21, 2026, since there was no longer an AG enforcement action to challenge.
+      </p>
+      <p>
+        What's left is a private right of action: an injured minor, or their parent or guardian, can sue an
+        app store or developer directly and recover the greater of actual damages or a statutory
+        <strong>$1,000 per violation</strong>, plus litigation costs. That's a genuine shift in who can come
+        after you and why. There's no AG investigation sweep to watch for, but there is a working statutory
+        floor available to any harmed individual plaintiff's attorney -- and no regulator's enforcement
+        priorities standing between a violation and a lawsuit. Treat "AG enforcement removed" as a change in
+        who enforces, not a change in whether the law has teeth.
+      </p>
+
+      <h2>Louisiana: same-shape delay, but the law itself changed underneath it</h2>
+      <p>
+        Louisiana's original App Store Accountability Act (HB 570) was signed June 30, 2025, with an
+        original effective date of July 1, 2026. HB 977, signed May 15, 2026, repealed and reenacted the
+        law -- not just delayed it -- with a new effective date of <strong>July 1, 2027</strong>, plus four
+        substantive changes worth reading individually, because they change what you actually have to
+        build, not just when:
+      </p>
+      <ul>
+        <li><strong>A reliance rule:</strong> developers may rely on the age/consent signal the app store
+          provides, unless they have actual knowledge their own internal data is more accurate.</li>
+        <li><strong>A new family-account exception:</strong> paid-subscription apps with an adult primary
+          accountholder can use that adult's age for safety defaults, instead of separately verifying every
+          subaccount.</li>
+        <li><strong>Narrowed verification-source requirement:</strong> the original requirement to verify
+          age using both app-store signals and other sources was narrowed to focus primarily on
+          app-store-provided signals.</li>
+        <li><strong>The prior emergency-services-app carveout was removed.</strong></li>
+      </ul>
+      <p>
+        Enforcement runs through the Louisiana Attorney General only. Louisiana is notably the one state in
+        the enacted-and-litigated ASAA family <strong>without</strong> a private right of action -- the
+        opposite of Utah's post-amendment shape.
+      </p>
+
+      <h2>What "enforcement mechanism" actually changes about how you should build</h2>
+      <p>
+        A regulator (Louisiana's AG) and individual plaintiffs (Utah, post-amendment) don't behave the same
+        way, and that has real engineering implications, not just legal ones:
+      </p>
+      <ul>
+        <li><strong>For Louisiana (AG-only):</strong> a single office's enforcement priorities determine
+          your actual risk exposure. There's no per-user statutory damages figure driving a plaintiff's
+          lawyer's math -- the practical risk is closer to "does this draw regulatory attention," which
+          argues for solid documentation of your reliance-rule and family-account-exception decisions in
+          case of an inquiry.</li>
+        <li><strong>For Utah (private right of action):</strong> any individual harmed party can sue,
+          independent of what a regulator chooses to prioritize, with a statutory floor already defined in
+          the text. That argues for treating consent-flow correctness and audit-trail completeness as
+          load-bearing -- a single well-documented incident could still generate real per-violation
+          exposure regardless of AG interest.</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout-label">The mistake this article exists to prevent</p>
+        <p>
+          "Utah and Louisiana are both App Store Accountability Act states, so my Utah build covers
+          Louisiana too" is the exact assumption that misses the reliance rule and the family-account
+          exception -- both Louisiana-specific, both added by the same 2026 reenactment that also changed
+          Louisiana's date. If you're building toward both states, budget for two separate compliance
+          reviews, not one build with a second state name copy-pasted into your privacy policy.
+        </p>
+      </div>
+
+      <h2>What to check now, for each state</h2>
+      <ul>
+        <li><strong>Utah:</strong> confirm you have Utah users &middot; target integration built and tested
+          at least 60 days before May 6, 2027, not started at it &middot; document consent-withdrawal
+          handling carefully, since a private right of action means any single user can become a plaintiff.</li>
+        <li><strong>Louisiana:</strong> confirm you have Louisiana users &middot; confirm your
+          platform-signal reliance logic actually matches how you use the API response, per the reliance
+          rule above &middot; check whether the family-account exception applies to your account model
+          &middot; note the emergency-services carveout no longer exists if you were relying on it.</li>
+        <li><strong>Both:</strong> the underlying API integration (Apple Declared Age Range / Google Play
+          Age Signals) is likely shared infrastructure across states -- see our companion API guide -- but
+          the compliance logic layered on top of that API response is not identical between these two
+          states.</li>
+      </ul>
+
+      <h2>How to re-verify these dates and mechanics yourself</h2>
+      <p>
+        Do this before you rely on anything here for a real compliance decision, and repeat it roughly
+        every 60&ndash;90 days while either deadline is still in the future:
+      </p>
+      <ol>
+        <li>Search <code>"Utah App Store Accountability Act" amendment 2027</code> and
+          <code>"Louisiana HB 977" amendment 2027</code> separately -- both states have already amended
+          once each; a further change wouldn't be unprecedented.</li>
+        <li>Check each state legislature's own bill-tracking page for the amending bill number, not just a
+          law firm's summary of it.</li>
+        <li>Cross-check Apple's and Google's own developer-news pages against the dates you find -- our
+          companion state-by-state guide documents a real case of Apple's own page running months out of
+          date on these exact two states' deadlines.</li>
+        <li>Note the publish date of anything you read, including this article.</li>
+      </ol>
+
+      <p class="quote-source">
+        Sources checked directly for this article: Wiley/JDSupra's "Utah Amends App Store Accountability
+        Act (ASAA) &ndash; Key Obligations Delayed Until May 6, 2027"; Alston &amp; Bird's "Challenge to
+        Utah's App Store Accountability Act Voluntarily Dismissed Following Statutory Amendments" and
+        "Louisiana Delays App Store Accountability Effective Date to July 2027"; Wiley's cross-state
+        comparison alert; and Bass, Berry &amp; Sims's "Apps and Minors: New Compliance Frontiers and Risks
+        in Louisiana, Utah, and Texas."
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../app-age-verification-laws-by-state/">App age-verification laws: which states apply to your app and when</a> &mdash; the full four-state overview, including Texas and California.</li>
+        <li><a href="../california-ab-1043-digital-age-assurance-act-developer-guide/">California AB 1043 explained: the Digital Age Assurance Act deadline</a> &mdash; a structurally different law from Utah/Louisiana's ASAA family.</li>
+        <li><a href="../apple-declared-age-range-vs-google-play-age-signals/">Apple Declared Age Range API vs. Google Play Age Signals</a> &mdash; the build steps once you know a state applies to you.</li>
+        <li><a href="https://disclosure.desklark.com/">Free Etsy AI-Disclosure Statement Generator</a> &mdash; from the same studio, for sellers rather than app developers.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want the full multi-state kit, not just Utah and Louisiana?</h2>
+      <p class="promo-intro">This article covers Utah and Louisiana's enforcement mechanics. The compliance kit below adds Texas and California's matrices plus concrete API/policy build steps -- but isn't published yet.</p>
+      <div class="promo-cards">
+        <!-- BUILD NOTE: ASAA Developer Compliance Kit -- built and reviewer-approved
+             (ventures/asaa-compliance-kit/build/kit/), publish is owner-gated on
+             Gumroad and not live as of this writing (tasks.md: "cleared for the
+             owner's Gumroad-publish decision"). Replace GUMROAD_URL once live,
+             same convention as the AI-disclosure kit's own promo cards. -->
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">Gumroad &middot; $59 instant download &middot; Coming soon</p>
+          <h3>The ASAA Developer Compliance Kit</h3>
+          <p>A state-by-state applicability matrix with primary-source citations, concrete Apple Declared Age Range / Significant Change API integration steps, concrete Google Play Age Signals integration steps, and copy-paste privacy-policy and consent-flow templates. Educational, not legal advice.</p>
+          <span class="promo-cta promo-cta--disabled">In the works</span>
+        </div>
+        <a class="promo-card" href="https://disclosure.desklark.com/">
+          <p class="promo-eyebrow">Free tool &middot; No signup, nothing collected</p>
+          <h3>Etsy AI-Disclosure Statement Generator</h3>
+          <p>From the same studio: if you also run (or help run) an Etsy shop, this generates the exact disclosure sentence Etsy's own policy requires for AI-assisted listings.</p>
+          <span class="promo-cta">Open the generator &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">Not legal advice. Not affiliated with, endorsed by, sponsored by, or reviewed by Apple, Google, or the states of Utah or Louisiana. Confirm current dates against each state's own bill-tracking page before relying on any date here.</p>
+  </div>
+</footer>
+
+</body>
+</html>
