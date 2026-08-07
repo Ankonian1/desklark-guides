@@ -193,6 +193,11 @@ article header.article-hero { margin-bottom: 28px; }
 
 .article-body { margin-bottom: 40px; }
 .article-body h2:first-child { margin-top: 0; }
+/* Long unbroken inline `code` runs (e.g. a full developer-docs URL path with no
+   spaces) otherwise force horizontal overflow at narrow viewports -- browsers
+   don't break at "/" by default. Scoped to article prose, not tables (which
+   already scroll via .table-scroll) or the hub grid. */
+.article-body code { overflow-wrap: break-word; word-break: break-word; }
 
 /* Informational callout -- neutral, teal-accented (contrast with the
    warn-red disclaimer box, which is reserved for real regulatory/legal
