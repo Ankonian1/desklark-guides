@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apple Declared Age Range API vs. Google Play Age Signals: What Indie Developers Actually Have to Build | DeskLark Studio</title>
+<meta name="description" content="A grounded, side-by-side comparison of Apple's Declared Age Range / Significant Change APIs and Google's Play Age Signals API -- OS-version floors, call patterns, response shapes, and usage restrictions, cited directly from Apple and Google's own developer documentation.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/apple-declared-age-range-vs-google-play-age-signals/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apple Declared Age Range API vs. Google Play Age Signals: What Indie Developers Actually Have to Build">
+<meta property="og:description" content="A side-by-side comparison of Apple's age-assurance APIs and Google Play's Age Signals API -- OS floors, call patterns, and usage restrictions, from each platform's own docs.">
+<meta property="og:url" content="https://guides.desklark.com/apple-declared-age-range-vs-google-play-age-signals/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apple Declared Age Range API vs. Google Play Age Signals">
+<meta name="twitter:description" content="What indie developers actually have to build for each platform's age-assurance API, grounded in Apple's and Google's own docs.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Apple Declared Age Range API vs. Google Play Age Signals: What Indie Developers Actually Have to Build",
+  "description": "A grounded, side-by-side comparison of Apple's Declared Age Range / Significant Change APIs and Google's Play Age Signals API, cited directly from each platform's own developer documentation.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-08-07",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/apple-declared-age-range-vs-google-play-age-signals/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Apple Declared Age Range API vs. Google Play Age Signals", "item": "https://guides.desklark.com/apple-declared-age-range-vs-google-play-age-signals/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free planning tools, plus printables for the parts a calculator can't do alone.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; App age-verification law</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>Apple Declared Age Range API vs. Google Play Age Signals: What Indie Developers Actually Have to Build</h1>
+      <p class="article-meta">App age-verification law guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        Once you know a state age-assurance law applies to your app (see our companion state-by-state
+        guide if you haven't checked yet), the actual work is platform-specific: Apple and Google each
+        ship their own age-signal mechanism, and the two are not the same shape. This is a grounded,
+        implementation-level comparison, checked directly against developer.apple.com's and
+        developer.android.com's own documentation as of August 6, 2026 -- not a summary of a summary.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Not Legal Advice</p>
+        <p class="db-text">This is a technical summary of publicly documented APIs, not legal advice, and not affiliated with, endorsed by, or reviewed by Apple or Google. Both APIs are actively changing -- verify method names and behavior against each platform's current documentation before you ship.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>Apple's stack: three moving parts</h2>
+      <p>
+        Apple's compliance stack for state age-assurance laws has three pieces: the
+        <strong>Declared Age Range API</strong> (<code>developer.apple.com/documentation/declaredagerange</code>),
+        the API you call to ask the OS for a signal about the current user's age; the
+        <strong>Significant Change API</strong>, under the PermissionKit framework
+        (<code>developer.apple.com/documentation/PermissionKit/SignificantAppUpdateTopic</code>), which you
+        call when your app undergoes a change significant enough to require fresh parental consent; and
+        App Store server-side plumbing -- a new <code>AppStore.ageRatingCode</code> property in StoreKit,
+        plus App Store Server Notifications that tell your backend when a parent revokes consent for a
+        minor's access to your app.
+      </p>
+      <p>
+        Platform requirement: the Declared Age Range API needs <strong>iOS, iPadOS, or macOS 26 or
+        later</strong>, and Apple's own forum threads confirm the iOS 26 SDK (Xcode 26+) is required to
+        use it at all.
+      </p>
+
+      <h2>What Declared Age Range actually returns</h2>
+      <p>
+        There is no fixed, OS-provided age-category enum. You call
+        <code>AgeRangeService.shared.requestAgeRange(ageGates:in:)</code> (UIKit/AppKit) or the SwiftUI
+        environment value <code>@Environment(\.requestAgeRange)</code> -- and <strong>you supply the age
+        thresholds yourself</strong>, as up to three integer "age gates" (Apple's own sample uses
+        13, 15, 18; gates must be at least two years apart or the call throws
+        <code>AgeRangeService.Error.invalidRequest</code>). The system returns bounds around the gates you
+        supplied, not a fixed category, and the call requires the
+        <code>com.apple.developer.declared-age-range</code> entitlement, enabled via the Declared Age
+        Range capability in Xcode.
+      </p>
+      <p>
+        What comes back is a <code>Response</code> enum with two cases -- <code>.sharing(AgeRange)</code>
+        or <code>.declinedSharing</code>. The <code>AgeRange</code> struct has a nullable
+        <code>lowerBound</code> and <code>upperBound</code> (an <code>Int?</code> pair marking the gates
+        the person falls between), an <code>ageRangeDeclaration</code> describing how the age was
+        established -- the current, non-deprecated cases are <code>.selfDeclared</code>,
+        <code>.guardianDeclared</code>, and <code>.confirmed</code> (a scrutinized method, e.g. a credit
+        card or government ID, undifferentiated at this level; six older cases like
+        <code>.paymentChecked</code> and <code>.governmentIDChecked</code> are deprecated in Apple's own
+        reference docs and shouldn't drive new logic) -- and an <code>activeParentalControls</code> option
+        set describing parental controls active on the device, worth checking before enabling any
+        minor-facing feature even after a successful age-range share.
+      </p>
+      <p>
+        Two more properties are called independently, not part of the age-range response:
+        <code>isEligibleForAgeFeatures</code> (iOS/iPadOS/macOS <strong>26.2+</strong>) tells you whether
+        age assurance is legally required for this person/region at all, and
+        <code>requiredRegulatoryFeatures</code> (iOS/iPadOS/macOS <strong>26.4+</strong>, a higher floor
+        -- don't assume they ship together) tells you which specific obligations apply, e.g.
+        <code>.declaredAgeRangeRequired</code> or <code>.significantAppChangeRequiresParentalConsent</code>.
+        Apple's own sample derives an app-level outcome from all of this with four cases:
+        <strong>.minor</strong> (route to parental consent), <strong>.verifiedAdult</strong> (adult,
+        <code>.confirmed</code> declaration &mdash; may still need significant-change acknowledgment),
+        <strong>.unverifiedAdult</strong> (adult without a <code>.confirmed</code> declaration &mdash;
+        Apple's own sample blocks access pending verification), and <strong>.declinedSharing</strong>
+        (mandatory in some regulated regions, optional in others). Build your gating logic around this
+        four-case model, not a simpler three-state guess.
+      </p>
+
+      <h2>Significant Change API: the part most developers miss</h2>
+      <p>
+        This isn't a one-time integration -- it's a trigger you re-evaluate every release. Per Apple's own
+        developer-news language, a change in your app's age rating is automatically treated as a
+        significant change under Texas's law. Beyond that specific automatic trigger, Apple states plainly
+        that it's the developer's responsibility to determine when a change is significant enough to
+        require fresh parental consent -- Apple doesn't hand you an exhaustive checklist. Treat any change
+        that would plausibly change a parent's original consent decision (new social/chat features, new
+        purchase mechanics, new data collection, a rating bump) as a candidate, and document your
+        reasoning for each release.
+      </p>
+      <p>
+        Mechanically: you call the API to present a system-level dialog requesting guardian re-approval,
+        and Apple can restrict the minor's access until consent is obtained. Consent <em>withdrawal</em>
+        works differently -- you configure your backend to receive an App Store Server Notification when a
+        parent revokes access, rather than polling for it, and your app should block the relevant feature
+        (or launching entirely) on that device when the notification arrives.
+      </p>
+
+      <h2>Google Play Age Signals API</h2>
+      <p>
+        Google's equivalent is currently <strong>beta</strong>: a runtime interface that lets your Android
+        app retrieve an age-related signal for the current user directly from Google Play, on devices
+        running <strong>Android 6.0 (API level 23) or higher</strong>. Google's documented default age
+        bands are <strong>0&ndash;12, 13&ndash;15, 16&ndash;17, and 18+</strong> -- though Google's docs
+        note you can receive custom ranges depending on region/regulatory requirements, so don't hard-code
+        gating logic to exactly four bands everywhere.
+      </p>
+      <p>
+        The integration flow, per Google's own docs, is four steps: request access to the API for your
+        app; request the signal itself, which as of the latest release is an explicit two-call pattern
+        -- call <code>requestAgeSignalsAccess()</code> to trigger the Play in-app prompt, then
+        <code>checkAgeSignals()</code> to actually receive it (Google's release notes flag this as a
+        change from an earlier single-call version, so older sample code you find online may be
+        pre-migration -- check the current <code>use-age-signals-api</code> doc page for the live
+        signature); receive the response via <code>AgeSignalsResult</code> plus
+        <code>@AgeSignalsVerificationStatus</code> / <code>@AgeSignalsErrorCode</code> annotations for
+        handling outcomes and failures; and use the information strictly per Google Play's terms, covered
+        below. Key classes: <code>AgeSignalsManager</code>, <code>AgeSignalsManagerFactory</code>,
+        <code>AgeSignalsRequest</code>/<code>.Builder</code>, <code>AgeSignalsResult</code>/<code>.Builder</code>,
+        <code>AgeSignalsException</code>, and Google's own provided test double,
+        <code>FakeAgeSignalsManager</code>.
+      </p>
+
+      <h2>Regional rollout: don't assume every user gets a signal</h2>
+      <p>
+        This determines whether you'll actually get a signal back today. Per Google's own release
+        messaging: Brazil went live March 17, 2026 (tied to Brazil's Digital ECA law); Texas is live for
+        new accounts created after May 28, 2026 (tied to Texas SB 2420); Australia and Canada were rolling
+        out by mid-August 2026; and Google has stated a target of worldwide availability by the end of
+        2026. If you call this API for a user outside a live region today, expect no signal or an explicit
+        "not available" error code rather than a stale or default value -- build your fallback path
+        around that, don't assume the API silently degrades to "assume adult."
+      </p>
+
+      <div class="callout">
+        <p class="callout-label">Google's usage restriction is a hard constraint, not a guideline</p>
+        <p>
+          Per Google's own documentation, the signal may be used <strong>only</strong> to deliver
+          age-appropriate content/experiences and to meet compliance obligations in regulated regions. It
+          may not be used for advertising, marketing, user profiling, analytics, or any purpose outside
+          age-appropriate gating. Google's docs state that violating this can result in API access
+          termination and app suspension or takedown from Google Play. If your analytics or ad-tech vendor
+          ingests every signal your app touches by default, you need an explicit exception carved out for
+          this one -- audit every downstream consumer of the signal in your codebase, not just the code
+          path that calls the API. You must also accurately complete Play's Data Safety section to reflect
+          that you use this API.
+        </p>
+      </div>
+
+      <h2>Side by side: what you actually build for each platform</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col"></th><th scope="col">Apple</th><th scope="col">Google Play</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">API name</th><td>Declared Age Range API + Significant Change API (PermissionKit)</td><td>Play Age Signals API (beta)</td></tr>
+            <tr><th scope="row">Minimum OS</th><td>iOS/iPadOS/macOS 26 (26.2+ and 26.4+ for two specific properties)</td><td>Android 6.0 / API level 23</td></tr>
+            <tr><th scope="row">Age representation</th><td>Bounds around developer-supplied gates, not a fixed category</td><td>Default bands 0&ndash;12/13&ndash;15/16&ndash;17/18+, region-dependent custom ranges possible</td></tr>
+            <tr><th scope="row">Call pattern</th><td>Single call, four-case outcome model (Apple's own recommended pattern)</td><td>Two-call pattern: <code>requestAgeSignalsAccess()</code> then <code>checkAgeSignals()</code></td></tr>
+            <tr><th scope="row">Consent withdrawal</th><td>App Store Server Notification to your backend; app must block on receipt</td><td>Not documented as a separate mechanic in the current API surface</td></tr>
+            <tr><th scope="row">Usage restriction</th><td>Governed by App Store policy and the significant-change obligations above</td><td>Age-appropriate gating and compliance only &mdash; explicitly not for ads/marketing/analytics, enforced by Play ToS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>A practical build checklist</h2>
+      <ul>
+        <li>Confirm your app's minimum OS targets support each API (iOS/iPadOS/macOS 26+, with 26.2+/26.4+
+          for two specific Apple properties; Android API 23+) and add Apple's
+          <code>com.apple.developer.declared-age-range</code> entitlement in Xcode.</li>
+        <li>On Apple: call <code>isEligibleForAgeFeatures</code> and <code>requiredRegulatoryFeatures</code>
+          first, choose your <code>ageGates</code> deliberately (&ge;2 years apart), then call
+          <code>requestAgeRange</code> and handle all four outcome cases -- don't branch on the deprecated
+          fine-grained <code>ageRangeDeclaration</code> cases.</li>
+        <li>On Apple: identify every user-facing change in your release pipeline that plausibly needs the
+          Significant Change API, document why each release did or didn't trigger it, and wire up (and
+          actually test in sandbox) App Store Server Notifications for consent withdrawal.</li>
+        <li>On Google: confirm your region is live per the rollout table above before treating a missing
+          signal as an integration bug, call <code>requestAgeSignalsAccess()</code> before
+          <code>checkAgeSignals()</code>, and handle the full <code>AgeSignalsResult</code> outcome space
+          including error codes.</li>
+        <li>On Google: audit every downstream consumer of the signal (analytics, ad SDKs, feature flags)
+          against the usage restriction above, and update your Play Data Safety section accordingly.</li>
+        <li>On both platforms: re-check each vendor's current documentation before you ship -- both APIs
+          have already changed method signatures or outcome models once since their initial release.</li>
+      </ul>
+
+      <h2>The documentation-lag lesson applies here too</h2>
+      <p>
+        Apple's own developer documentation is authoritative for what these APIs do and how to call them
+        -- that part is current and reliable. It is <strong>not</strong> authoritative for when a given
+        state's law takes effect: Apple's own Utah/Louisiana developer-news post is dated February 25,
+        2026 and still shows both states' pre-amendment dates, months after both were delayed by a year.
+        Cross-check any state deadline against the state's own text or a current law-firm tracker, not
+        against a developer-news post's publish date -- see our companion state-by-state guide for the
+        corrected dates and the full re-verification method.
+      </p>
+
+      <p class="quote-source">
+        Sources checked directly for this article: developer.apple.com's Declared Age Range and
+        PermissionKit/SignificantAppUpdateTopic reference documentation, Apple's
+        <em>implementing-age-assurance-and-permissions</em> sample, and Apple developer-news posts dated
+        Oct 8, 2025, Nov 4, 2025, Dec 23, 2025, Feb 25, 2026, and Jun 3, 2026; developer.android.com's Play
+        Age Signals documentation and release notes.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../app-age-verification-laws-by-state/">App age-verification laws: which states apply to your app and when</a> &mdash; the state-by-state timeline these APIs exist to satisfy.</li>
+        <li><a href="../etsy-ai-disclosure-consequences/">What happens if you don't disclose AI use on Etsy?</a> &mdash; a different marketplace, same underlying discipline: check the platform's own policy pages, not an unverified blog claim.</li>
+        <li><a href="https://disclosure.desklark.com/">Free Etsy AI-Disclosure Statement Generator</a> &mdash; from the same studio, for sellers rather than app developers.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want copy-paste templates, not just the API reference?</h2>
+      <p class="promo-intro">This article covers the build. The compliance kit below adds the state-by-state matrix and copy-paste privacy-policy and consent-flow templates -- but isn't published yet.</p>
+      <div class="promo-cards">
+        <!-- BUILD NOTE: ASAA Developer Compliance Kit -- built and reviewer-approved
+             (ventures/asaa-compliance-kit/build/kit/), publish is owner-gated on
+             Gumroad and not live as of this writing (tasks.md: "cleared for the
+             owner's Gumroad-publish decision"). Replace GUMROAD_URL once live,
+             same convention as the AI-disclosure kit's own promo cards. -->
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">Gumroad &middot; $59 instant download &middot; Coming soon</p>
+          <h3>The ASAA Developer Compliance Kit</h3>
+          <p>A state-by-state applicability matrix with primary-source citations, concrete Apple Declared Age Range / Significant Change API integration steps, concrete Google Play Age Signals integration steps, and copy-paste privacy-policy and consent-flow templates. Educational, not legal advice.</p>
+          <span class="promo-cta promo-cta--disabled">In the works</span>
+        </div>
+        <a class="promo-card" href="https://disclosure.desklark.com/">
+          <p class="promo-eyebrow">Free tool &middot; No signup, nothing collected</p>
+          <h3>Etsy AI-Disclosure Statement Generator</h3>
+          <p>From the same studio: if you also run (or help run) an Etsy shop, this generates the exact disclosure sentence Etsy's own policy requires for AI-assisted listings.</p>
+          <span class="promo-cta">Open the generator &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">Not legal advice. Not affiliated with, endorsed by, sponsored by, or reviewed by Apple or Google. Both APIs are actively changing -- verify current behavior against each platform's own developer documentation before you ship.</p>
+  </div>
+</footer>
+
+</body>
+</html>
