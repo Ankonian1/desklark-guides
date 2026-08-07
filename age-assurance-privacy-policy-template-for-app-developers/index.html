@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Your Privacy Policy Needs to Say About App-Store Age-Assurance Signals | DeskLark Studio</title>
+<meta name="description" content="Starting template language for the privacy-policy section and in-app consent-flow copy your app needs once a state age-verification law applies to you. Not legal advice -- an attorney-review starting point.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/age-assurance-privacy-policy-template-for-app-developers/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="What Your Privacy Policy Needs to Say About App-Store Age-Assurance Signals">
+<meta property="og:description" content="Starting template language for the privacy-policy section and in-app consent-flow copy your app needs once a state age-verification law applies to you.">
+<meta property="og:url" content="https://guides.desklark.com/age-assurance-privacy-policy-template-for-app-developers/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What Your Privacy Policy Needs to Say About Age-Assurance Signals">
+<meta name="twitter:description" content="Starting template language for the privacy-policy section and consent-flow copy age-verification compliance actually requires.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Your Privacy Policy Needs to Say About App-Store Age-Assurance Signals",
+  "description": "Starting template language for the privacy-policy section and in-app consent-flow copy your app needs once a state age-verification law applies to you. Not legal advice -- an attorney-review starting point.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-08-07",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/age-assurance-privacy-policy-template-for-app-developers/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "What Your Privacy Policy Needs to Say About App-Store Age-Assurance Signals", "item": "https://guides.desklark.com/age-assurance-privacy-policy-template-for-app-developers/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free planning tools, plus printables for the parts a calculator can't do alone.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; App age-verification law</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>What Your Privacy Policy Needs to Say About App-Store Age-Assurance Signals</h1>
+      <p class="article-meta">App age-verification law guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        Most age-verification compliance writing focuses on the API integration -- which method to call,
+        which OS version you need. The policy-language and consent-copy side gets less attention, but it's
+        just as real a requirement, and it's easy to get wrong in a way that either overstates what you
+        collect or understates a minor's protections. This is starting language, not a finished policy --
+        read the disclaimer below before you copy anything.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Not Legal Advice</p>
+        <p class="db-text">This is an educational starting point, not legal advice, not written or reviewed by an attorney, and not a substitute for one. State age-assurance and privacy law carries real financial exposure -- Utah alone gives individual plaintiffs a $1,000-per-violation statutory floor once its private right of action applies. Have counsel licensed in your operating states review whatever you ship, before you ship it.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>Why this needs its own section, not a paragraph bolted onto your existing policy</h2>
+      <p>
+        The age-assurance mechanic is genuinely different from how most apps describe their other data
+        practices: you're not collecting a birthdate or an ID yourself, you're requesting a signal from the
+        app marketplace (Apple or Google) and acting on the result. A privacy policy that folds this into a
+        general "information we collect" section, worded like the rest of your data-collection language,
+        tends to either overstate what you actually receive or bury the one distinction (platform-verified
+        signal, not developer-collected data) that matters most here. Give it a dedicated section.
+      </p>
+
+      <h2>Starting language for the privacy-policy section itself</h2>
+      <div class="callout">
+        <p class="callout-label">Illustrative starting language -- fill in your own brackets, then have counsel review it</p>
+        <p>
+          "[App Name] uses age-assurance signals provided by the app marketplace you downloaded this app
+          from (the Apple App Store or Google Play Store) to determine whether age-appropriate content
+          restrictions or parental consent requirements apply to your account. We do not independently
+          collect, store, or verify your birthdate, government ID, or other identifying documents to
+          determine your age. Instead, we request an age-category signal from the platform you're using --
+          the platform, not [App Name], is responsible for determining and verifying that signal, using
+          methods it discloses in its own privacy documentation."
+        </p>
+      </div>
+      <p>
+        Two fill-in choices matter more than the rest of the wording: describe what your app <em>actually
+        does</em> when it receives a "consent required" or "consent withdrawn" signal -- don't describe
+        restriction behavior you haven't built and tested -- and name the <em>specific</em> states you
+        determined apply to you (see our companion decision guide), not "all states with such laws" as a
+        hedge. A policy naming the wrong states, or none, is less defensible than one that's specific and
+        gets updated when the underlying law changes.
+      </p>
+
+      <h2>The parental-consent screen: what you actually control</h2>
+      <p>
+        On both Apple's and Google's current implementations, the consent dialog a parent interacts with is
+        largely rendered by the platform itself, not your app -- your role is triggering the request and
+        handling the result, not designing a competing custom screen. Where your own copy matters is the
+        surrounding context you do control: onboarding screens, your settings page, your support
+        documentation. That copy should plainly state what permission is being requested, and just as
+        plainly state what you are <em>not</em> collecting to make the request -- most apps under-explain
+        this half, and it's the half that actually reassures a parent reading it.
+      </p>
+
+      <h2>Consent-withdrawal copy: the one honesty rule that matters most here</h2>
+      <div class="callout">
+        <p class="callout-label">The rule</p>
+        <p>
+          When a parent withdraws consent and your app has to tell the affected minor, keep that notice
+          honest and non-manipulative. No "your friends miss you" dark-pattern re-engagement language, no
+          urgency pressure aimed at getting a minor to go convince a parent to re-approve. This entire
+          product category exists because of child-safety legislation -- shipping a guilt-trip screen at
+          exactly the moment consent was withdrawn is the fastest way to turn a compliance feature into a
+          legal and PR liability at once.
+        </p>
+      </div>
+      <p>
+        Structurally, the notice needs three things and nothing more: state plainly that access has been
+        restricted or paused, tell the person how to raise it with their parent or guardian if they believe
+        it's a mistake, and offer a real support contact. Anything beyond that risks becoming the dark
+        pattern the rule above warns against.
+      </p>
+
+      <h2>Keep a visible change log</h2>
+      <p>
+        Add a "Last updated" line to this section and a short changelog entry every time you touch it,
+        noting which state, law, or API change triggered the edit. Two of the four state deadlines covered
+        by these laws were themselves delayed by amendment in the months before this guide was written --
+        a policy that silently changed with no visible history is worse evidence of active compliance than
+        one with a dated trail, if either is ever reviewed by a court, a regulator, or your own future self
+        trying to remember why a line changed.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../does-my-app-need-age-verification-law-compliance/">Does your app need age verification? A state-by-state decision guide</a> &mdash; confirm which states to actually name in the policy language above.</li>
+        <li><a href="../app-age-verification-laws-by-state/">App age-verification laws: which states apply to your app and when</a> &mdash; the underlying dates and citations.</li>
+        <li><a href="../apple-declared-age-range-vs-google-play-age-signals/">Apple Declared Age Range API vs. Google Play Age Signals</a> &mdash; the API mechanics this policy language describes.</li>
+        <li><a href="https://disclosure.desklark.com/">Free Etsy AI-Disclosure Statement Generator</a> &mdash; from the same studio, for sellers rather than app developers.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want the full copy-paste templates, not an excerpt?</h2>
+      <p class="promo-intro">This article covers the approach and the honesty rules. The compliance kit below has the complete privacy-policy section, consent-screen copy, and withdrawal-notice templates, plus the state matrix and API steps -- but isn't published yet.</p>
+      <div class="promo-cards">
+        <!-- BUILD NOTE: ASAA Developer Compliance Kit -- built and reviewer-approved
+             (ventures/asaa-compliance-kit/build/kit/), publish is owner-gated on
+             Gumroad and not live as of this writing (tasks.md: "cleared for the
+             owner's Gumroad-publish decision"). Replace GUMROAD_URL once live,
+             same convention as the AI-disclosure kit's own promo cards. -->
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">Gumroad &middot; $59 instant download &middot; Coming soon</p>
+          <h3>The ASAA Developer Compliance Kit</h3>
+          <p>A state-by-state applicability matrix with primary-source citations, concrete Apple Declared Age Range / Significant Change API integration steps, concrete Google Play Age Signals integration steps, and copy-paste privacy-policy and consent-flow templates. Educational, not legal advice.</p>
+          <span class="promo-cta promo-cta--disabled">In the works</span>
+        </div>
+        <a class="promo-card" href="https://disclosure.desklark.com/">
+          <p class="promo-eyebrow">Free tool &middot; No signup, nothing collected</p>
+          <h3>Etsy AI-Disclosure Statement Generator</h3>
+          <p>From the same studio: if you also run (or help run) an Etsy shop, this generates the exact disclosure sentence Etsy's own policy requires for AI-assisted listings.</p>
+          <span class="promo-cta">Open the generator &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">Not legal advice. Not affiliated with, endorsed by, sponsored by, or reviewed by Apple, Google, or any state government. This is a starting point for attorney review, not a finished policy -- have counsel licensed in your operating states review anything you ship.</p>
+  </div>
+</footer>
+
+</body>
+</html>
