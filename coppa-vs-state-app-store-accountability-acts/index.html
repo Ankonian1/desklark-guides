@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COPPA vs. State App Store Accountability Acts: Why One Doesn't Cover the Other | DeskLark Studio</title>
+<meta name="description" content="COPPA and the new state app-store age-verification laws (Texas, Utah, Louisiana, California) are easy to treat as one compliance project. They aren't -- different trigger, different age range, different mechanism -- and the state laws can actually hand you a COPPA obligation you didn't have before.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/coppa-vs-state-app-store-accountability-acts/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="COPPA vs. State App Store Accountability Acts: Why One Doesn't Cover the Other">
+<meta property="og:description" content="Different trigger, different age range, different mechanism -- and the state laws can hand a developer a COPPA obligation they didn't have before.">
+<meta property="og:url" content="https://guides.desklark.com/coppa-vs-state-app-store-accountability-acts/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="COPPA vs. State App Store Accountability Acts: Why One Doesn't Cover the Other">
+<meta name="twitter:description" content="Different trigger, different age range, different mechanism -- and they interact more than you'd think.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "COPPA vs. State App Store Accountability Acts: Why Complying With One Doesn't Cover the Other",
+  "description": "COPPA (federal, FTC-enforced, under-13, audience/actual-knowledge triggered) and the state app-store age-verification laws (all users, app-store-level triggered) are two separate compliance systems that interact -- a state-mandated age signal can hand a developer COPPA 'actual knowledge' they didn't have before.",
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/coppa-vs-state-app-store-accountability-acts/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "COPPA vs. State App Store Accountability Acts: Why Complying With One Doesn't Cover the Other", "item": "https://guides.desklark.com/coppa-vs-state-app-store-accountability-acts/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to article</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free budgeting calculators and printables for everyday household money decisions.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; App age-verification law</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>COPPA vs. State App Store Accountability Acts: Why Complying With One Doesn't Cover the Other</h1>
+      <p class="article-meta">App age-verification law guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        It's a reasonable assumption: your app already has a COPPA-compliant privacy policy, or you've
+        already built the age-signal integration a state app-store law requires, so surely one covers the
+        other. It doesn't -- they're triggered differently, cover different ages, and run through different
+        regulators. Worse (or better, depending on how you look at it), they're not independent either: a
+        signal the state law forces the app store to hand you can create a federal COPPA obligation you
+        didn't have a moment before receiving it.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Not Legal Advice</p>
+        <p class="db-text">This is general information, not legal advice, and not affiliated with, endorsed by, or reviewed by the FTC, Apple, Google, or any state government. Confirm current rules directly against the FTC's own COPPA guidance and each state's bill text before making a compliance decision.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>Two different systems, easy to conflate</h2>
+      <p>
+        COPPA (the Children's Online Privacy Protection Act) is a federal law, enforced by the FTC since
+        1998, built around a specific rule: 16 CFR Part 312. The state laws covered in our companion article
+        -- Texas's SB 2420, Utah's and Louisiana's App Store Accountability Acts, and California's Digital
+        Age Assurance Act (AB 1043) -- are recent, separate statutes, most passed in 2025, running through
+        state attorneys general or private lawsuits rather than the FTC. They frequently get treated as one
+        "kids' privacy compliance" bucket. They aren't the same bucket.
+      </p>
+
+      <h2>What COPPA actually requires, and who it applies to</h2>
+      <p>
+        The FTC's own COPPA Rule guidance states it applies to "operators of websites or online services
+        directed to children under 13 years of age, and on operators of other websites or online services
+        that have actual knowledge that they are collecting personal information online from a child under
+        13 years of age." Two separate triggers, in other words: your app is <em>designed for</em> children
+        under 13 (audience-based), or you happen to have <em>actual knowledge</em> a specific user is under
+        13, regardless of your intended audience. Either trigger requires, among other things, a compliant
+        privacy policy, direct notice to parents, and verifiable parental consent before collecting a
+        child's personal information.
+      </p>
+      <p>
+        Critically, COPPA does not require every app to verify every user's age at signup. A general-audience
+        app with no reason to think any user is under 13 has historically had no COPPA age-verification
+        obligation at all -- "actual knowledge" has to come from somewhere (a user's own stated birth year,
+        a parent's complaint, or similar), not from a mandatory universal check.
+      </p>
+
+      <h2>What the state laws actually require -- and why that's a different shape entirely</h2>
+      <p>
+        The state app-store laws don't ask whether your app is directed to children. They apply to app
+        marketplaces (and, downstream, developers) covering <strong>all</strong> users in that state, and
+        require the app store to verify age at the account level for everyone, then share an age
+        category and parental-consent status with developers who request it. See our companion article,
+        <a href="../app-age-verification-laws-by-state/">App Age-Verification Laws: Which States Apply to
+        Your App and When</a>, for the exact compliance dates and enforcement mechanisms state by state --
+        the short version is Texas is enforceable now, and Utah, Louisiana, and California all take effect
+        at various points in 2027. None of the four conditions this on whether your app is child-directed.
+      </p>
+
+      <div class="callout">
+        <p class="callout-label">A general-audience app can be squarely covered by a state law and have zero COPPA exposure -- until it doesn't</p>
+        <p>
+          A budgeting app, a puzzle game, or a productivity tool with no child-directed content and no
+          reason to think any user is under 13 can still be required to integrate a state's age-signal API,
+          simply because it's distributed in that state through a covered app store. On its own, that's a
+          state-law compliance question, not a COPPA one -- until the app store hands back a signal saying a
+          specific account belongs to a 9-year-old. At that moment, the compliance picture changes.
+        </p>
+      </div>
+
+      <h2>The real interaction: a state-mandated signal can create the "actual knowledge" COPPA runs on</h2>
+      <p>
+        This is the part most "pick one law and comply with it" mental models miss. Attorney Nerissa Coyle
+        McGinn, writing for Loeb &amp; Loeb in December 2025, put it directly: "If an app developer has
+        actual knowledge that a child is under the age of 13 because the app store has given the app
+        developer the child's age, the app developer will now have to comply with COPPA for that user" --
+        including, per the same analysis, obtaining verifiable parental consent and deleting personal
+        information already collected from that user. The same piece notes the practical shift this closes:
+        developers who previously avoided COPPA's actual-knowledge trigger simply by never asking a user's
+        age can no longer rely on that gap once a state-mandated signal supplies the age for them.
+      </p>
+      <p>
+        In plain terms: passing your state-law age-verification integration doesn't just satisfy the state
+        law. It can simultaneously hand you information that switches on a separate, federal COPPA
+        obligation for that specific user -- one your app may never have had to think about before the
+        signal arrived, if your audience genuinely wasn't child-directed.
+      </p>
+
+      <h2>The FTC's own February 2026 policy statement narrows one specific risk -- read the conditions carefully</h2>
+      <p>
+        On February 25, 2026, the FTC issued a COPPA enforcement policy statement stating the Commission
+        will not bring an enforcement action against general-audience or mixed-audience operators that
+        collect, use, or disclose personal information <strong>solely to determine a user's age</strong>
+        via age-verification technology -- a direct response to exactly the age-signal-integration scenario
+        above. That relief comes with conditions, consistently described across multiple law-firm summaries
+        of the statement: the age-verification data can't be used or disclosed for any other purpose, it
+        can't be retained longer than necessary before being deleted, and any third party it's shared with
+        must be reasonably vetted for confidentiality and security. The policy explicitly does not apply to
+        operators whose primary audience is children -- it's relief for the general-audience case described
+        above, not a blanket exemption. The statement also arrives ahead of an April 22, 2026 compliance
+        deadline for a separate set of COPPA Rule amendments the FTC finalized in January 2025 -- a second,
+        independent date worth tracking regardless of anything in this article.
+      </p>
+
+      <h2>What this means for your compliance checklist</h2>
+      <ul>
+        <li><strong>Treat these as two checklists, not one.</strong> Finishing your state-law age-signal
+          integration is a real, separate item from a COPPA compliance review -- don't let one get marked
+          "done" because the other is.</li>
+        <li><strong>Decide in advance what happens when a signal identifies a user under 13.</strong> Per
+          the interaction above, that's the moment a COPPA obligation can attach -- have a plan (consent
+          flow or deletion) ready before it happens in production, not improvised the first time it does.</li>
+        <li><strong>If you use age-verification data, use it only to determine age.</strong> That's the
+          condition the FTC's February 2026 policy statement actually asks for in exchange for its
+          enforcement forbearance -- any secondary use forfeits that protection.</li>
+        <li><strong>Track the April 22, 2026 COPPA Rule amendment deadline separately</strong> from any
+          state app-store law's own compliance date -- they're unrelated timelines that happen to be
+          converging on the same general subject.</li>
+      </ul>
+
+      <p class="quote-source">
+        Sources checked directly for this article: the FTC's own COPPA Rule guidance
+        (ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions and
+        ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa); Nerissa Coyle
+        McGinn (Loeb &amp; Loeb LLP), "App Store Age Verification Laws Trigger New Federal and State
+        Children's Privacy Requirements," December 2025; and the FTC's February 25, 2026 press release,
+        "FTC Issues COPPA Policy Statement to Incentivize the Use of Age Verification Technologies to
+        Protect Children Online," cross-checked against independent summaries from Hunton Andrews Kurth,
+        Mayer Brown, DLA Piper (Privacy Matters), and Ogletree Deakins, all describing the same conditions
+        and April 22, 2026 amendment deadline.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../app-age-verification-laws-by-state/">App age-verification laws: which states apply to your app and when</a> -- the full state-by-state dates and citations this article builds on.</li>
+        <li><a href="../apple-declared-age-range-vs-google-play-age-signals/">Apple Declared Age Range API vs. Google Play Age Signals</a> -- the actual API mechanics behind the "age signal" this article discusses.</li>
+        <li><a href="../age-assurance-privacy-policy-template-for-app-developers/">What your privacy policy needs to say about age-assurance signals</a> -- policy language for the age-verification-data-use conditions this article covers.</li>
+        <li><a href="../does-my-app-need-age-verification-law-compliance/">Does your app need age verification? A state-by-state decision guide</a></li>
+        <li><a href="https://disclosure.desklark.com/">Free Etsy AI-Disclosure Statement Generator</a> &mdash; from the same studio, for sellers rather than app developers.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Want the full state-by-state kit, not just this one interaction?</h2>
+      <p class="promo-intro">This article covers how the two systems interact. The compliance kit below goes further -- concrete integration steps and copy-paste privacy-policy language -- but isn't published yet.</p>
+      <div class="promo-cards">
+        <!-- BUILD NOTE: ASAA Developer Compliance Kit -- built and reviewer-approved
+             (ventures/asaa-compliance-kit/build/kit/), publish is owner-gated on
+             Gumroad and not live as of this writing (tasks.md: "cleared for the
+             owner's Gumroad-publish decision"). Replace GUMROAD_URL once live,
+             same convention as this cluster's other promo cards. -->
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">Gumroad &middot; $59 instant download &middot; Coming soon</p>
+          <h3>The ASAA Developer Compliance Kit</h3>
+          <p>A state-by-state applicability matrix with primary-source citations, concrete Apple Declared Age Range / Significant Change API integration steps, concrete Google Play Age Signals integration steps, and copy-paste privacy-policy and consent-flow templates. Educational, not legal advice.</p>
+          <span class="promo-cta promo-cta--disabled">In the works</span>
+        </div>
+        <a class="promo-card" href="https://disclosure.desklark.com/">
+          <p class="promo-eyebrow">Free tool &middot; No signup, nothing collected</p>
+          <h3>Etsy AI-Disclosure Statement Generator</h3>
+          <p>From the same studio: if you also run (or help run) an Etsy shop, this generates the exact disclosure sentence Etsy's own policy requires for AI-assisted listings.</p>
+          <span class="promo-cta">Open the generator &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">Not legal advice. Not affiliated with, endorsed by, sponsored by, or reviewed by the FTC, Apple, Google, or any state government. Confirm current rules directly against the FTC's own COPPA guidance and each state's current bill text before relying on anything here.</p>
+  </div>
+</footer>
+
+</body>
+</html>
