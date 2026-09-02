@@ -123,23 +123,30 @@
         compliant with your state specifically.
       </p>
 
-      <h2>States we could confirm against a primary source</h2>
+      <h2>State 1099-NEC/MISC thresholds we could confirm against a primary source</h2>
       <p>
-        These three held up against a direct look at the issuing state tax agency's own page or document.
-        Wisconsin and Mississippi carry an asterisk: the quoted text below is the department's own wording,
-        found via a search-engine-indexed copy of the page, but a direct fetch of the live page didn't
-        succeed this pass (a connectivity issue on our end, not a sign the content is wrong) -- worth a
-        quick confirmation on your own before relying on either one for a real filing decision.
+        These seven -- six states plus the District of Columbia -- held up against a direct look at the
+        issuing tax agency's own page or document, specifically for the 1099-NEC/1099-MISC filing rule
+        this article is about (not the 1099-K rule covered separately below). Five carry an asterisk:
+        Wisconsin, Mississippi, California, Arkansas, and New Jersey. The asterisk means the quoted text is the
+        department's own wording, retrieved from its own current page or PDF via a text-extraction reader
+        tool because a direct fetch either failed outright (403, DNS timeout) or returned an unparseable
+        PDF file on our end -- not a sign the content itself is wrong, but worth a quick confirmation on
+        your own before relying on any of the four for a real filing decision.
       </p>
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th scope="col">State</th><th scope="col">Threshold</th><th scope="col">Confidence</th></tr>
+            <tr><th scope="col">State</th><th scope="col">1099-NEC/MISC threshold</th><th scope="col">Confidence</th></tr>
           </thead>
           <tbody>
             <tr><th scope="row">Missouri</th><td>$1,200</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified</span></td></tr>
             <tr><th scope="row">Wisconsin</th><td>$600</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
             <tr><th scope="row">Mississippi</th><td>$600</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
+            <tr><th scope="row">California</th><td>$2,000 (tax year 2026)</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
+            <tr><th scope="row">Arkansas</th><td>$2,500 (only if no Arkansas withholding)</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
+            <tr><th scope="row">District of Columbia</th><td>$600</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified</span></td></tr>
+            <tr><th scope="row">New Jersey</th><td>$1,000</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -149,59 +156,98 @@
         Wisconsin*: Wisconsin Department of Revenue, <a href="https://www.revenue.wi.gov/Pages/TaxPro/2026/TaxPractitonerFall2025QandA.aspx">revenue.wi.gov Tax Practitioner Q&amp;A</a>
         &mdash; department's own wording, via search-indexed text: "The threshold under Wisconsin law remains $600 for certain Form 1099s required to be filed with the department." &middot;
         Mississippi*: Mississippi Department of Revenue, <a href="https://www.dor.ms.gov/sites/default/files/individual/1099%20guidance%20for%20recipients.pdf">dor.ms.gov 1099 guidance for recipients (PDF)</a>
-        &mdash; department's own wording, via search-indexed text: "1099-K is required to be filed to report income of $600 or more, regardless if there is any Mississippi withholding."
+        &mdash; department's own wording, via reader-extracted text: "1099-NEC is required to be filed to report income of $600 or more, regardless if there is any Mississippi withholding" (Mississippi states an identical, independent $600 figure for 1099-MISC, 1099-K, and a modified 1099-INT rule too -- it's the one state in this table where the same number happens to apply uniformly across form types). &middot;
+        California*: California Franchise Tax Board, <a href="https://www.ftb.ca.gov/file/personal/income-types/information-returns-1099.html">ftb.ca.gov 1099 guidance for recipients</a>
+        &mdash; department's own wording, via reader-extracted text (ftb.ca.gov blocked direct fetch attempts): "You may receive a 1099-NEC if you received at least $600 for 2025 tax year (or $2,000 for 2026 tax year)," with an identical sentence for 1099-MISC. The mechanism is California Revenue &amp; Taxation Code &sect;18631, which requires a state copy of any federal information return required under IRC &sect;6041/6041A (the sections OBBBA amended) -- not the SB 711 conformity-date law, which set general conformity to January 1, 2025 and doesn't mention 1099 thresholds or OBBBA at all. &middot;
+        Arkansas*: Arkansas Department of Finance and Administration, <a href="https://www.dfa.arkansas.gov/wp-content/uploads/Withholding-Tax-Instructions-for-Employers.pdf">"Withholding Tax Instructions for Employers" (PDF)</a>
+        &mdash; department's own wording, via reader-extracted text: "The dollar threshold for filing provided there is no Arkansas income tax withheld is $100.00 for 1099DIV &amp; 1099INT, and $2,500.00 for all other 1099 types. If Arkansas taxes are withheld, filing is required regardless of the threshold amount." &middot;
+        District of Columbia: DC Office of Tax and Revenue, <a href="https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2025%20MyTax%201099_W2G%20instructions%20v1.0_Final.pdf">"2025 Specifications for the Electronic Filing of Forms 1099/W-2G" (PDF)</a>
+        &mdash; direct quote, fetched successfully: "Filing is required if income of $600 or more is reported for both District of Columbia residents and nonresidents." This is a general 1099 filing threshold, not a 1099-K-only rule -- the same document lists 1099-NEC and 1099-MISC by name among the accepted form types. &middot;
+        New Jersey*: NJ Division of Taxation, <a href="https://www.nj.gov/treasury/taxation/pdf/other_forms/git-er/04njwt1099.pdf">"Form 1099 Information Reporting" (GIT-ER, PDF)</a>
+        &mdash; department's own wording, via reader-extracted text: filing is required "when the amount paid or credited is $1,000 or more," described as applying to all Form 1099 information returns, not scoped to any one form type. Of the seven in this table, this is the one we would most want to re-confirm against a second clean pull of the same PDF: the states in the 1099-K table below looked like general thresholds too until a closer read showed they were form-specific, so treat New Jersey as the likeliest of these seven to move if better source text turns up.
       </p>
 
-      <h2>Secondary-sourced only -- not primary-confirmed</h2>
+      <h2>State 1099-K thresholds -- a different form, not a NEC/MISC threshold</h2>
       <p>
-        These eight appear consistently across secondary aggregators (payroll-compliance sites, CPA-firm
-        explainers, filing-software guides), but we could not independently confirm any of them on the
-        issuing state's own page this pass -- either the primary source didn't load, or it loaded but
-        didn't contain the specific dollar figure being repeated elsewhere. Treat every number in this
-        section as a starting point for your own check, not a confirmed fact.
+        This is the mix-up the rest of this article warns about, showing up in state law itself: several
+        states set a low, specific dollar threshold for the <strong>1099-K</strong> -- the payment-processor
+        form covered above, not the NEC/MISC form this page is otherwise about -- and secondary sources
+        (and an earlier version of this page) sometimes repeat that 1099-K figure as if it were the state's
+        NEC/MISC threshold too. It usually isn't. The five states below have a confirmed state-level 1099-K
+        dollar threshold; what that means for each state's <em>separate</em> 1099-NEC/MISC filing rule is
+        noted individually, because the two states we could check directly (Maryland, Illinois) turned out
+        to have <strong>no dollar threshold at all</strong> for NEC/MISC -- filing there is triggered purely
+        by the presence of state tax withholding, at any amount, not by a payment total.
       </p>
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th scope="col">State</th><th scope="col">Reported threshold</th><th scope="col">Confidence</th></tr>
+            <tr><th scope="col">State</th><th scope="col">1099-K threshold</th><th scope="col">Confidence</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Arkansas</th><td>$2,500</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
             <tr><th scope="row">Maryland</th><td>$600</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">Massachusetts</th><td>$600</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">Vermont</th><td>$600</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">Virginia</th><td>$600</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">District of Columbia</th><td>$600</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">Illinois</th><td>$1,000 (+4 transactions)</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
-            <tr><th scope="row">New Jersey</th><td>$1,000</td><td><span class="confidence-badge confidence-badge--secondary">Secondary only</span></td></tr>
+            <tr><th scope="row">Illinois</th><td>$1,000 and 4+ separate transactions</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
+            <tr><th scope="row">Massachusetts</th><td>$600</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
+            <tr><th scope="row">Vermont</th><td>$600 (since tax year 2017)</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified</span></td></tr>
+            <tr><th scope="row">Virginia</th><td>$600</td><td><span class="confidence-badge confidence-badge--verified">Primary-verified*</span></td></tr>
           </tbody>
         </table>
       </div>
       <p>
-        Arkansas is worth a specific note: several secondary sources describe the $2,500 figure as applying
-        only when there's no Arkansas state withholding on the payment, a nuance that adds one more reason
-        to check the state's own current guidance rather than treat the flat number as the whole rule. We
-        fetched the Arkansas Department of Finance and Administration's own 1099 page directly, but the
-        text we could extract from it covered filing procedure and mailing instructions only -- the dollar
-        figure itself wasn't present in what loaded, which is why this stays in the secondary-only tier
-        rather than the confirmed one above.
+        <strong>Maryland:</strong> the $600 figure above is what secondary compliance sources report as
+        Maryland's 1099-K threshold; we could not locate a clean primary Maryland statutory quote for that
+        exact number this pass, so it stays secondary-only. What <em>is</em> primary-confirmed, directly
+        from the Comptroller's own instructions PDF: <strong>"Maryland only requires a 1099-MISC and
+        1099-NEC from the payer (or employer) when there is Maryland withholding greater than zero,
+        regardless of the payment amount."</strong> In other words, Maryland has no NEC/MISC dollar
+        threshold to report -- the $600 number, whatever its exact source, does not apply to the form this
+        article is otherwise about. (Maryland Comptroller, <a href="https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/instructions/2025/reporting-1099-instructions.pdf">"2025 Maryland Employer Reporting of 1099s Instructions and Specifications" (PDF)</a>, department's own wording via reader-extracted text.)
       </p>
-
-      <h2>California: a number we could not verify, and you shouldn't rely on either</h2>
-      <div class="disclaimer-box">
-        <p class="db-label">Could Not Verify</p>
-        <p class="db-text">Multiple secondary sources report California's threshold as $2,000 -- but they disagree with each other about <em>why</em>. One line of reasoning says California automatically conforms to the new federal figure through general IRC conformity; another says a 2025 California conformity-date law (SB 711) actually set California's federal conformity date <em>before</em> the OBBBA was signed, which would mean that particular mechanism doesn't reach the new figure at all, and instead points to a separate, direct state statute as the real reason $2,000 applies. Both arrive at the same number through different, partly contradictory legal reasoning -- and ftb.ca.gov itself blocked every direct access attempt this pass, so we have no FTB quote to settle it either way. We are not publishing $2,000 as a confirmed California figure. If California is your state, check ftb.ca.gov's own current guidance, or ask a CA-licensed tax professional, before relying on any number for a real filing decision.</p>
-      </div>
+      <p>
+        <strong>Illinois:</strong> the Illinois Department of Revenue's own Pub-110 states the $1,000 and
+        4-or-more-transaction figure specifically as the 1099-K electronic-filing trigger, and the same
+        document goes on to state directly that Illinois imposes <strong>no separate dollar threshold for
+        1099-NEC or 1099-MISC</strong>. That's a primary, department-stated fact, not an inference. (Illinois
+        Dept. of Revenue, <a href="https://tax.illinois.gov/content/dam/soi/en/web/tax/research/publications/pubs/documents/pub-110.pdf">Pub-110, "Forms Filing and Storage Requirements" (PDF)</a>, department's own wording via reader-extracted text.)
+      </p>
+      <p>
+        <strong>Massachusetts:</strong> Mass.gov's own 1099-filing-requirements page states $600 only for
+        the 1099-K. It separately says an employer must file if it issued a 1099-MISC or 1099-NEC, but
+        states no dollar amount for that obligation -- only a due date. We did not find a Massachusetts
+        primary source stating a dollar threshold for NEC/MISC this pass, so we're not asserting one; do
+        not assume it mirrors the old $600 federal figure. (Mass.gov, <a href="https://www.mass.gov/info-details/massachusetts-form-1099-filing-requirements">"Massachusetts Form 1099 Filing Requirements"</a>, department's own wording via reader-extracted text.)
+      </p>
+      <p>
+        <strong>Vermont:</strong> the Vermont Department of Taxes' own page states the $600 figure
+        specifically for third-party settlement organizations -- the 1099-K rule, in effect since tax year
+        2017. We did not find a Vermont primary source giving a dollar threshold for 1099-NEC/MISC. Multiple
+        independent secondary sources describe Vermont's NEC/MISC filing as triggered by withholding rather
+        than a dollar amount, consistent with Maryland and Illinois's confirmed pattern, but for Vermont
+        that specific claim is secondary-only, not something we verified directly on a Vermont primary page.
+        (Vermont Dept. of Taxes, <a href="https://tax.vermont.gov/news/1099-k-information-reporting">"New Law Lowers Reporting Threshold for 1099-K Information Reporting"</a>, direct quote, fetched successfully.)
+      </p>
+      <p>
+        <strong>Virginia:</strong> Virginia Tax Bulletin 20-10 states the $600 figure specifically for
+        1099-K filing by third-party settlement organizations; the bulletin's title and content are
+        exclusively about the 1099-K. We did not find a Virginia primary source giving a dollar threshold
+        for 1099-NEC/MISC. As with Vermont, several independent secondary sources describe Virginia's
+        NEC/MISC filing as withholding-triggered rather than dollar-triggered, but that specific claim is
+        secondary-only here, not primary-confirmed the way Maryland's and Illinois's no-threshold rules are.
+        (Virginia Tax Bulletin 20-10, <a href="https://www.tax.virginia.gov/sites/default/files/inline-files/tb-20-10-virginia-1099-k-filing-requirements.pdf">"Virginia 1099-K Filing Requirements" (PDF)</a>, department's own wording via reader-extracted text.)
+      </p>
 
       <h2>What this list doesn't cover</h2>
       <p>
-        This article covers the federal NEC/MISC and 1099-K rules plus eleven states -- three confirmed,
-        eight secondary-only, and one we couldn't verify at all. That leaves most of the country
-        unaddressed here. Some states have no separate state income tax and may have no equivalent
-        threshold to report in the first place; others may have rules we simply haven't researched yet.
-        Nothing on this page should be read as a claim that it's a complete 50-state table, and the
-        confidence labels above exist specifically so a partial, honestly-labeled list is more useful than
-        a complete-looking one that overstates how well each number checks out.
+        This article covers the federal NEC/MISC and 1099-K rules plus 11 states and the District of
+        Columbia: 7 (6 states plus DC) with a primary-verified state 1099-NEC/MISC threshold, and 5 more
+        states with a confirmed state 1099-K threshold that is a separate form from the one this article is
+        mainly about -- and, for two of those five (Maryland, Illinois), primary-confirmed to carry no
+        NEC/MISC dollar threshold at all. That leaves most of the country unaddressed here. Some states have
+        no separate state income tax and may have no equivalent threshold to report in the first place;
+        others may have rules we simply haven't researched yet. Nothing on this page should be read as a
+        claim that it's a complete 50-state table, and the confidence labels above exist specifically so a
+        partial, honestly-labeled list is more useful than a complete-looking one that overstates how well
+        each number checks out.
       </p>
 
       <h2>How to verify any of these numbers yourself</h2>
@@ -221,14 +267,16 @@
 
       <p class="quote-source">
         Sources checked directly for this article: IRS.gov's Instructions for Forms 1099-MISC and 1099-NEC
-        (i1099mec); two IRS.gov newsroom pages on the One Big Beautiful Bill Act's 1099-K provisions;
-        Missouri Department of Revenue's "Reporting Miscellaneous Income" page (fetched directly); Wisconsin
-        Department of Revenue's 2026 Tax Practitioner Q&amp;A and Mississippi Department of Revenue's 1099
-        guidance PDF (both via search-indexed text, direct fetch unsuccessful this pass); and the Arkansas
-        Department of Finance and Administration's 1099 guidelines page (fetched directly, threshold figure
-        not present in the extracted text). The Maryland, Massachusetts, Vermont, Virginia, DC, Illinois,
-        New Jersey, and California figures are secondary-sourced only, not independently confirmed against
-        a primary source as of this writing.
+        (i1099mec); two IRS.gov newsroom pages on the One Big Beautiful Bill Act's 1099-K provisions; and,
+        for the state 1099-NEC/MISC table, the Missouri Department of Revenue's "Reporting Miscellaneous
+        Income" page and the DC Office of Tax and Revenue's 2025 e-filing specifications (both fetched
+        directly), plus the Wisconsin, Mississippi, California, Arkansas, and New Jersey department pages
+        and PDFs cited above (each via reader-extracted text, direct fetch unsuccessful this pass).
+        For the separate state 1099-K table, the Maryland Comptroller's
+        2025 reporting instructions PDF, Illinois Department of Revenue Pub-110, the Massachusetts and
+        Virginia department pages/bulletins (via reader-extracted text), and the Vermont Department of
+        Taxes' page (fetched directly) -- all cited individually above, alongside the specific claims each
+        one does and does not support for 1099-NEC/MISC.
       </p>
 
     </div>
