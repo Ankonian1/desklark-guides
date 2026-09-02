@@ -483,6 +483,22 @@ article header.article-hero { margin-bottom: 28px; }
   border-radius: 6px;
 }
 
+/* C89: opt-in badge reposition for cards whose hero art carries its own title
+   across the TOP of the image (the two multi-workbook bundles). The default
+   top-left badge sat directly on that title. Scoped via
+   BADGE_BOTTOM_RIGHT_SLUGS in catalog/build_catalog.py so the other 32 cards
+   are byte-identical to before -- their heroes are left-aligned with a clear
+   top gutter, and their lower-left carries the big stat number, which is why
+   this is bottom-RIGHT and why it is not applied globally. */
+.catalog-live-badge.catalog-badge--br,
+.catalog-soon-badge.catalog-badge--br {
+  top: auto;
+  left: auto;
+  bottom: 10px;
+  right: 10px;
+}
+
+
 .catalog-card-body { padding: 14px 16px 16px; }
 
 .catalog-kind {
@@ -540,4 +556,42 @@ article header.article-hero { margin-bottom: 28px; }
 
 @media (min-width: 900px) {
   .catalog-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* ---------- code blocks (AutoSync install page) ---------- */
+/* Collapsible <details>/<summary> wrapper around a <pre><code> source
+   listing, so the install page can show 5 full Apps Script files without
+   forcing a reader to scroll past all of them to reach the next step.
+   Native <details> element, no JS -- consistent with this site's "no JS
+   frameworks" convention. */
+.code-block {
+  margin: 16px 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: #fff;
+  overflow: hidden;
+}
+.code-block summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--cream-dim);
+}
+.code-block summary code { font-weight: 700; }
+.code-block pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  max-height: 480px;
+  overflow-y: auto;
+  background: var(--ink);
+  border-top: 1px solid var(--rule);
+}
+.code-block pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--cream);
+  white-space: pre;
 }

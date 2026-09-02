@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install AutoSync in Your Own Google Sheet | DeskLark Studio</title>
+<meta name="description" content="Step-by-step: copy AutoSync's Apps Script source into your own Google Sheet (Extensions > Apps Script), no account, no payment, no signup. Exact files to paste, what to expect on first run, and the honest limitations.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/autosync/install/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Install AutoSync in Your Own Google Sheet">
+<meta property="og:description" content="Copy AutoSync's Apps Script source into your own Google Sheet. No account with us, no payment, no signup -- exact steps and the code to paste.">
+<meta property="og:url" content="https://guides.desklark.com/autosync/install/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Install AutoSync in Your Own Google Sheet">
+<meta name="twitter:description" content="Copy AutoSync's Apps Script source into your own Google Sheet. No account with us, no payment, no signup.">
+
+<link rel="stylesheet" href="../../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Install AutoSync in Your Own Google Sheet",
+  "description": "Step-by-step instructions and the exact Apps Script source to paste into Extensions > Apps Script inside your own Google Sheet -- no account with us, no payment, no signup.",
+  "datePublished": "2026-09-01",
+  "dateModified": "2026-09-01",
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/autosync/install/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "AutoSync", "item": "https://guides.desklark.com/autosync/" },
+    { "@type": "ListItem", "position": 3, "name": "Install", "item": "https://guides.desklark.com/autosync/install/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free budgeting calculators and printables for everyday household money decisions.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../../">Guides</a> &rsaquo; <a href="../">AutoSync</a> &rsaquo; Install</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>Install AutoSync in Your Own Google Sheet</h1>
+      <p class="article-meta">Install guide &middot; DeskLark Studio</p>
+      <p class="lede">
+        AutoSync isn't something we host or sell access to -- it's a Google Apps Script you copy into
+        your own Google Sheet, where it runs entirely inside your own Google account. No signup with us,
+        no account to create, no payment, no OAuth grant to any third party. This page is the exact,
+        ordered steps and the exact code, so you can try it today.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">You're an early tester, not a customer</p>
+        <p class="db-text">The parsing and staging logic below is tested 14/14 against automated fixtures
+        (see the <a href="../">AutoSync product page</a> for what that means). The thin Apps Script
+        wrapper that actually shows you a menu and writes to a real spreadsheet has been reviewed but has
+        never been run against a live Google Sheet by us -- you may be among the first people to run it
+        for real. "What to expect on first run" below is our best description of what the code is written
+        to do, not a report of us having watched it happen.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>Before you start</h2>
+      <ul>
+        <li>A Google account with access to Google Sheets. Importing works in any Sheet -- AutoSync
+        creates its own new staging tab and doesn't require any particular existing layout. Applying
+        staged numbers into a dashboard (the second menu item) only works on a spreadsheet that already
+        has tabs named exactly <code>Master Dashboard</code> and <code>Monthly Bookkeeping Ledger</code>
+        -- in practice, our own Etsy Seller Financial OS workbook. On any other Sheet, that step fails
+        with a clear alert rather than guessing a different tab.</li>
+        <li>About 10 minutes and careful copy-pasting. There's no install package or add-on to click
+        "install" on; you're pasting source code into 5 files.</li>
+        <li>Your Etsy Orders CSV export, or a plan to download one in Step 5 below.</li>
+        <li>Comfort with the idea that this is early-stage software (see the box above) -- not a
+        finished, support-backed product.</li>
+      </ul>
+
+      <h2>Step 1 &mdash; Get the code</h2>
+      <p>
+        Two equivalent ways to get the same 5 files -- pick whichever is easier for you:
+      </p>
+      <ul>
+        <li><strong>Download the bundle:</strong> <a href="../autosync-appsscript-bundle.txt" download>autosync-appsscript-bundle.txt</a>
+        &mdash; one plain-text file containing all 5 files back-to-back with clear <code>===== FILE: Name.gs =====</code>
+        markers, openable in any text editor. A single text file rather than a .zip because Google's Apps
+        Script editor has no "import archive" feature either way -- you'll paste each file's contents in
+        individually in Step 3 regardless, so a .zip would need an extra unzip step for no benefit over
+        plain text.</li>
+        <li><strong>Or copy directly from this page:</strong> each file is shown in its own expandable box
+        in Step 3 below -- click to expand, select all the code, and copy.</li>
+      </ul>
+
+      <h2>Step 2 &mdash; Open the Apps Script editor</h2>
+      <ol>
+        <li>Open the Google Sheet you want AutoSync to run in.</li>
+        <li>From the menu bar, click <strong>Extensions &rsaquo; Apps Script</strong>. This opens a
+        separate Apps Script editor tab bound to that spreadsheet.</li>
+        <li>Apps Script opens with one file already there, named <code>Code.gs</code>, containing a
+        placeholder <code>function myFunction() {}</code>. Leave it open -- you'll replace its contents
+        last, in Step 3.</li>
+      </ol>
+
+      <h2>Step 3 &mdash; Create the 5 files and paste in the code</h2>
+      <p>
+        In the Apps Script editor's left sidebar, click the <strong>+</strong> next to "Files" &rsaquo;
+        <strong>Script</strong> to add a new file. Create these 4 new files first, naming each exactly as
+        shown (type just the name -- Apps Script adds the <code>.gs</code> itself), then paste in the
+        matching box's full contents, replacing anything already in the file:
+      </p>
+      <ol>
+        <li>New file named <code>Errors</code> &rsaquo; paste the <code>Errors.gs</code> box below.</li>
+        <li>New file named <code>Parser</code> &rsaquo; paste the <code>Parser.gs</code> box below.</li>
+        <li>New file named <code>Aggregate</code> &rsaquo; paste the <code>Aggregate.gs</code> box
+        below.</li>
+        <li>New file named <code>ApplyMapping</code> &rsaquo; paste the <code>ApplyMapping.gs</code> box
+        below.</li>
+        <li>Finally, click the existing <code>Code</code> file, delete the placeholder
+        <code>function myFunction() {}</code>, and paste in the <code>Code.gs</code> box below.</li>
+        <li>Save the project (the disk icon, or Ctrl/Cmd+S).</li>
+      </ol>
+      <p>
+        The 5 boxes below are the exact file contents shipped in this build -- not retyped, generated
+        directly from the same source files the automated test suite runs against.
+      </p>
+
+      <details class="code-block">
+        <summary>Show <code>Errors.gs</code> (99 lines) &mdash; click to expand and copy</summary>
+        <pre id="code-errors"><code>// errors.js -- shared error types for the Etsy CSV importer.
+// Pure JS, zero dependencies. Safe to paste verbatim into an Apps Script
+// project (Apps Script's V8 runtime supports `class extends Error`).
+//
+// Design principle (see README.md "Fail-loud semantics"): every error thrown
+// by src/parser.js or src/aggregate.js is one of these two types, always
+// carries a human-readable `message` that names the row/column/value at
+// fault, and is never swallowed -- the Apps Script wrapper's job is only to
+// surface `.message` (and `.rowErrors` when present) to the seller via
+// SpreadsheetApp.getUi().alert(), never to catch-and-continue.
+
+/**
+ * Thrown when the CSV's HEADER doesn't satisfy the contract: a required
+ * logical field has no matching column present anywhere in the header row.
+ * This must never be thrown for a merely reordered or additional column --
+ * only for a genuinely missing required field.
+ */
+class CsvContractError extends Error {
+  constructor(message, details) {
+    super(message);
+    this.name = 'CsvContractError';
+    this.details = details || {};
+  }
+}
+
+/**
+ * Thrown when one or more DATA ROWS fail to parse/coerce cleanly (bad
+ * currency, ambiguous date, unrecognized status, wrong column count, etc).
+ * `rowErrors` is an array of { row, field, rawValue, message } so the caller
+ * can show every problem at once instead of stopping at the first row.
+ */
+class CsvParseError extends Error {
+  constructor(message, rowErrors) {
+    super(message);
+    this.name = 'CsvParseError';
+    this.rowErrors = rowErrors || [];
+  }
+}
+
+/**
+ * Thrown by applyMapping.js's buildApplyPlan()/parseStagingRows() when
+ * applying an already-staged import to the Master Dashboard / Monthly
+ * Bookkeeping Ledger tabs must be refused -- e.g. the staging sheet has no
+ * readable TOTAL row, or the staged data spans more than one calendar year
+ * (see applyMapping.js for why that specific case is refused rather than
+ * guessed). Same fail-loud contract as the two error types above: always a
+ * human-readable `message`, never caught-and-continued by the caller except
+ * to display it and abort with nothing written.
+ */
+class ApplyMappingError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApplyMappingError';
+  }
+}
+
+/**
+ * _CsvContractError(...)/_CsvParseError(...) -- the single source for
+ * constructing CsvContractError/CsvParseError instances. Defined ONCE here,
+ * not duplicated in Parser.gs and Aggregate.gs (both used to declare their
+ * own byte-identical copies of `function _CsvContractError(...)`, and
+ * Parser.gs also declared `function _CsvParseError(...)`).
+ *
+ * Why that duplication was a real (if latent) risk: Apps Script merges every
+ * .gs file in a project into ONE shared global scope. Two files each
+ * declaring `function _CsvContractError(...)` at top level is legal JS --
+ * function/function redeclaration of the same name in the same scope does
+ * not throw, unlike the var/class collision described below -- but it means
+ * whichever file Apps Script happens to concatenate LAST silently wins, and
+ * Apps Script does not guarantee file load order by filename. That was
+ * harmless only because both copies had byte-identical bodies; editing just
+ * one of them would have made behavior depend on undocumented load order.
+ * Parser.gs and Aggregate.gs now call `_CsvContractError(...)` /
+ * `_CsvParseError(...)` directly and resolve them via the normal JS scope
+ * chain to THESE declarations, instead of declaring their own.
+ *
+ * Because these factories live in the SAME file as the `class
+ * CsvContractError`/`class CsvParseError` declarations, they can reference
+ * those class names directly -- no `require('./errors.js')` indirection is
+ * needed here (that indirection exists in Parser.gs/Aggregate.gs precisely
+ * because, under Node, each file is its own module with no shared scope; see
+ * those files' header comments).
+ */
+function _CsvContractError(message, details) {
+  return new CsvContractError(message, details);
+}
+function _CsvParseError(message, rowErrors) {
+  return new CsvParseError(message, rowErrors);
+}
+
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  module.exports = {
+    CsvContractError,
+    CsvParseError,
+    ApplyMappingError,
+    _CsvContractError,
+    _CsvParseError,
+  };
+}
+</code></pre>
+      </details>
+      <details class="code-block">
+        <summary>Show <code>Parser.gs</code> (564 lines) &mdash; click to expand and copy</summary>
+        <pre id="code-parser"><code>// parser.js -- pure, Google-free CSV parsing for Etsy's "Orders" CSV export.
+//
+// Zero dependencies, zero Google/SpreadsheetApp calls. Every function here
+// takes plain strings/arrays in and returns plain objects/throws -- that is
+// what lets tests/run-tests.mjs exercise it under plain node with fixture
+// files, and it is what AppsScript/Parser.gs is (a verbatim copy of this
+// file, ready to paste into an Apps Script project's global scope).
+//
+// See CSV-CONTRACT.md for the header contract this file implements and,
+// importantly, for which parts of that contract are VERIFIED vs UNVERIFIED
+// against Etsy's own documentation. Where the contract is unverified, this
+// file is deliberately conservative: it fails loudly on anything it cannot
+// confidently interpret rather than guessing.
+//
+// Error factories: `_CsvContractError(...)`/`_CsvParseError(...)` are the
+// single source of truth, declared ONCE in errors.js (mirrored verbatim into
+// AppsScript/Errors.gs) -- see that file for the full rationale. This file
+// used to declare its own byte-identical copies of both factories (as did
+// aggregate.js for `_CsvContractError`), which was harmless ONLY because the
+// bodies were identical; the moment Apps Script's shared global scope
+// concatenated two files each declaring the same function name, behavior
+// depended on undocumented load order. This file now simply CALLS
+// `_CsvContractError(...)`/`_CsvParseError(...)` below and resolves them via
+// the normal JS scope chain to errors.js's declarations.
+//
+// Under Apps Script that resolution is automatic (Errors.gs is another file
+// in the same merged project). Under Node, where each file is its own
+// module with no shared scope, the `if` block below re-exports the same two
+// functions from './errors.js'. This is a `var` declaration -- but note it
+// sits inside a branch (`typeof module !== 'undefined'`) that NEVER executes
+// under Apps Script (Apps Script has no `module` global), so per the
+// hoisting rule that matters here: `var` declarations are hoisted at PARSE
+// time regardless of which branch executes, but a hoisted-but-never-ASSIGNED
+// `var` sharing a name with a `function` declaration in the same scope is
+// legal JS (unlike `var` colliding with a `class`, which throws a
+// SyntaxError at parse time -- see tests/verify-appsscript-loads.mjs, which
+// exists specifically to catch that class of mutation). Errors.gs's
+// `function _CsvContractError`/`function _CsvParseError` declarations are
+// therefore never overwritten by this file's hoisted-but-unassigned `var`s.
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  var _errors = require('./errors.js');
+  var _CsvContractError = _errors._CsvContractError;
+  var _CsvParseError = _errors._CsvParseError;
+}
+
+// ---------------------------------------------------------------------------
+// 1. Header contract
+// ---------------------------------------------------------------------------
+
+// Logical field -&gt; the exact column header string(s) that count as that
+// field. Matching is case-insensitive and trims whitespace, and is tolerant
+// of the column appearing in ANY position (order-independent) and of columns
+// this map doesn't know about being present anywhere (added/renamed-elsewhere
+// columns are simply ignored, never an error).
+//
+// NOTE ON PROVENANCE: this alias list is built from CSV-CONTRACT.md, which
+// is UNVERIFIED against Etsy's own official docs (help.etsy.com returned
+// HTTP 403 to automated fetch every time it was tried). It is the best
+// available synthesis of third-party sources. Treat every string below as
+// "our best guess of Etsy's real header," not a confirmed fact.
+const FIELD_ALIASES = {
+  orderId: ['Order ID'],
+  saleDate: ['Sale Date', 'Order Date'],
+  currency: ['Currency'],
+  orderTotal: ['Order Total'],
+  status: ['Status'],
+  // Optional / not required for a successful parse, but recognized and
+  // coerced when present.
+  orderValue: ['Order Value'],
+  fees: ['Card Processing Fees'],
+  orderNet: ['Order Net'],
+  shipping: ['Shipping'],
+  salesTax: ['Sales Tax'],
+  couponCode: ['Coupon Code'],
+  discountAmount: ['Discount Amount'],
+  buyer: ['Buyer', 'Full Name'],
+  sku: ['SKU'],
+  numberOfItems: ['Number of Items'],
+};
+
+// A parse is refused outright if any of these logical fields has zero
+// matching columns in the header row. This is intentionally a SMALL set --
+// every additional required field is one more way a real (slightly
+// different) Etsy export gets rejected instead of imported. See
+// CSV-CONTRACT.md "Required vs optional" for the reasoning.
+const REQUIRED_FIELDS = ['orderId', 'saleDate', 'currency', 'orderTotal', 'status'];
+
+function normalizeHeaderCell(cell) {
+  return String(cell == null ? '' : cell).trim().toLowerCase();
+}
+
+/**
+ * detectHeader(headerRow: string[]) -&gt; { columnMap, unknownColumns }
+ * columnMap: { logicalField: columnIndex }
+ * Throws CsvContractError if a required field's aliases are all absent.
+ * Order-independent, case/whitespace-insensitive. Never errors on unknown
+ * (extra) columns -- they're reported in `unknownColumns` for visibility
+ * only.
+ */
+function detectHeader(headerRow) {
+  if (!Array.isArray(headerRow) || headerRow.length === 0) {
+    throw _CsvContractError(
+      'The CSV has no header row at all (file is empty or blank). Cannot import.'
+    );
+  }
+  const normalized = headerRow.map(normalizeHeaderCell);
+  const columnMap = {};
+  const claimedIndexes = new Set();
+
+  for (const [field, aliases] of Object.entries(FIELD_ALIASES)) {
+    for (const alias of aliases) {
+      const idx = normalized.indexOf(alias.toLowerCase());
+      if (idx !== -1) {
+        columnMap[field] = idx;
+        claimedIndexes.add(idx);
+        break;
+      }
+    }
+  }
+
+  const missingRequired = REQUIRED_FIELDS.filter((f) =&gt; !(f in columnMap));
+  if (missingRequired.length &gt; 0) {
+    const missingDetail = missingRequired
+      .map((f) =&gt; `"${f}" (looked for column named: ${FIELD_ALIASES[f].map((a) =&gt; `"${a}"`).join(' or ')})`)
+      .join('; ');
+    throw _CsvContractError(
+      `This CSV is missing ${missingRequired.length} required column(s): ${missingDetail}. ` +
+        `Found header columns: [${headerRow.map((c) =&gt; `"${String(c).trim()}"`).join(', ')}]. ` +
+        `Refusing to import -- a partial or wrong-file import must never silently produce numbers.`,
+      { missingRequired, headerRow }
+    );
+  }
+
+  const unknownColumns = headerRow
+    .map((c, i) =&gt; ({ c, i }))
+    .filter(({ i }) =&gt; !claimedIndexes.has(i))
+    .map(({ c, i }) =&gt; ({ name: String(c).trim(), index: i }));
+
+  return { columnMap, unknownColumns };
+}
+
+// ---------------------------------------------------------------------------
+// 2. RFC-4180-ish CSV tokenizer (handles quoted fields with embedded commas,
+//    embedded newlines, and doubled "" escaped quotes). Etsy's real export
+//    quoting style is unconfirmed, so this implements the CSV standard
+//    rather than a naive String.split(',').
+// ---------------------------------------------------------------------------
+
+/**
+ * parseCsvText(text: string) -&gt; string[][]
+ * Returns an array of rows, each row an array of raw (untrimmed-of-nothing,
+ * but unquoted) string cells. Does not interpret types -- purely tokenizes.
+ */
+function parseCsvText(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let inQuotes = false;
+  // Normalize CRLF/CR to LF up front with a blind global replace, so the state
+  // machine below only ever deals with \n. KNOWN CONSEQUENCE: a CRLF embedded
+  // INSIDE a quoted field is also normalized, so such a field comes back with a
+  // bare \n rather than the verbatim \r\n it had on disk. That is accepted --
+  // Etsy's export does not put CRLFs inside quoted cells, and every downstream
+  // consumer here treats the cell as text. Do not "fix" this by reverting to a
+  // char-by-char normalizer without a fixture proving a real CRLF-in-quotes
+  // case; the blind replace is what the code actually does and this comment now
+  // says so (the previous comment claimed char-by-char handling that was never
+  // implemented).
+  const s = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  for (let i = 0; i &lt; s.length; i++) {
+    const ch = s[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (s[i + 1] === '"') {
+          field += '"';
+          i++;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        field += ch;
+      }
+    } else if (ch === '"' &amp;&amp; field.trim().length === 0) {
+      // A quote opens quote-mode only when everything accumulated in
+      // `field` so far is pure whitespace (usually nothing at all, but
+      // sometimes a single leading space) -- NOT merely field.length === 0.
+      // Real-world CSV writers commonly pad a quoted field with a space
+      // after the delimiter, e.g. `foo, "bar, baz",qux`; strict RFC 4180
+      // (a quoted field's opening " must be the FIRST character of the
+      // field) would treat that leading space as literal data, which
+      // breaks the quoting and silently mis-splits the embedded comma into
+      // an extra field -- a field-count corruption, not a cosmetic
+      // rendering issue. Trimming before the check absorbs that padding
+      // while still refusing to open quote-mode on a quote that follows
+      // REAL (non-whitespace) content already in the field (e.g. a bare
+      // inches mark in `12" TAPER`, or a nickname quote in `Chris "Bud"
+      // Lee`) -- those are literal data, not a quoting directive, and fall
+      // through to the plain-char branch below, which appends them to
+      // `field` unchanged. See fixtures/leading-whitespace-quoted.csv for
+      // the regression case this guards against.
+      inQuotes = true;
+    } else if (ch === ',') {
+      row.push(field);
+      field = '';
+    } else if (ch === '\n') {
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = '';
+    } else {
+      field += ch;
+    }
+  }
+  // Unterminated-quote guard. Reaching EOF while still inQuotes means a quote
+  // opened a field that never closed -- everything after it was swallowed into
+  // one giant cell. Without this check that failure is SILENT: the swallowed
+  // rows simply vanish, `errors` stays 0, and the caller reconciles against a
+  // truncated file. The trigger is real, not theoretical: `a,   ",b` (a
+  // whitespace-only field followed by a bare quote) opens quote-mode under the
+  // `field.trim().length === 0` rule above and never closes.
+  //
+  // Why the guard is here and not in the opening condition: tightening that
+  // condition to `field.length === 0 || field === ' '` was measured to break
+  // two-space and tab padding (`a,  "x,y",b` tokenizes to 4 fields instead of
+  // 3), reintroducing the column-shift corruption the trim() rule exists to
+  // prevent. Neither opening rule dominates, so we keep the permissive one and
+  // convert its failure mode from silent truncation into a loud refusal.
+  //
+  // RESIDUAL (known, not fixed): a stray quote later in the file can still
+  // "close" a runaway field, in which case EOF is reached with inQuotes false
+  // and this throw does not fire. The guard narrows the class; it does not
+  // eliminate it.
+  if (inQuotes) {
+    throw _CsvParseError(
+      'Unterminated quoted field: reached end of file while inside a quoted ' +
+        'value (row ' +
+        (rows.length + 1) +
+        '). The file is likely truncated or contains a stray double-quote ' +
+        'character. Re-download the CSV export and try again.',
+      [
+        {
+          row: rows.length + 1,
+          field: 'n/a',
+          message: 'unterminated quoted field at end of file',
+        },
+      ]
+    );
+  }
+  // Flush trailing field/row (handles files with no trailing newline).
+  if (field.length &gt; 0 || row.length &gt; 0) {
+    row.push(field);
+    rows.push(row);
+  }
+  // Drop fully-blank trailing rows produced by a trailing newline.
+  while (rows.length &gt; 0 &amp;&amp; rows[rows.length - 1].every((c) =&gt; c === '')) {
+    rows.pop();
+  }
+  return rows;
+}
+
+// ---------------------------------------------------------------------------
+// 3. Type coercion primitives
+// ---------------------------------------------------------------------------
+
+// Matches "45", "45.00", "1,234.56", "-45.00", "$45.00", "$1,234.56" style
+// US/thousands-comma-decimal-dot amounts, optionally wrapped in parens for
+// negative ("(12.34)"), optionally prefixed/suffixed with a currency symbol
+// or code. Deliberately does NOT attempt to support the EU "1.234,56"
+// (dot-thousands, comma-decimal) convention -- we cannot safely
+// disambiguate "1.234,56" from a malformed US number without a confirmed
+// locale signal, so such values are rejected rather than guessed.
+const CURRENCY_SYMBOLS = /[$€£¥]/g;
+const CURRENCY_CODE_PREFIX = /^[A-Z]{3}\s?/;
+const AMOUNT_RE = /^-?\d{1,3}(,\d{3})*(\.\d{1,2})?$|^-?\d+(\.\d{1,2})?$/;
+
+/**
+ * parseCurrency(raw: string, ctx: {row, field}) -&gt; number (in the export's
+ * stated currency unit, e.g. dollars not cents)
+ * Throws CsvParseError with row/field context on anything it can't
+ * confidently parse -- never returns 0/NaN for bad input.
+ */
+function parseCurrency(raw, ctx) {
+  const original = raw;
+  let s = String(raw == null ? '' : raw).trim();
+  if (s === '') {
+    throw fieldError(ctx, 'empty amount value', original);
+  }
+  let negative = false;
+  if (/^\(.*\)$/.test(s)) {
+    negative = true;
+    s = s.slice(1, -1).trim();
+  }
+  if (s.startsWith('-')) {
+    negative = true;
+    s = s.slice(1).trim();
+  }
+  s = s.replace(CURRENCY_SYMBOLS, '').trim();
+  s = s.replace(CURRENCY_CODE_PREFIX, '').trim();
+  s = s.replace(/\s/g, '');
+
+  if (!AMOUNT_RE.test(s)) {
+    throw fieldError(
+      ctx,
+      `amount "${original}" is not a recognized currency format (expected e.g. "45.00", "$1,234.56", "(12.00)")`,
+      original
+    );
+  }
+  const numeric = parseFloat(s.replace(/,/g, ''));
+  if (!isFinite(numeric)) {
+    throw fieldError(ctx, `amount "${original}" did not parse to a finite number`, original);
+  }
+  return negative ? -numeric : numeric;
+}
+
+const MONTH_NAMES = {
+  jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3, apr: 4, april: 4,
+  may: 5, jun: 6, june: 6, jul: 7, july: 7, aug: 8, august: 8, sep: 9, sept: 9,
+  september: 9, oct: 10, october: 10, nov: 11, november: 11, dec: 12, december: 12,
+};
+
+/**
+ * parseDate(raw: string, ctx) -&gt; { iso: 'YYYY-MM-DD', year, month, monthKey: 'YYYY-MM' }
+ *
+ * Accepts ONLY unambiguous formats:
+ *   - ISO 8601 date, optionally with a time/offset: "2026-08-01", "2026-08-01T10:00:00Z"
+ *   - "Mon D, YYYY" / "Month D, YYYY": "Aug 1, 2026", "August 1, 2026"
+ *
+ * Deliberately REJECTS slash-separated numeric dates ("08/01/2026") outright
+ * -- whether Etsy's export uses US (MM/DD/YYYY) or localized (DD/MM/YYYY)
+ * ordering for international sellers is UNCONFIRMED (see CSV-CONTRACT.md),
+ * so any such value is ambiguous by construction and this function refuses
+ * to guess which digit is the month.
+ */
+function parseDate(raw, ctx) {
+  const original = raw;
+  const s = String(raw == null ? '' : raw).trim();
+  if (s === '') {
+    throw fieldError(ctx, 'empty date value', original);
+  }
+
+  if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(s)) {
+    throw fieldError(
+      ctx,
+      `date "${original}" uses ambiguous slash-separated format (could be MM/DD/YYYY or DD/MM/YYYY -- ` +
+        `Etsy's exact convention for this export is unconfirmed). Refusing to guess; re-export with an ` +
+        `unambiguous date format or resolve this in code with a confirmed convention before importing.`,
+      original
+    );
+  }
+
+  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})(?:[T\s].*)?$/.exec(s);
+  if (isoMatch) {
+    const year = parseInt(isoMatch[1], 10);
+    const month = parseInt(isoMatch[2], 10);
+    const day = parseInt(isoMatch[3], 10);
+    if (month &lt; 1 || month &gt; 12 || day &lt; 1 || day &gt; 31) {
+      throw fieldError(ctx, `date "${original}" has an out-of-range month/day`, original);
+    }
+    return isoResult(year, month, day);
+  }
+
+  const monthNameMatch = /^([A-Za-z]+)\.?\s+(\d{1,2}),?\s+(\d{4})$/.exec(s);
+  if (monthNameMatch) {
+    const monthName = monthNameMatch[1].toLowerCase();
+    const month = MONTH_NAMES[monthName];
+    if (!month) {
+      throw fieldError(ctx, `date "${original}" has an unrecognized month name "${monthNameMatch[1]}"`, original);
+    }
+    const day = parseInt(monthNameMatch[2], 10);
+    const year = parseInt(monthNameMatch[3], 10);
+    if (day &lt; 1 || day &gt; 31) {
+      throw fieldError(ctx, `date "${original}" has an out-of-range day`, original);
+    }
+    return isoResult(year, month, day);
+  }
+
+  throw fieldError(
+    ctx,
+    `date "${original}" is not in a recognized unambiguous format (expected "YYYY-MM-DD" or "Mon D, YYYY")`,
+    original
+  );
+}
+
+function isoResult(year, month, day) {
+  const mm = String(month).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  return { iso: `${year}-${mm}-${dd}`, year, month, monthKey: `${year}-${mm}` };
+}
+
+// UNVERIFIED vocabulary (see CSV-CONTRACT.md "Status field") -- these are
+// our best guess at Etsy's real Status column values, not a confirmed list.
+// Anything outside these three buckets is refused rather than guessed.
+const REVENUE_STATUSES = new Set(['completed', 'paid', 'shipped']);
+const EXCLUDED_STATUSES = new Set(['canceled', 'cancelled']);
+const REFUND_STATUSES = new Set(['refunded', 'partially refunded']);
+
+/**
+ * classifyStatus(raw, ctx) -&gt; 'revenue' | 'excluded' | 'refund'
+ * Throws on any status string not in the known (unverified) vocabulary.
+ */
+function classifyStatus(raw, ctx) {
+  const s = String(raw == null ? '' : raw).trim().toLowerCase();
+  if (REVENUE_STATUSES.has(s)) return 'revenue';
+  if (EXCLUDED_STATUSES.has(s)) return 'excluded';
+  if (REFUND_STATUSES.has(s)) return 'refund';
+  throw fieldError(
+    ctx,
+    `unrecognized order Status "${raw}" -- this importer only knows how to classify ` +
+      `[${[...REVENUE_STATUSES, ...EXCLUDED_STATUSES, ...REFUND_STATUSES].join(', ')}] ` +
+      `(an UNVERIFIED guessed vocabulary, see CSV-CONTRACT.md). Refusing to guess whether this status ` +
+      `counts as revenue -- extend the vocabulary in src/parser.js once you've confirmed the real value ` +
+      `against an actual Etsy export.`,
+    raw
+  );
+}
+
+function fieldError(ctx, message, rawValue) {
+  return _CsvParseError(`Row ${ctx.row}, column "${ctx.field}": ${message}`, [
+    { row: ctx.row, field: ctx.field, rawValue, message },
+  ]);
+}
+
+// ---------------------------------------------------------------------------
+// 4. Row coercion + full-file parse
+// ---------------------------------------------------------------------------
+
+/**
+ * coerceRow(rawRow, columnMap, rowNumber) -&gt; normalized record
+ * rowNumber is 1-based and counts data rows only (header is row 0), matching
+ * what a seller would count if opening the CSV in a spreadsheet minus the
+ * header -- i.e. rowNumber 1 is the first DATA row.
+ * Throws CsvParseError (with a single rowErrors entry) on the first
+ * uncoercible required field in this row; parseOrdersCsv() below collects
+ * these across all rows before deciding whether to abort.
+ */
+function coerceRow(rawRow, columnMap, rowNumber) {
+  const get = (field) =&gt; (columnMap[field] != null ? rawRow[columnMap[field]] : undefined);
+
+  const orderId = String(get('orderId') || '').trim();
+  if (!orderId) {
+    throw fieldError({ row: rowNumber, field: 'Order ID' }, 'empty Order ID', get('orderId'));
+  }
+
+  const date = parseDate(get('saleDate'), { row: rowNumber, field: 'Sale Date' });
+  const currency = String(get('currency') || '').trim().toUpperCase();
+  if (!currency) {
+    throw fieldError({ row: rowNumber, field: 'Currency' }, 'empty Currency', get('currency'));
+  }
+  const orderTotal = parseCurrency(get('orderTotal'), { row: rowNumber, field: 'Order Total' });
+  const statusClass = classifyStatus(get('status'), { row: rowNumber, field: 'Status' });
+
+  const record = {
+    row: rowNumber,
+    orderId,
+    date,
+    currency,
+    orderTotal,
+    statusRaw: String(get('status') || '').trim(),
+    statusClass,
+  };
+
+  // Optional fields: coerce only if the column exists AND the cell is
+  // non-empty; a missing optional column, or a blank cell in a present
+  // optional column, is not an error.
+  if (columnMap.fees != null &amp;&amp; String(get('fees') || '').trim() !== '') {
+    record.fees = parseCurrency(get('fees'), { row: rowNumber, field: 'Card Processing Fees' });
+  }
+  if (columnMap.shipping != null &amp;&amp; String(get('shipping') || '').trim() !== '') {
+    record.shipping = parseCurrency(get('shipping'), { row: rowNumber, field: 'Shipping' });
+  }
+  if (columnMap.salesTax != null &amp;&amp; String(get('salesTax') || '').trim() !== '') {
+    record.salesTax = parseCurrency(get('salesTax'), { row: rowNumber, field: 'Sales Tax' });
+  }
+  if (columnMap.orderNet != null &amp;&amp; String(get('orderNet') || '').trim() !== '') {
+    record.orderNet = parseCurrency(get('orderNet'), { row: rowNumber, field: 'Order Net' });
+  }
+  if (columnMap.sku != null) {
+    const sku = String(get('sku') || '').trim();
+    if (sku) record.sku = sku;
+  }
+  if (columnMap.buyer != null) {
+    const buyer = String(get('buyer') || '').trim();
+    if (buyer) record.buyer = buyer;
+  }
+  if (columnMap.couponCode != null) {
+    const coupon = String(get('couponCode') || '').trim();
+    if (coupon) record.couponCode = coupon;
+  }
+
+  return record;
+}
+
+/**
+ * parseOrdersCsv(csvText: string) -&gt; { records, unknownColumns, columnMap }
+ *
+ * Full pipeline: tokenize -&gt; detect header -&gt; coerce every data row.
+ * - Throws CsvContractError immediately if the header is missing a required
+ *   field (never even looks at data rows).
+ * - Otherwise coerces EVERY row and collects ALL row-level failures, then
+ *   throws ONE CsvParseError listing every failing row (not just the
+ *   first) if there were any -- so a seller sees the whole problem at once.
+ * - An all-header, zero-data-row file is valid and returns records: [].
+ */
+function parseOrdersCsv(csvText) {
+  const rows = parseCsvText(csvText);
+  if (rows.length === 0) {
+    throw _CsvContractError('The CSV file is completely empty (no header row found).');
+  }
+  const [headerRow, ...dataRows] = rows;
+  const { columnMap, unknownColumns } = detectHeader(headerRow);
+
+  const records = [];
+  const rowErrors = [];
+  dataRows.forEach((raw, i) =&gt; {
+    const rowNumber = i + 1;
+    // Skip fully-blank rows (common trailing-blank-line artifact) without
+    // treating them as a parse failure.
+    if (raw.every((c) =&gt; String(c).trim() === '')) return;
+    try {
+      records.push(coerceRow(raw, columnMap, rowNumber));
+    } catch (err) {
+      if (err &amp;&amp; err.name === 'CsvParseError' &amp;&amp; err.rowErrors) {
+        rowErrors.push(...err.rowErrors);
+      } else {
+        rowErrors.push({ row: rowNumber, field: '(unknown)', rawValue: raw, message: String(err &amp;&amp; err.message) });
+      }
+    }
+  });
+
+  if (rowErrors.length &gt; 0) {
+    const summary = rowErrors
+      .slice(0, 20)
+      .map((e) =&gt; `  - Row ${e.row}, ${e.field}: ${e.message}`)
+      .join('\n');
+    const more = rowErrors.length &gt; 20 ? `\n  ...and ${rowErrors.length - 20} more.` : '';
+    throw _CsvParseError(
+      `Import refused: ${rowErrors.length} of ${dataRows.length} data row(s) failed to parse. ` +
+        `NO data was written anywhere. Fix the file (or the parser's understanding of it) and re-import.\n${summary}${more}`,
+      rowErrors
+    );
+  }
+
+  return { records, unknownColumns, columnMap };
+}
+
+// ---------------------------------------------------------------------------
+// module exports (Node only; Apps Script has no `module` so this is skipped
+// and every function above is simply available in the project's global
+// scope for Code.gs to call).
+// ---------------------------------------------------------------------------
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  module.exports = {
+    FIELD_ALIASES,
+    REQUIRED_FIELDS,
+    detectHeader,
+    parseCsvText,
+    parseCurrency,
+    parseDate,
+    classifyStatus,
+    coerceRow,
+    parseOrdersCsv,
+  };
+}
+</code></pre>
+      </details>
+      <details class="code-block">
+        <summary>Show <code>Aggregate.gs</code> (142 lines) &mdash; click to expand and copy</summary>
+        <pre id="code-aggregate"><code>// aggregate.js -- pure aggregation of parsed Etsy order records into the
+// shape the bundle's Master Dashboard / Monthly Bookkeeping Ledger tabs
+// need. Zero Google dependency, same Node/Apps-Script dual-use pattern as
+// parser.js (see that file's header comment for the `require` guard
+// explanation).
+//
+// IMPORTANT SCOPE NOTE: this module produces a normalized aggregate object.
+// It does NOT write to any spreadsheet -- that is Code.gs's job, and only
+// via the non-destructive staging-tab flow documented in README.md. Keeping
+// this pure and Google-free is what lets tests/run-tests.mjs exercise it
+// under plain node with zero mocking.
+
+// Error factory: `_CsvContractError(...)` is the single source of truth,
+// declared ONCE in errors.js (mirrored verbatim into AppsScript/Errors.gs).
+// See src/parser.js's header comment (above its own identical-purpose guard)
+// for the full rationale, including why this file's own `var` re-export
+// below cannot collide with Errors.gs's `function _CsvContractError`
+// declaration once every .gs file is concatenated into Apps Script's shared
+// global scope (proven by tests/verify-appsscript-loads.mjs). This file used
+// to declare its own byte-identical copy of this factory (as did
+// parser.js), which risked exactly the load-order-dependent duplicate
+// identifier that dedupe fixed.
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  var _errors = require('./errors.js');
+  var _CsvContractError = _errors._CsvContractError;
+}
+
+/**
+ * aggregateOrders(records: NormalizedRecord[]) -&gt; {
+ *   currency: string | null,      // null only when records is empty
+ *   byMonth: { [monthKey: 'YYYY-MM']: {
+ *     revenue: number,            // sum of orderTotal for 'revenue' + 'refund' class rows
+ *     orderCount: number,         // all rows this month, any status
+ *     revenueOrderCount: number,
+ *     refundedOrderCount: number,
+ *     canceledOrderCount: number,
+ *     fees: number,               // sum of optional `fees` field, 0 if absent
+ *     salesTax: number,
+ *   }},
+ *   totals: { revenue, orderCount, revenueOrderCount, refundedOrderCount,
+ *             canceledOrderCount, fees, salesTax },
+ * }
+ *
+ * Policy (see CSV-CONTRACT.md "Status field" -- UNVERIFIED vocabulary,
+ * classified upstream by parser.js's classifyStatus):
+ *   - statusClass 'revenue' -&gt; orderTotal counts fully toward revenue.
+ *   - statusClass 'refund'  -&gt; orderTotal counts toward revenue AS-IS, under
+ *     the assumption (UNVERIFIED, documented in CSV-CONTRACT.md) that
+ *     Etsy's Order Total for a refunded row already reflects the refund
+ *     adjustment. Tallied separately in refundedOrderCount so a seller can
+ *     see refund volume at a glance.
+ *   - statusClass 'excluded' (canceled) -&gt; contributes $0 to revenue,
+ *     tallied in canceledOrderCount.
+ *
+ * Throws CsvContractError if records span more than one currency -- this
+ * function refuses to sum unlike currencies rather than silently producing
+ * a meaningless blended total. The caller (or the seller) must split a
+ * multi-currency export by currency and import each slice separately.
+ */
+function aggregateOrders(records) {
+  if (!Array.isArray(records)) {
+    throw new TypeError('aggregateOrders() expects an array of normalized records');
+  }
+  if (records.length === 0) {
+    return { currency: null, byMonth: {}, totals: emptyTotals() };
+  }
+
+  const currencies = new Set(records.map((r) =&gt; r.currency));
+  if (currencies.size &gt; 1) {
+    throw _CsvContractError(
+      `Cannot aggregate: this export mixes ${currencies.size} currencies (${[...currencies].sort().join(', ')}). ` +
+        `Summing different currencies into one total would produce a meaningless number. ` +
+        `Filter/split the CSV to a single currency and import each slice separately.`,
+      { currencies: [...currencies] }
+    );
+  }
+  const currency = [...currencies][0];
+
+  const byMonth = {};
+  const totals = emptyTotals();
+
+  for (const r of records) {
+    const key = r.date.monthKey;
+    if (!byMonth[key]) byMonth[key] = emptyTotals();
+    const bucket = byMonth[key];
+
+    bucket.orderCount += 1;
+    totals.orderCount += 1;
+
+    if (r.statusClass === 'revenue' || r.statusClass === 'refund') {
+      bucket.revenue += r.orderTotal;
+      totals.revenue += r.orderTotal;
+      bucket.revenueOrderCount += r.statusClass === 'revenue' ? 1 : 0;
+      totals.revenueOrderCount += r.statusClass === 'revenue' ? 1 : 0;
+      if (r.statusClass === 'refund') {
+        bucket.refundedOrderCount += 1;
+        totals.refundedOrderCount += 1;
+      }
+    } else if (r.statusClass === 'excluded') {
+      bucket.canceledOrderCount += 1;
+      totals.canceledOrderCount += 1;
+    }
+
+    if (typeof r.fees === 'number') {
+      bucket.fees += r.fees;
+      totals.fees += r.fees;
+    }
+    if (typeof r.salesTax === 'number') {
+      bucket.salesTax += r.salesTax;
+      totals.salesTax += r.salesTax;
+    }
+  }
+
+  // Round every monetary figure to 2dp to avoid float-noise like
+  // 1234.5600000000002 leaking into the sheet.
+  round2InPlace(totals);
+  for (const key of Object.keys(byMonth)) round2InPlace(byMonth[key]);
+
+  return { currency, byMonth, totals };
+}
+
+function emptyTotals() {
+  return {
+    revenue: 0,
+    orderCount: 0,
+    revenueOrderCount: 0,
+    refundedOrderCount: 0,
+    canceledOrderCount: 0,
+    fees: 0,
+    salesTax: 0,
+  };
+}
+
+function round2InPlace(bucket) {
+  bucket.revenue = Math.round(bucket.revenue * 100) / 100;
+  bucket.fees = Math.round(bucket.fees * 100) / 100;
+  bucket.salesTax = Math.round(bucket.salesTax * 100) / 100;
+}
+
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  module.exports = { aggregateOrders };
+}
+</code></pre>
+      </details>
+      <details class="code-block">
+        <summary>Show <code>ApplyMapping.gs</code> (279 lines) &mdash; click to expand and copy</summary>
+        <pre id="code-applymapping"><code>// applyMapping.js -- pure logic for mapping an already-staged Etsy CSV
+// import onto the shipping bundle's "Master Dashboard" / "Monthly
+// Bookkeeping Ledger" tabs. Zero SpreadsheetApp dependency -- everything
+// here takes plain values in and returns plain values or throws, exactly
+// like parser.js/aggregate.js, so it's testable under plain node (see
+// tests/apply-mapping.mjs) with no fake-Sheets harness needed. Code.gs is
+// the only file that actually reads/writes a live sheet or shows UI; it
+// calls the functions below to decide WHAT to write and what to tell the
+// seller, never decides that inline.
+//
+// ---------------------------------------------------------------------------
+// DERIVED CELL COORDINATES -- confirmed against the ACTUAL generated
+// Seller-OS-Command-Center.xlsx (built by
+// ventures/niche-financial-spreadsheets/build/etsy/bundle-99/build_bundle_workbooks.py),
+// by loading that exact file with openpyxl and reading real cell values --
+// not just by reading the generator source, and not trusted from Code.gs's
+// old stub comment:
+//   Master Dashboard!D7  = "Total Revenue (YTD)"   (the row's label)
+//   Master Dashboard!E7  = 214800                  (its manual-entry value cell)
+//   Monthly Bookkeeping Ledger!B7     = "Etsy Income"        (the row's label)
+//   Monthly Bookkeeping Ledger!D7:O7  = the 12 Jan-Dec monthly figures
+//   Monthly Bookkeeping Ledger!P7     = "=SUM(D7:O7)"        (YTD formula --
+//     never written directly; it recomputes itself from D:O)
+// Loudly noting: this matches Code.gs's PRE-EXISTING stub guess (E7 / row 7
+// D:O) exactly. That guess turned out to be CORRECT once actually checked
+// against the shipped file, not wrong -- there is no coordinate correction
+// to make. They are used here only as a FALLBACK, though: the primary
+// lookup is by scanning for the row's own text LABEL at runtime (see
+// findRowByLabel below), so a future regeneration of the workbook that
+// inserts or removes a row above these does not silently drift the target
+// out from under a hardcoded number.
+// ---------------------------------------------------------------------------
+
+// See src/parser.js's header comment (above its own identical-purpose
+// guard) for why this must NOT declare a bare `var ApplyMappingError = ...;`
+// -- that would collide, at Apps Script's PARSE time, with Errors.gs's
+// top-level `class ApplyMappingError` once every .gs file is concatenated
+// into one shared global scope (proven by tests/verify-appsscript-loads.mjs).
+// The `_ApplyMappingError(...)` factory function introduces only a new,
+// non-colliding name; the bare `ApplyMappingError` reference inside its body
+// is a lookup, not a declaration, resolved via `_errors` under Node or via
+// the normal scope chain to Errors.gs's class under Apps Script.
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  var _errors = require('./errors.js');
+}
+function _ApplyMappingError(message) {
+  var Ctor = (typeof _errors !== 'undefined' &amp;&amp; _errors) ? _errors.ApplyMappingError : ApplyMappingError;
+  return new Ctor(message);
+}
+
+var MASTER_DASHBOARD_SHEET_NAME = 'Master Dashboard';
+var LEDGER_SHEET_NAME = 'Monthly Bookkeeping Ledger';
+
+var REVENUE_ROW_LABEL = 'Total Revenue (YTD)';
+var REVENUE_LABEL_COL = 4; // column D ("Metric")
+var REVENUE_VALUE_COL = 5; // column E ("Value")
+var REVENUE_FALLBACK_ROW = 7;
+
+var LEDGER_ROW_LABEL = 'Etsy Income';
+var LEDGER_LABEL_COL = 2; // column B ("Category")
+var LEDGER_MONTH_COL_START = 4; // column D (Jan)
+var LEDGER_MONTH_COUNT = 12; // through column O (Dec)
+var LEDGER_FALLBACK_ROW = 7;
+
+var MONTH_KEY_RE = /^(\d{4})-(\d{2})$/;
+
+/**
+ * findRowByLabel(columnValues, label) -&gt; 1-indexed row number, or null.
+ * columnValues[0] is row 1's value, columnValues[1] is row 2's, etc, i.e.
+ * exactly what Range(1, col, lastRow, 1).getValues().map(function(r){return
+ * r[0];}) returns. Exact match after trimming whitespace; case-sensitive
+ * (these are this template's own literal strings, not free-form user
+ * input, so a loose/fuzzy match would only risk matching the wrong row).
+ */
+function findRowByLabel(columnValues, label) {
+  for (var i = 0; i &lt; columnValues.length; i++) {
+    var v = columnValues[i];
+    if (typeof v === 'string' &amp;&amp; v.trim() === label) return i + 1;
+  }
+  return null;
+}
+
+/**
+ * parseStagingRows(rows) -&gt; { byMonth: { 'YYYY-MM': { revenue } }, totals: { revenue } }
+ *
+ * `rows` is the full 2D getValues() array of the staging sheet ("Import
+ * Staging (Etsy CSV)", written by Code.gs's writeStagingSheet_()), row 1
+ * through the sheet's last row, column 1 through its last column. Month
+ * rows and the TOTAL row are found by their OWN label in column A ('YYYY-MM'
+ * or literal 'TOTAL') rather than by the fixed row offsets writeStagingSheet_
+ * happens to use today -- this function does not need to know or assume
+ * exactly which row number the header, month rows, or TOTAL row landed on.
+ *
+ * Why this re-parses the staging sheet instead of receiving the in-memory
+ * aggregate object from the import step: applyStagedImportToDashboard() is
+ * a separate, independently-invoked menu action (see Code.gs), and Apps
+ * Script has no in-memory state carried between two separate menu-click
+ * executions -- the staging SHEET is the only durable record of what was
+ * imported. Re-parsing it (rather than, say, caching JSON in
+ * PropertiesService) also means what gets applied is always exactly what
+ * the seller can see and review on the staging tab, which is the whole
+ * point of the two-step stage-then-apply design.
+ *
+ * Throws ApplyMappingError if no TOTAL row with a numeric revenue value is
+ * found -- that would mean the staging sheet is empty, malformed, or from an
+ * incompatible version of this tool, and silently treating that as "$0
+ * revenue" would be a wrong-number risk, not a safe default.
+ */
+function parseStagingRows(rows) {
+  var byMonth = {};
+  var totalsRevenue = null;
+  for (var i = 0; i &lt; rows.length; i++) {
+    var row = rows[i];
+    var col1 = row[0];
+    if (typeof col1 !== 'string') continue;
+    var trimmed = col1.trim();
+    var m = MONTH_KEY_RE.exec(trimmed);
+    if (m) {
+      var revenue = Number(row[1]);
+      if (!isNaN(revenue)) byMonth[trimmed] = { revenue: revenue };
+    } else if (trimmed === 'TOTAL') {
+      var totalRevenue = Number(row[1]);
+      if (!isNaN(totalRevenue)) totalsRevenue = totalRevenue;
+    }
+  }
+  if (totalsRevenue === null) {
+    throw _ApplyMappingError(
+      'Could not find a "TOTAL" row with a numeric revenue value on the staging sheet -- it may be empty, ' +
+        'malformed, or from an incompatible version of this tool. Nothing was changed. Re-run ' +
+        '"1. Import Orders CSV..." to regenerate the staging sheet, then try applying again.'
+    );
+  }
+  return { byMonth: byMonth, totals: { revenue: totalsRevenue } };
+}
+
+/**
+ * buildApplyPlan(staged, revenueRow, ledgerRow, opts) -&gt; {
+ *   warnings: string[],
+ *   masterDashboard: { row, col, value },
+ *   ledger: { row, writes: [{ col, value }] },
+ *   year: string | null,
+ * }
+ *
+ * Pure decision logic: given the ALREADY-RESOLVED target rows (label match
+ * or fallback -- the label lookup itself has to happen in Code.gs, since
+ * only it can read a live sheet) and the staged totals from
+ * parseStagingRows(), decides exactly which cells to write, what value goes
+ * in each, and what warnings (if any) to surface in the confirm dialog.
+ *
+ * Refuses (throws ApplyMappingError, decides nothing) if the staged import
+ * spans more than one calendar year: the Ledger has exactly one column per
+ * calendar month for a single year, so folding two different years'
+ * Januaries into the same "Jan" column would silently misattribute revenue
+ * to the wrong year. This mirrors aggregateOrders()'s existing policy of
+ * refusing to sum mixed currencies rather than guessing (see aggregate.js).
+ *
+ * Only months actually PRESENT in the staged data get a write entry -- a
+ * month the seller's CSV export didn't cover is left OUT of
+ * `ledger.writes` entirely, so applying a 3-month import can never zero out
+ * the other 9 months' pre-existing ledger figures that this import simply
+ * has no data for.
+ */
+function buildApplyPlan(staged, revenueRow, ledgerRow, opts) {
+  opts = opts || {};
+  var warnings = [];
+  if (opts.revenueLabelFound === false) {
+    warnings.push(
+      'Could not find a row labeled "' + REVENUE_ROW_LABEL + '" in column D of "' + MASTER_DASHBOARD_SHEET_NAME +
+        '" -- using fallback row ' + REVENUE_FALLBACK_ROW + '. Double-check that is still the right row before confirming.'
+    );
+  }
+  if (opts.ledgerLabelFound === false) {
+    warnings.push(
+      'Could not find a row labeled "' + LEDGER_ROW_LABEL + '" in column B of "' + LEDGER_SHEET_NAME +
+        '" -- using fallback row ' + LEDGER_FALLBACK_ROW + '. Double-check that is still the right row before confirming.'
+    );
+  }
+
+  var monthKeys = Object.keys(staged.byMonth).sort();
+  var years = [];
+  for (var i = 0; i &lt; monthKeys.length; i++) {
+    var y = monthKeys[i].slice(0, 4);
+    if (years.indexOf(y) === -1) years.push(y);
+  }
+  if (years.length &gt; 1) {
+    throw _ApplyMappingError(
+      'Staged import spans ' + years.length + ' different years (' + years.join(', ') + '). The Monthly ' +
+        'Bookkeeping Ledger has one set of Jan-Dec columns for a single year, so applying a multi-year import ' +
+        'would silently mix different years into the same 12 columns. Import and apply one year at a time.'
+    );
+  }
+
+  var ledgerWrites = monthKeys.map(function (key) {
+    var month = parseInt(key.slice(5, 7), 10);
+    return { col: LEDGER_MONTH_COL_START + (month - 1), value: round2(staged.byMonth[key].revenue) };
+  });
+
+  return {
+    warnings: warnings,
+    masterDashboard: { row: revenueRow, col: REVENUE_VALUE_COL, value: round2(staged.totals.revenue) },
+    ledger: { row: ledgerRow, writes: ledgerWrites },
+    year: years.length === 1 ? years[0] : null,
+  };
+}
+
+function round2(n) {
+  return Math.round(n * 100) / 100;
+}
+
+/**
+ * buildConfirmMessage(plan) -&gt; string shown in the YES/NO confirm dialog
+ * before anything is written. Pure string formatting so its exact wording
+ * is testable without a UI, and so the seller always sees precisely which
+ * cells are about to change (and any warnings) before they can say YES.
+ */
+function buildConfirmMessage(plan) {
+  var lines = [];
+  lines.push('This will write:');
+  lines.push(
+    '  - "' + MASTER_DASHBOARD_SHEET_NAME + '" row ' + plan.masterDashboard.row + ', column ' +
+      colLetter(plan.masterDashboard.col) + ' ("' + REVENUE_ROW_LABEL + '") -&gt; ' + plan.masterDashboard.value
+  );
+  if (plan.ledger.writes.length === 0) {
+    lines.push(
+      '  - "' + LEDGER_SHEET_NAME + '" row ' + plan.ledger.row + ' ("' + LEDGER_ROW_LABEL +
+        '"): the staged import has no months, so nothing will be written there.'
+    );
+  } else {
+    lines.push(
+      '  - "' + LEDGER_SHEET_NAME + '" row ' + plan.ledger.row + ' ("' + LEDGER_ROW_LABEL + '"), ' +
+        plan.ledger.writes.length + ' month column(s) for ' + plan.year + ':'
+    );
+    plan.ledger.writes.forEach(function (w) {
+      lines.push('      column ' + colLetter(w.col) + ' -&gt; ' + w.value);
+    });
+  }
+  lines.push('');
+  lines.push('Only these specific cells change. Every other cell on both tabs is left exactly as it is.');
+  if (plan.warnings.length &gt; 0) {
+    lines.push('');
+    lines.push('WARNING:');
+    plan.warnings.forEach(function (w) {
+      lines.push('  - ' + w);
+    });
+  }
+  return lines.join('\n');
+}
+
+/** colLetter(col) -&gt; 1 -&gt; 'A', 5 -&gt; 'E', 15 -&gt; 'O', etc. */
+function colLetter(col) {
+  var s = '';
+  while (col &gt; 0) {
+    var rem = (col - 1) % 26;
+    s = String.fromCharCode(65 + rem) + s;
+    col = Math.floor((col - 1) / 26);
+  }
+  return s;
+}
+
+if (typeof module !== 'undefined' &amp;&amp; module.exports) {
+  module.exports = {
+    MASTER_DASHBOARD_SHEET_NAME: MASTER_DASHBOARD_SHEET_NAME,
+    LEDGER_SHEET_NAME: LEDGER_SHEET_NAME,
+    REVENUE_ROW_LABEL: REVENUE_ROW_LABEL,
+    REVENUE_LABEL_COL: REVENUE_LABEL_COL,
+    REVENUE_VALUE_COL: REVENUE_VALUE_COL,
+    REVENUE_FALLBACK_ROW: REVENUE_FALLBACK_ROW,
+    LEDGER_ROW_LABEL: LEDGER_ROW_LABEL,
+    LEDGER_LABEL_COL: LEDGER_LABEL_COL,
+    LEDGER_MONTH_COL_START: LEDGER_MONTH_COL_START,
+    LEDGER_MONTH_COUNT: LEDGER_MONTH_COUNT,
+    LEDGER_FALLBACK_ROW: LEDGER_FALLBACK_ROW,
+    findRowByLabel: findRowByLabel,
+    parseStagingRows: parseStagingRows,
+    buildApplyPlan: buildApplyPlan,
+    buildConfirmMessage: buildConfirmMessage,
+    colLetter: colLetter,
+  };
+}
+</code></pre>
+      </details>
+      <details class="code-block">
+        <summary>Show <code>Code.gs</code> (352 lines) &mdash; click to expand and copy</summary>
+        <pre id="code-code"><code>/**
+ * Code.gs -- THIN Apps Script wrapper over the pure functions in
+ * Parser.gs / Aggregate.gs / Errors.gs / ApplyMapping.gs (byte-identical
+ * copies of src/parser.js / src/aggregate.js / src/errors.js /
+ * src/applyMapping.js -- verified by tests/verify-appsscript-sync.mjs).
+ * This file is the ONLY one that touches SpreadsheetApp/Ui -- everything
+ * else is Google-free and covered by the node test harness in tests/
+ * (including this file's own orchestration, via the fake SpreadsheetApp in
+ * tests/fake-spreadsheet-app.mjs -- see tests/apply-staged-import.mjs).
+ *
+ * ============================================================================
+ * STATUS: WRITTEN, NOT YET DEPLOYED OR RUN AGAINST A REAL GOOGLE SHEET.
+ * This phase built the harness and parser per the task brief's explicit
+ * scope ("Phase 1 is the harness and the parser, not the polished
+ * product"). Deploying this file into an actual Apps Script project bound
+ * to the bundle's .xlsx (as a Google Sheet) requires opening the file in
+ * Google Sheets, which needs the owner's Google account -- out of scope for
+ * this phase and not something this agent can or should do (no accounts,
+ * no logins, per the hard rules). Treat every SpreadsheetApp/Ui call below
+ * as UNTESTED until a human (or a future phase with sanctioned Sheets
+ * access) runs it inside a real Sheet and confirms the menu, the staging
+ * write, and the confirm-before-apply flow all behave as designed.
+ * ============================================================================
+ *
+ * NON-DESTRUCTIVE IMPORT DESIGN (this is the load-bearing decision):
+ *   1. importEtsyOrdersCsv() takes pasted CSV text, calls the pure
+ *      importOrdersCsv() logic, and -- ONLY if it does not throw -- writes
+ *      the result to a sheet named "Import Staging (Etsy CSV)", which it
+ *      creates fresh (clearing any prior staging content) each run. It
+ *      NEVER touches "Master Dashboard" or "Monthly Bookkeeping Ledger".
+ *   2. If importOrdersCsv() throws (CsvContractError or CsvParseError),
+ *      NOTHING is written anywhere -- not even to the staging sheet. The
+ *      seller sees the error message via a UI alert and their existing
+ *      dashboard numbers are completely untouched.
+ *   3. applyStagedImportToDashboard() is a SEPARATE, explicitly-invoked
+ *      function (its own menu item) that copies staging values into the
+ *      real tabs -- and ONLY after SpreadsheetApp.getUi().alert() with a
+ *      YES_NO prompt the seller must actively confirm. There is no
+ *      one-click "import and overwrite" path by design: a CSV mis-parse
+ *      corrupting a seller's own revenue tracker is a trust/refund-class
+ *      failure (see the task brief this was built against), so the two
+ *      steps (stage, then explicitly apply) are kept structurally separate
+ *      rather than a single convenient button.
+ *
+ * WHERE staged data maps (NOT a live formula link -- the bundle's own
+ * Master Dashboard tab already explains, in cell B4, why cross-file live
+ * formulas were deliberately rejected; applyStagedImportToDashboard() below
+ * follows the same "copy values, not formulas" philosophy, just from a
+ * staging tab within the SAME file instead of a manual re-type):
+ *   - Master Dashboard!E7 "Total Revenue (YTD)"    &lt;- staging totals.revenue
+ *   - Monthly Bookkeeping Ledger row 7 "Etsy Income", columns D:O (Jan-Dec)
+ *     &lt;- staging byMonth[...].revenue per month
+ * These coordinates were DERIVED, not guessed: confirmed by loading the
+ * actual generated Seller-OS-Command-Center.xlsx (built by
+ * ventures/niche-financial-spreadsheets/build/etsy/bundle-99/build_bundle_workbooks.py)
+ * with openpyxl and reading real cell values (see applyMapping.js's header
+ * comment for the exact evidence). They match what an earlier draft of this
+ * file guessed, which is a coincidence worth stating loudly rather than
+ * quietly relying on -- that is why applyStagedImportToDashboard() below
+ * does NOT hardcode row 7 as the only source of truth: it looks up each
+ * target row by scanning for its own text label at runtime (see
+ * findRowByLabel() in ApplyMapping.gs) and only falls back to the derived
+ * row number if that label can't be found, so a future regeneration of the
+ * workbook that inserts a row above these does not silently write to the
+ * wrong place. applyStagedImportToDashboard() is implemented below (see its
+ * own comment) but, like every SpreadsheetApp/Ui call in this file, has
+ * NEVER been executed against a real Google Sheet -- see STATUS above.
+ */
+
+var STAGING_SHEET_NAME = 'Import Staging (Etsy CSV)';
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('Etsy CSV Import')
+    .addItem('1. Import Orders CSV (paste text)...', 'importEtsyOrdersCsv_promptFlow')
+    .addItem('2. Apply staged import to dashboard...', 'applyStagedImportToDashboard')
+    .addToUi();
+}
+
+/**
+ * Menu entry point: prompts the seller to paste their Etsy Orders CSV
+ * (downloaded from Shop Manager &gt; Settings &gt; Options &gt; Download Data, per
+ * CSV-CONTRACT.md) into a dialog, then runs the non-destructive import.
+ * UNTESTED (see file header) -- SpreadsheetApp.getUi().prompt() with a
+ * large pasted CSV may need a proper HtmlService dialog instead of the
+ * built-in prompt (which has a practical input-length ceiling); that is a
+ * concrete open question for whoever runs this against a real Sheet first.
+ */
+function importEtsyOrdersCsv_promptFlow() {
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.prompt(
+    'Import Etsy Orders CSV',
+    'Paste the full contents of your Etsy Orders CSV export below, then click OK.\n\n' +
+      '(Shop Manager &gt; Settings &gt; Options &gt; Download Data &gt; Orders &gt; CSV Type: Orders)',
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+  var csvText = response.getResponseText();
+  try {
+    importEtsyOrdersCsv(csvText);
+    ui.alert(
+      'Import staged successfully.',
+      'Your CSV parsed cleanly and was written to the "' +
+        STAGING_SHEET_NAME +
+        '" tab. Nothing on Master Dashboard or Monthly Bookkeeping Ledger has been changed yet -- ' +
+        'review the staged numbers, then use "2. Apply staged import to dashboard..." when ready.',
+      ui.ButtonSet.OK
+    );
+  } catch (err) {
+    // Fail-loud: surface the FULL error message (which names every bad row
+    // / missing column / ambiguous value) and write NOTHING anywhere.
+    ui.alert('Import refused -- nothing was changed.', String(err &amp;&amp; err.message ? err.message : err), ui.ButtonSet.OK);
+  }
+}
+
+/**
+ * importEtsyOrdersCsv(csvText) -- the actual non-destructive import logic,
+ * separated from the UI prompt above so it's callable directly (e.g. from
+ * a custom HtmlService dialog in a future revision) without duplicating
+ * the staging-write logic.
+ *
+ * Calls the pure importOrdersCsv() (global function from the composed
+ * Parser.gs + Aggregate.gs -- Apps Script has no per-file imports needed
+ * since all .gs files share one global scope) via the small inline
+ * composition below (mirrors src/index.js, which Node uses instead).
+ * Throws straight through on any CsvContractError/CsvParseError -- this
+ * function must NEVER catch-and-continue; only the caller's UI layer
+ * catches, to display the message.
+ */
+function importEtsyOrdersCsv(csvText) {
+  var parsed = parseOrdersCsv(csvText); // from Parser.gs
+  var aggregate = aggregateOrders(parsed.records); // from Aggregate.gs
+  writeStagingSheet_(parsed, aggregate);
+  return { records: parsed.records, unknownColumns: parsed.unknownColumns, aggregate: aggregate };
+}
+
+/**
+ * writeStagingSheet_(parsed, aggregate) -- the ONLY function in this file
+ * that writes to the spreadsheet, and it only ever writes to the staging
+ * sheet (never Master Dashboard / Monthly Bookkeeping Ledger). Recreates
+ * the staging sheet fresh every run so a prior staged (but never applied)
+ * import can never be partially overwritten by a new one.
+ */
+function writeStagingSheet_(parsed, aggregate) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var existing = ss.getSheetByName(STAGING_SHEET_NAME);
+  if (existing) ss.deleteSheet(existing);
+  var sheet = ss.insertSheet(STAGING_SHEET_NAME);
+
+  sheet.getRange(1, 1).setValue('Etsy CSV Import -- Staging (not yet applied to Dashboard/Ledger)');
+  sheet.getRange(2, 1).setValue('Imported ' + new Date().toISOString() + ' -- ' + parsed.records.length + ' order(s), currency ' + aggregate.currency);
+  if (parsed.unknownColumns.length &gt; 0) {
+    sheet.getRange(3, 1).setValue(
+      'Ignored ' + parsed.unknownColumns.length + ' unrecognized column(s): ' +
+        parsed.unknownColumns.map(function (c) { return c.name; }).join(', ')
+    );
+  }
+
+  var headerRow = 5;
+  sheet.getRange(headerRow, 1, 1, 8).setValues([[
+    'Month', 'Revenue', 'Order Count', 'Revenue Orders', 'Refunded Orders', 'Canceled Orders', 'Fees', 'Sales Tax',
+  ]]);
+  var months = Object.keys(aggregate.byMonth).sort();
+  var rows = months.map(function (m) {
+    var b = aggregate.byMonth[m];
+    return [m, b.revenue, b.orderCount, b.revenueOrderCount, b.refundedOrderCount, b.canceledOrderCount, b.fees, b.salesTax];
+  });
+  if (rows.length &gt; 0) {
+    sheet.getRange(headerRow + 1, 1, rows.length, 8).setValues(rows);
+  }
+
+  var totalsRow = headerRow + rows.length + 2;
+  sheet.getRange(totalsRow, 1).setValue('TOTAL');
+  sheet.getRange(totalsRow, 2, 1, 7).setValues([[
+    aggregate.totals.revenue, aggregate.totals.orderCount, aggregate.totals.revenueOrderCount,
+    aggregate.totals.refundedOrderCount, aggregate.totals.canceledOrderCount, aggregate.totals.fees, aggregate.totals.salesTax,
+  ]]);
+}
+
+/**
+ * applyStagedImportToDashboard() -- copies the already-staged import's
+ * totals into Master Dashboard!&lt;Total Revenue row&gt;,E and Monthly Bookkeeping
+ * Ledger!&lt;Etsy Income row&gt;,D:O, and ONLY after the seller explicitly
+ * confirms a YES/NO dialog that shows exactly which cells are about to
+ * change. UNTESTED against a real Google Sheet -- see file header STATUS;
+ * everything below is proven by the fake-SpreadsheetApp harness in
+ * tests/apply-staged-import.mjs under plain node, never by actually running
+ * this file inside Apps Script.
+ *
+ * Sequence (every step fails safe -- see each inline comment for exactly
+ * what "fails safe" means at that step):
+ *   1. No staging sheet -&gt; alert and return. Nothing read, nothing written.
+ *   2. Re-parse the staging sheet's own TOTAL/month rows via
+ *      parseStagingRows() (ApplyMapping.gs) -- NOT any in-memory value from
+ *      the import step, because Apps Script menu clicks are independent
+ *      executions with no shared state. If the staging sheet doesn't look
+ *      like one this tool wrote, parseStagingRows() throws and nothing is
+ *      read further.
+ *   3. Look up "Master Dashboard" and "Monthly Bookkeeping Ledger" BY NAME.
+ *      Either missing -&gt; alert naming which tab and abort. This function
+ *      never creates a tab or guesses a differently-named one.
+ *   4. Look up each target ROW by scanning for its known text label
+ *      (findRowByLabel()); only fall back to the derived row 7 if the label
+ *      isn't found, and say so as a warning in the confirm dialog either way.
+ *   5. buildApplyPlan() (pure, ApplyMapping.gs) decides exactly which cells
+ *      to write. It throws (nothing written) if the staged data spans more
+ *      than one calendar year -- see its comment for why that's refused
+ *      rather than guessed.
+ *   6. Show the seller the exact plan (buildConfirmMessage()) in a YES/NO
+ *      dialog. Anything but YES -&gt; alert "not applied" and return; both
+ *      target tabs are untouched.
+ *   7. On YES, executeApplyPlan_() writes VALUES ONLY (never formulas) to
+ *      ONLY the planned cells -- ledger month columns actually present in
+ *      the staged data first, then the single Master Dashboard total cell.
+ *      Months the staged CSV has no data for are left alone, not zeroed.
+ *      RESIDUAL RISK: Sheets has no cross-cell transaction -- if a write
+ *      throws partway through the ledger's per-month loop, the cells
+ *      already written stay written and the rest (including the Master
+ *      Dashboard cell, written last) do not. This is a documented partial-
+ *      write window, not an eliminated one; the alert on that path tells
+ *      the seller to check both tabs by hand.
+ */
+function applyStagedImportToDashboard() {
+  var ui = SpreadsheetApp.getUi();
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  var staging = ss.getSheetByName(STAGING_SHEET_NAME);
+  if (!staging) {
+    ui.alert('Nothing to apply -- run "1. Import Orders CSV..." first.');
+    return;
+  }
+
+  var staged;
+  try {
+    staged = readStagedAggregate_(staging);
+  } catch (err) {
+    ui.alert('Apply refused -- nothing was changed.', String(err &amp;&amp; err.message ? err.message : err), ui.ButtonSet.OK);
+    return;
+  }
+
+  var dashboard = ss.getSheetByName(MASTER_DASHBOARD_SHEET_NAME);
+  if (!dashboard) {
+    ui.alert(
+      'Apply refused -- nothing was changed.',
+      'Could not find a tab named "' + MASTER_DASHBOARD_SHEET_NAME + '" in this spreadsheet. This tool never ' +
+        'creates or guesses a differently-named tab -- rename/restore the tab (or check you\'re in the right ' +
+        'file) and try again.',
+      ui.ButtonSet.OK
+    );
+    return;
+  }
+  var ledger = ss.getSheetByName(LEDGER_SHEET_NAME);
+  if (!ledger) {
+    ui.alert(
+      'Apply refused -- nothing was changed.',
+      'Could not find a tab named "' + LEDGER_SHEET_NAME + '" in this spreadsheet. This tool never creates or ' +
+        'guesses a differently-named tab -- rename/restore the tab (or check you\'re in the right file) and try again.',
+      ui.ButtonSet.OK
+    );
+    return;
+  }
+
+  var revenueLookup = resolveTargetRow_(dashboard, REVENUE_LABEL_COL, REVENUE_ROW_LABEL, REVENUE_FALLBACK_ROW);
+  var ledgerLookup = resolveTargetRow_(ledger, LEDGER_LABEL_COL, LEDGER_ROW_LABEL, LEDGER_FALLBACK_ROW);
+
+  var plan;
+  try {
+    plan = buildApplyPlan(staged, revenueLookup.row, ledgerLookup.row, {
+      revenueLabelFound: revenueLookup.found,
+      ledgerLabelFound: ledgerLookup.found,
+    });
+  } catch (err) {
+    ui.alert('Apply refused -- nothing was changed.', String(err &amp;&amp; err.message ? err.message : err), ui.ButtonSet.OK);
+    return;
+  }
+
+  var response = ui.alert('Apply staged import to dashboard?', buildConfirmMessage(plan), ui.ButtonSet.YES_NO);
+  if (response !== ui.Button.YES) {
+    ui.alert('Not applied.', 'No answer other than YES writes anything -- Master Dashboard and Monthly Bookkeeping Ledger are unchanged.', ui.ButtonSet.OK);
+    return;
+  }
+
+  try {
+    executeApplyPlan_(dashboard, ledger, plan);
+  } catch (err) {
+    ui.alert(
+      'Apply failed partway through -- please check both tabs by hand.',
+      String(err &amp;&amp; err.message ? err.message : err) +
+        '\n\nSome of the planned cells may already be written while others are not (see this function\'s ' +
+        'comment in Code.gs for why Sheets writes can\'t be made atomic across cells).',
+      ui.ButtonSet.OK
+    );
+    return;
+  }
+
+  ui.alert(
+    'Applied.',
+    'Master Dashboard!' + colLetter(plan.masterDashboard.col) + plan.masterDashboard.row + ' and ' +
+      plan.ledger.writes.length + ' month cell(s) on "' + LEDGER_SHEET_NAME + '" row ' + plan.ledger.row +
+      ' were updated. The staging tab is left as-is for reference.',
+    ui.ButtonSet.OK
+  );
+}
+
+/**
+ * readStagedAggregate_(stagingSheet) -- reads the staging sheet's full used
+ * range and hands it to parseStagingRows() (ApplyMapping.gs, pure) to pull
+ * out the TOTAL and per-month revenue figures by their own labels. The only
+ * SpreadsheetApp call in this function is the single getRange().getValues()
+ * -- everything else is the pure, node-tested parser.
+ */
+function readStagedAggregate_(stagingSheet) {
+  var lastRow = Math.max(stagingSheet.getLastRow(), 1);
+  var lastCol = Math.max(stagingSheet.getLastColumn(), 2);
+  var rows = stagingSheet.getRange(1, 1, lastRow, lastCol).getValues();
+  return parseStagingRows(rows);
+}
+
+/**
+ * resolveTargetRow_(sheet, labelCol, label, fallbackRow) -&gt; { row, found }
+ * Reads column `labelCol` (row 1..lastRow) and hands it to findRowByLabel()
+ * (ApplyMapping.gs, pure) to find the row whose text matches `label`
+ * exactly. Falls back to `fallbackRow` (the coordinate derived from the
+ * shipping workbook -- see file header) only if the label can't be found,
+ * and reports which happened so the caller can warn the seller.
+ */
+function resolveTargetRow_(sheet, labelCol, label, fallbackRow) {
+  var lastRow = Math.max(sheet.getLastRow(), 1);
+  var columnValues = sheet.getRange(1, labelCol, lastRow, 1).getValues().map(function (r) {
+    return r[0];
+  });
+  var found = findRowByLabel(columnValues, label);
+  return { row: found || fallbackRow, found: found !== null };
+}
+
+/**
+ * executeApplyPlan_(dashboardSheet, ledgerSheet, plan) -- the ONLY function
+ * that writes to Master Dashboard / Monthly Bookkeeping Ledger, and only
+ * ever the exact cells `plan` names (see buildApplyPlan() in
+ * ApplyMapping.gs). Writes ledger month cells first (one setValue() per
+ * planned month -- never a full D:O setValues() call, so months absent from
+ * `plan.ledger.writes` are never touched, not even with a blank), then the
+ * single Master Dashboard total cell last. Every setValue() call sets a
+ * plain number, never a formula, matching the workbook's own stated
+ * anti-live-link philosophy (see Master Dashboard!B4).
+ */
+function executeApplyPlan_(dashboardSheet, ledgerSheet, plan) {
+  plan.ledger.writes.forEach(function (w) {
+    ledgerSheet.getRange(plan.ledger.row, w.col).setValue(w.value);
+  });
+  dashboardSheet.getRange(plan.masterDashboard.row, plan.masterDashboard.col).setValue(plan.masterDashboard.value);
+}
+</code></pre>
+      </details>
+
+      <h2>Step 4 &mdash; Reload your spreadsheet</h2>
+      <ol>
+        <li>Close the Apps Script editor tab and go back to your Google Sheet tab.</li>
+        <li>Reload the page (refresh your browser). Apps Script menus registered via <code>onOpen()</code>
+        only appear after a fresh load, not immediately after saving.</li>
+        <li>You should now see a new menu, <strong>Etsy CSV Import</strong>, next to Help.</li>
+        <li>The first time you click any item in that menu, Google will likely show an
+        "Authorization required" prompt. This is standard for any custom Apps Script menu bound to a
+        Sheet -- it isn't unique to AutoSync. The permissions it asks for are exactly what the 5 files you
+        just pasted use: reading and writing the spreadsheet you're already in. There is no
+        <code>UrlFetchApp</code> or <code>fetch(</code> call anywhere in these files -- nothing leaves
+        your Google account.</li>
+      </ol>
+
+      <h2>Step 5 &mdash; Get your Etsy Orders CSV export</h2>
+      <p>
+        In Etsy: <strong>Shop Manager &rsaquo; Settings &rsaquo; Options &rsaquo; Download Data</strong>
+        tab &rsaquo; choose the <strong>Orders</strong> CSV type. This is a self-serve export Etsy already
+        gives every seller -- no API key, no app authorization, no new login.
+      </p>
+
+      <h2>Step 6 &mdash; Run the import</h2>
+      <ol>
+        <li>In your Sheet, click <strong>Etsy CSV Import &rsaquo; 1. Import Orders CSV (paste text)...</strong></li>
+        <li>A dialog box opens asking you to paste the CSV text. Open your downloaded CSV file in a
+        plain-text editor (or a spreadsheet app, then copy the cells as text), select all, copy, and paste
+        the raw text into the dialog.</li>
+        <li>Click OK.</li>
+      </ol>
+      <p>
+        Once you've reviewed the staged numbers on the <em>"Import Staging (Etsy CSV)"</em> tab, the
+        second menu item, <strong>"2. Apply staged import to dashboard..."</strong>, copies them into your
+        dashboard -- see "What to expect on first run" below for exactly what that step does and doesn't
+        do.
+      </p>
+
+      <h2>What to expect on first run</h2>
+      <p>
+        <strong>If the file parses cleanly:</strong> AutoSync creates (or replaces) a sheet tab named
+        <em>"Import Staging (Etsy CSV)"</em> with a month-by-month and total breakdown -- revenue, order
+        count, refunded/canceled counts, fees, and sales tax. Nothing else in your spreadsheet is touched.
+      </p>
+      <p>
+        <strong>If anything is missing, malformed, or ambiguous:</strong> you'll see an alert naming
+        exactly what's wrong -- a missing required column, an unparsable currency value, a file mixing
+        more than one currency, an ambiguous slash-separated date, or an unrecognized status value -- and
+        nothing is written anywhere. This is deliberate: the parser refuses to guess rather than risk a
+        quietly wrong revenue number.
+      </p>
+      <div class="callout">
+        <p class="callout-label">The most likely real-world outcome, stated honestly</p>
+        <p>
+          The exact column names this parser expects (see the product page's "Honest limitations") come
+          from third-party integration guides, not Etsy's own documentation -- every automated attempt to
+          fetch Etsy's own help pages failed. It's entirely possible your real export uses different
+          header wording than expected and gets rejected on the first try. That's the fail-loud design
+          working as intended, not a bug -- but it may take a follow-up fix before it actually imports your
+          file. If that happens, tell us the exact error text via the Etsy shop link below, and the column
+          header row from your export (no order or financial data needed) so we can check it against the
+          real contract.
+        </p>
+      </div>
+      <p>
+        <strong>The second menu item, "2. Apply staged import to dashboard...", is implemented</strong> --
+        it copies your staged totals into <code>Master Dashboard</code> and
+        <code>Monthly Bookkeeping Ledger</code> tabs, if your spreadsheet has tabs with exactly those
+        names (our Etsy Seller Financial OS workbook does). It always shows you the exact cells and values
+        it's about to write and waits for an explicit Yes before touching anything -- No, Cancel, or
+        closing the dialog leaves both tabs untouched. If those two tabs don't exist in your spreadsheet,
+        or the staged data spans more than one calendar year, it refuses with a clear message instead of
+        guessing. It's covered by two automated test suites (33 passing assertions under Node.js): 20
+        against the pure planning logic, and 13 more running the full function end-to-end against a fake,
+        in-memory stand-in for Google Sheets. That's a closer simulation than pure-logic tests alone, but
+        it is still not a real Google Sheet -- the actual write has never been run by us against a live
+        spreadsheet. See the callout below.
+      </p>
+      <div class="callout">
+        <p class="callout-label">A residual risk in the apply step, disclosed rather than hidden</p>
+        <p>
+          Google Sheets has no way to write several cells as a single all-or-nothing transaction. If a
+          write fails partway through applying the monthly ledger cells, the cells already written stay
+          written and the rest (including the Master Dashboard total, written last) do not. The apply step
+          tells you this happened and to check both tabs by hand if it does -- it is a documented, narrowed
+          risk window, not a silent one.
+        </p>
+      </div>
+
+      <h2>Honest limitations (short version)</h2>
+      <ul>
+        <li>Never run against a real Etsy export before you -- every test fixture is synthetic.</li>
+        <li>The exact header names this parser expects are unverified against Etsy's own documentation.</li>
+        <li>Applying staged numbers into a dashboard only works against a spreadsheet with tabs named
+        exactly <code>Master Dashboard</code> and <code>Monthly Bookkeeping Ledger</code>, and only for
+        staged data within a single calendar year.</li>
+        <li>A narrow CSV edge case remains where a later stray quote can still cause a field to run on
+        (see the product page for the specifics).</li>
+        <li>The Apps Script wrapper itself (menus, dialogs, the staging-sheet write, the dashboard write)
+        has not been run against a live Google Sheet by us before this page existed.</li>
+      </ul>
+      <p>
+        Full detail on every one of these is on the
+        <a href="../#honest-limitations">AutoSync product page's "Honest limitations" section</a> --
+        this page intentionally doesn't repeat it at length twice.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../">AutoSync Seller Financial OS</a> &mdash; what's shipped and tested, and what
+        isn't yet, stated plainly.</li>
+        <li><a href="../../etsy-shop-systems-not-checklist/">Why your Etsy shop needs a system, not just
+        a checklist</a></li>
+        <li><a href="../../editorial-standards/">Editorial standards</a> &mdash; how this site sources and
+        corrects factual claims, including the ones on this page.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Something not work as described?</h2>
+      <p class="promo-intro">This is early-stage, self-installed software -- tell us what broke and we'll look at it.</p>
+      <div class="promo-cards">
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">DeskLark Studio &middot; Direct message</p>
+          <h3>Report an issue or ask a question</h3>
+          <p>Message DeskLark Studio through <a href="https://www.etsy.com/shop/DeskLarkStudio">our Etsy
+          shop</a> and mention AutoSync -- that's the most reliable way to reach us right now, and we read
+          shop messages regularly.</p>
+          <span class="promo-cta promo-cta--disabled">Etsy shop messages</span>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="../../">Guides home</a>
+      <a href="../../all-guides/">Browse all guides</a>
+      <a href="../../about/">About</a>
+      <a href="../../editorial-standards/">Editorial standards</a>
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">This page describes AutoSync's current, tested capabilities only -- not a purchase, and not financial, tax, or legal advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>

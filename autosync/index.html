@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoSync Seller Financial OS | DeskLark Studio</title>
+<meta name="description" content="AutoSync is a Google Sheets script that validates and parses your Etsy Orders CSV export inside your own spreadsheet, then stages monthly revenue and order totals for review -- no OAuth, no third-party server. What's shipped and tested, what isn't yet, stated plainly.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://guides.desklark.com/autosync/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="AutoSync Seller Financial OS">
+<meta property="og:description" content="A Google Sheets script that validates and parses your Etsy Orders CSV export inside your own spreadsheet, then stages the numbers for review. No OAuth, no third-party server.">
+<meta property="og:url" content="https://guides.desklark.com/autosync/">
+<meta property="og:site_name" content="DeskLark Studio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AutoSync Seller Financial OS">
+<meta name="twitter:description" content="A Google Sheets script that validates and parses your Etsy Orders CSV export, then stages the numbers for review. No OAuth, no third-party server.">
+
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "AutoSync Seller Financial OS",
+  "description": "A Google Sheets script that validates and parses an Etsy Orders CSV export inside a seller's own spreadsheet, then stages monthly revenue and order totals in a non-destructive review sheet. Runs entirely inside the seller's own Google Sheet -- no OAuth, no third-party server.",
+  "datePublished": "2026-09-01",
+  "dateModified": "2026-09-01",
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/autosync/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "AutoSync", "item": "https://guides.desklark.com/autosync/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#article-body">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="wordmark">DeskLark Studio</p>
+    <p class="tagline">Free budgeting calculators and printables for everyday household money decisions.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="breadcrumb"><a href="../">Guides</a> &rsaquo; AutoSync</p>
+
+  <article>
+    <header class="article-hero">
+      <h1>AutoSync Seller Financial OS</h1>
+      <p class="article-meta">Product page &middot; DeskLark Studio</p>
+      <p class="lede">
+        AutoSync is a Google Sheets script for Etsy sellers: paste your Etsy Orders CSV export into a
+        prompt inside your own spreadsheet, and it validates the file, parses every row, and stages
+        monthly revenue and order totals in a separate review sheet -- without ever touching your
+        existing data unless you tell it to. It runs entirely inside your own Google Sheet, with no
+        OAuth connection and no third-party server in between.
+      </p>
+      <div class="disclaimer-box">
+        <p class="db-label">Free, install-it-yourself script -- not a paid product</p>
+        <p class="db-text">There is no checkout, account, or signup for AutoSync -- you copy the source
+        into your own Google Sheet and it runs there. See "What's shipped today" below for exactly which
+        parts are built and tested versus still in progress, and
+        <a href="install/">the install guide</a> for the exact copy-paste steps and code.</p>
+      </div>
+    </header>
+
+    <div class="article-body" id="article-body">
+
+      <h2>The problem this solves</h2>
+      <p>
+        Etsy's own Orders CSV export is the most complete record of a shop's sales, but getting it into a
+        seller-run financial spreadsheet usually means hand-copying or re-typing rows -- a slow habit that
+        also fails silently: a mis-copied cell doesn't announce itself, it just quietly understates revenue
+        until something looks off weeks later. A script that reads the export directly removes the
+        re-typing step, but only if it's built to refuse a bad or ambiguous row instead of guessing at it
+        and moving on, since a script that "succeeds" on a corrupted file is worse than one that never
+        existed.
+      </p>
+
+      <h2>What's shipped today, checked against a real test suite</h2>
+      <p>
+        Everything below is either running code with a passing automated test, or explicitly marked as not
+        yet built. Nothing here is aspirational.
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Capability</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Parses the Etsy Orders CSV export -- tolerates reordered headers and extra/unrecognized columns</td><td>Shipped &amp; tested</td></tr>
+            <tr><td>Refuses to guess: malformed currency, ambiguous (slash-separated) dates, mixed currencies in one file, and missing required columns all throw a specific error instead of producing a number</td><td>Shipped &amp; tested</td></tr>
+            <tr><td>Aggregates monthly and total revenue, order count, refunded/cancelled counts, fees, and sales tax (where present in the export)</td><td>Shipped &amp; tested</td></tr>
+            <tr><td>Writes results to a separate, non-destructive staging sheet inside the same spreadsheet -- your existing tabs are never touched, and nothing is written at all if validation fails</td><td>Shipped &amp; tested</td></tr>
+            <tr><td>Applies staged totals into the Etsy Seller Financial OS dashboard's cells, only after an explicit Yes confirmation showing exactly what will change</td><td>Shipped &amp; tested (planning logic; see limitations for what "tested" does and doesn't cover here)</td></tr>
+            <tr><td>Verified against a real Etsy CSV export</td><td>Not yet done (test data is synthetic -- see limitations)</td></tr>
+            <tr><td>Order Items CSV / Shop Stats CSV support</td><td>Not yet built (Orders CSV only)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The parsing and aggregation logic is 14 automated test fixtures deep -- happy-path orders, an empty
+        export, reordered and extra columns, a missing required column, malformed currency, multiple
+        currencies in one file, refunded and cancelled orders, an unrecognized status value, an ambiguous
+        date, a 5,000-row file, and three deliberately adversarial quote-handling cases (a bare quote
+        mid-field, a field starting with whitespace before a quote, and a file that ends mid-quote) -- all
+        currently passing. A separate "positive control" check deliberately corrupts a known-good result
+        and confirms the test suite actually catches it, so a green run means the checks can fail, not
+        just that they always pass. The dashboard-apply planning logic (label lookup, cell-plan building,
+        the single-calendar-year refusal, the confirmation message) has its own 20 passing assertions,
+        run the same way -- under plain Node.js, with no Google account involved. The full
+        apply-to-dashboard function is separately exercised end-to-end (13 more passing assertions,
+        including the partial-write scenario below) against a fake, in-memory stand-in for Google Sheets --
+        a closer simulation than the pure-logic tests, but still not a real Google Sheet.
+      </p>
+
+      <div class="callout">
+        <p class="callout-label">The design rule behind all of it</p>
+        <p>
+          The single worst outcome for a script like this is writing a wrong number into a seller's own
+          revenue tracker without saying so. AutoSync's parser never returns a partial result and never
+          guesses on anything ambiguous -- an unrecognized status value, an unparsable currency string, or
+          a file mixing more than one currency all stop the import with a specific error rather than
+          silently producing a smaller (or larger) number than reality.
+        </p>
+      </div>
+
+      <h2>How it works, step by step</h2>
+      <ol>
+        <li>Download your Orders CSV export from Etsy's Shop Manager (a self-serve export Etsy already
+        provides -- no API key or app authorization involved).</li>
+        <li>Open the AutoSync menu inside your Google Sheet and paste the CSV text into the prompt it
+        shows you.</li>
+        <li>AutoSync checks the file's structure and required columns, then parses every row. If anything
+        is missing, malformed, or ambiguous, it stops and tells you exactly what -- nothing is written to
+        your sheet.</li>
+        <li>If the file parses cleanly, AutoSync writes the monthly and total figures (revenue, order
+        count, refunds, cancellations, fees, sales tax) to a separate staging sheet inside the same
+        spreadsheet, so you can check the numbers before they go anywhere else.</li>
+        <li>Applying those staged numbers into the dashboard's cells is a separate, explicit confirmation
+        step: AutoSync shows exactly which cells and values are about to change and waits for a Yes before
+        writing anything -- any other answer leaves both tabs untouched (see "Honest limitations" below
+        for what this step does and doesn't yet cover).</li>
+      </ol>
+
+      <h2>Built to stay inside your own spreadsheet</h2>
+      <p>
+        AutoSync is a Google Apps Script -- the same scripting layer Google Sheets itself exposes, not a
+        separate app or a hosted service. There is no OAuth connection to authorize, no Google Cloud
+        project to create, and no network call anywhere in the code: the script reads the CSV text you
+        paste and writes back to sheets inside the same spreadsheet, and nothing else. Your Etsy data never
+        leaves your own Google account.
+      </p>
+
+      <h2 id="honest-limitations">Honest limitations</h2>
+      <div class="disclaimer-box">
+        <p class="db-label">What this page will not overclaim</p>
+        <p class="db-text">
+          <strong>Never run against a real Etsy export.</strong> Every one of the 14 test files is
+          synthetic. Etsy's own help pages returned an error to every automated attempt to fetch their
+          documented column names, so the exact header wording this parser expects is sourced from
+          third-party integration guides -- and those two sources only agree with each other on one of the
+          five required columns (Order ID). If a real export uses different header wording than expected,
+          the fail-loud design means it will be rejected outright with a clear error, not silently
+          misread -- but it may need a follow-up fix to actually import.
+        </p>
+        <p class="db-text">
+          <strong>"Apply to your dashboard" is built, but only for our own workbook's tab names, and
+          never proven against a real Google Sheet.</strong> It looks for tabs named exactly
+          <code>Master Dashboard</code> and <code>Monthly Bookkeeping Ledger</code> (our Etsy Seller
+          Financial OS spreadsheet's own tabs) and refuses with a clear message if either is missing, or if
+          the staged data spans more than one calendar year. It never writes without an explicit Yes on a
+          dialog naming the exact cells and values first. Two automated test suites cover it (33 passing
+          assertions total under Node.js): 20 test the pure planning logic in isolation, and 13 more run
+          the full function end-to-end -- including the confirm dialog, the tab lookups, and the
+          partial-write scenario below -- against a fake, in-memory stand-in for Google Sheets. That's a
+          closer simulation than pure-logic tests alone, but it is still not a real Google Sheet: like the
+          rest of this file's Apps Script wrapper, this function has never been run against a live Google
+          account by us, and a fake object cannot fully stand in for the real API's quirks. Google Sheets
+          also has no all-cells-at-once write, so if a write fails partway through, cells already written
+          stay written while the rest do not; the tool tells you this happened rather than hiding it, but
+          the risk window itself isn't eliminated.
+        </p>
+        <p class="db-text">
+          <strong>A narrow CSV-parsing edge case remains, by design choice, not oversight.</strong> Earlier
+          test rounds found and fixed two ways a single stray quote character in a cell could cause the
+          parser to misread the rest of a row without raising an error. Both are fixed and covered by
+          tests. One narrower shape is still open: a stray quote that later gets "closed" by an unrelated
+          quote elsewhere in the same file can still cause a field to run on longer than it should. This is
+          a known, narrowed edge case, not a hidden one.
+        </p>
+        <p class="db-text">
+          <strong>The Apps Script wrapper itself hasn't run against a real Google Sheet.</strong> The
+          parsing and aggregation logic is tested directly under Node.js. The thin wrapper that actually
+          reads a menu prompt and writes to a spreadsheet has been reviewed but not executed against a live
+          Google account.
+        </p>
+      </div>
+
+      <h2>How this relates to the Etsy Seller Financial OS spreadsheet</h2>
+      <p>
+        AutoSync is being built as the import engine for a seller-run financial dashboard -- the kind of
+        workbook our
+        <a href="https://www.etsy.com/listing/4565183989">Etsy Seller Financial OS spreadsheet</a>
+        already provides for manual entry.
+        The two are not wired together yet: buying that spreadsheet today does not include AutoSync, and
+        AutoSync does not currently write into that workbook's cells automatically (see "What's shipped
+        today" above). This page describes AutoSync on its own, current terms.
+      </p>
+
+    </div>
+
+    <div class="related-links">
+      <h3>Related</h3>
+      <ul>
+        <li><a href="../etsy-shop-systems-not-checklist/">Why your Etsy shop needs a system, not just a checklist</a> -- the same "make it a repeatable habit, not a one-time task" thinking applied to shop upkeep generally.</li>
+        <li><a href="../1099-k-threshold-etsy-sellers-freelancers/">The 1099-K threshold for Etsy sellers and freelancers</a> -- for sellers whose real question is which sales actually get reported to the IRS.</li>
+        <li><a href="../freelancer-quarterly-taxes-decision-guide/">Do freelancers have to pay quarterly estimated taxes?</a> -- a decision framework for the tax side of tracking your own sales.</li>
+        <li><a href="../editorial-standards/">Editorial standards</a> -- how this site sources and corrects factual claims, including the ones on this page.</li>
+      </ul>
+    </div>
+
+    <section class="promo" aria-labelledby="promo-heading">
+      <h2 id="promo-heading">Try it or get in touch</h2>
+      <p class="promo-intro">There is no signup form or purchase link for AutoSync -- it's free and you
+      install it yourself, in your own Google Sheet.</p>
+      <div class="promo-cards">
+        <a class="promo-card" href="install/">
+          <p class="promo-eyebrow">Free &middot; No account, no payment</p>
+          <h3>Install AutoSync now</h3>
+          <p>Step-by-step instructions and the exact Apps Script source to paste into Extensions &gt; Apps
+          Script inside your own Google Sheet -- about 10 minutes, ready today.</p>
+          <span class="promo-cta">Get the install steps &rarr;</span>
+        </a>
+        <div class="promo-card promo-card--soon">
+          <p class="promo-eyebrow">DeskLark Studio &middot; Direct message</p>
+          <h3>Report an issue or ask a question</h3>
+          <p>If something behaves differently than this page describes, message DeskLark Studio through
+          <a href="https://www.etsy.com/shop/DeskLarkStudio">our Etsy shop</a> and mention AutoSync --
+          that's the most reliable way to reach us right now, and we read shop messages regularly.</p>
+          <span class="promo-cta promo-cta--disabled">Etsy shop messages</span>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="site-links" aria-label="DeskLark Studio sites">
+      <a href="../">Guides home</a>
+      <a href="../all-guides/">Browse all guides</a>
+      <a href="../about/">About</a>
+      <a href="../editorial-standards/">Editorial standards</a>
+      <a href="https://desklark.com/">DeskLark Studio home</a>
+      <a href="https://weddingbudget.desklark.com/">Wedding Budget Calculator</a>
+      <a href="https://cashstuffing.desklark.com/">Cash Stuffing Calculator</a>
+      <a href="https://setaside.desklark.com/">Freelancer Set-Aside Calculator</a>
+      <a href="https://disclosure.desklark.com/">AI-Disclosure Generator</a>
+      <a href="https://www.etsy.com/shop/DeskLarkStudio">Etsy shop</a>
+    </nav>
+    <p>DeskLark Studio &middot; No accounts, no cookies, no analytics, no data collected by this page.</p>
+    <p class="footer-fine">This page describes AutoSync's current, tested capabilities only -- not a purchase, and not financial, tax, or legal advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>
