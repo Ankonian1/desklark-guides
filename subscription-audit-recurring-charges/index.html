@@ -3,32 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to Run a Subscription Audit and Find Recurring Charges You Forgot About | DeskLark Studio</title>
-<meta name="description" content="Recurring charges are easy to lose track of because no single one feels significant on its own. A framework for finding every subscription, sorting them into used, rarely used, and forgotten, and turning the audit into a repeat habit.">
+<title>Subscription Audit Tracker: Find Every Recurring Charge You Forgot About | DeskLark Studio</title>
+<meta name="description" content="A fill-in subscription audit tracker: log every recurring charge with its billing cycle and annualized cost, sort each into used, rarely used, and forgotten, then decide what to keep or cancel.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://guides.desklark.com/subscription-audit-recurring-charges/">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to Run a Subscription Audit and Find Recurring Charges You Forgot About">
-<meta property="og:description" content="Finding every recurring charge and sorting them into used, rarely used, and forgotten before deciding what to keep.">
+<meta property="og:title" content="Subscription Audit Tracker: Find Every Recurring Charge You Forgot About">
+<meta property="og:description" content="A tracker for logging every recurring charge, sorting each into used, rarely used, and forgotten, and deciding what to keep or cancel.">
 <meta property="og:url" content="https://guides.desklark.com/subscription-audit-recurring-charges/">
 <meta property="og:site_name" content="DeskLark Studio">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How to Run a Subscription Audit and Find Recurring Charges You Forgot About">
-<meta name="twitter:description" content="Sorting every recurring charge into used, rarely used, and forgotten before deciding what to keep.">
+<meta name="twitter:title" content="Subscription Audit Tracker: Find Every Recurring Charge You Forgot About">
+<meta name="twitter:description" content="Log every recurring charge, sort each into used, rarely used, and forgotten, and decide what to keep or cancel.">
 
 <link rel="stylesheet" href="../styles.css">
+<style>
+/* Page-specific print rules for the fill-in subscription-audit tracker table
+   (C108). Not promoted to the shared styles.css because no other guide page
+   has a fill-in tracker yet -- if a future guide adds one, move this block
+   there instead of duplicating it per-page. */
+@media print {
+  .site-header, .site-footer, .breadcrumb, .related-links, .promo { display: none; }
+  html, body { background: #fff !important; }
+  main.wrap { padding: 0; }
+  .article-body thead th {
+    background: var(--teal) !important;
+    color: var(--cream) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .tracker-table tr { break-inside: avoid; }
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How to Run a Subscription Audit and Find Recurring Charges You Forgot About",
-  "description": "A framework for finding every recurring charge across statements, app stores, and saved payment methods, sorting subscriptions into actively used, rarely used but still valuable, and forgotten, watching for free trials that convert unnoticed, and turning the audit into a repeatable habit rather than a one-time purge, plus a worked example.",
+  "headline": "Subscription Audit Tracker: Find Every Recurring Charge You Forgot About",
+  "description": "A fill-in tracker for logging every recurring charge found across statements, app stores, and saved payment methods, with columns for billing cycle and annualized cost, sorted into actively used, rarely used but still valuable, and forgotten, plus guidance on free trials that convert unnoticed and a worked example.",
   "datePublished": "2026-08-06",
-  "dateModified": "2026-08-06",
+  "dateModified": "2026-09-01",
   "author": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
-  "publisher": { "@type": "Organization", "name": "DeskLark Studio" },
+  "publisher": { "@type": "Organization", "name": "DeskLark Studio", "url": "https://desklark.com/" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://guides.desklark.com/subscription-audit-recurring-charges/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Guides", "item": "https://guides.desklark.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Subscription Audit Tracker: Find Every Recurring Charge You Forgot About", "item": "https://guides.desklark.com/subscription-audit-recurring-charges/" }
+  ]
 }
 </script>
 </head>
@@ -49,13 +77,14 @@
 
   <article>
     <header class="article-hero">
-      <h1>How to Run a Subscription Audit and Find Recurring Charges You Forgot About</h1>
+      <h1>Subscription Audit Tracker: Find Every Recurring Charge You Forgot About</h1>
       <p class="article-meta">Subscriptions &amp; recurring charges guide &middot; DeskLark Studio</p>
       <p class="lede">
         No single subscription feels significant enough to think hard about when it's added -- a streaming
         trial here, an app upgrade there -- which is exactly why the full list rarely gets reviewed as a
         whole. A subscription audit isn't about cutting everything; it's about actually seeing the complete
-        list in one place before deciding what earns a spot on it.
+        list in one place before deciding what earns a spot on it. The fill-in tracker further down this
+        page is built for exactly that: one row per subscription, filled in as it's found.
       </p>
       <div class="disclaimer-box">
         <p class="db-label">No Typical Subscription-Spend Figures Here</p>
@@ -115,12 +144,90 @@
         </p>
       </div>
 
+      <h2>The subscription audit tracker</h2>
+      <p>
+        This tracker turns the three-source search and three-bucket sort above into one sheet: one row per
+        subscription, with billing cycle and annualized cost worked out the same way for every entry, so a
+        $4.99 monthly charge and a $58 annual charge can actually be compared side by side instead of just
+        felt as "small" or "not that small." Print it, or copy the columns into a spreadsheet, and fill it
+        in as statements, app-store lists, and saved payment methods get checked.
+      </p>
+      <p>
+        <strong>Annualized cost</strong> = charge amount &times; times billed per year (12 for monthly, 4
+        for quarterly, 1 for annual). Two filled example rows show the pattern below; the blank rows after
+        them are for your own list.
+      </p>
+
+      <div class="table-scroll">
+      <table class="tracker-table">
+        <caption class="sr-only">Subscription audit tracker with columns for service, where it was found, billing cycle, charge amount, annualized cost, bucket, and keep-or-cancel decision. Two filled example rows are followed by blank rows to complete with your own subscriptions.</caption>
+        <colgroup>
+          <col style="width:18%"><col style="width:14%"><col style="width:12%"><col style="width:12%"><col style="width:13%"><col style="width:12%"><col style="width:19%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Service</th>
+            <th scope="col">Where found</th>
+            <th scope="col">Billing cycle</th>
+            <th scope="col">Charge amount</th>
+            <th scope="col">Annualized cost</th>
+            <th scope="col">Bucket</th>
+            <th scope="col">Keep / cancel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Streaming service <em>(example)</em></td>
+            <td>Bank statement</td>
+            <td>Monthly</td>
+            <td>$15.49</td>
+            <td>$185.88</td>
+            <td>Rarely used</td>
+            <td>Keep &mdash; watched most in winter</td>
+          </tr>
+          <tr>
+            <td>Cloud storage plan <em>(example)</em></td>
+            <td>Saved on site</td>
+            <td>Annual</td>
+            <td>$99.00</td>
+            <td>$99.00</td>
+            <td>Forgotten</td>
+            <td>Cancel &mdash; confirmed Mar 3</td>
+          </tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="tracker-note">
+        Once every row is filled in, add up the annualized-cost column for everything marked "Cancel"
+        &mdash; that total, not any single line item, is what this audit actually recovers.
+      </p>
+
       <h2>A worked example: the first full audit</h2>
       <p>
         Suppose someone hasn't reviewed their subscriptions in a long while and decides to do a full audit.
         They pull several months of bank and card statements, check their phone's app store subscription
-        list separately, and jot down every recurring charge they find regardless of how small it seems.
-        Each item gets sorted into the three buckets above. The actively-used bucket gets left alone. The
+        list separately, and jot down every recurring charge they find regardless of how small it seems,
+        one row per charge on the tracker above. Each item gets sorted into the three buckets above. The
+        actively-used bucket gets left alone. The
         rarely-used bucket gets a deliberate decision for each item, not a blanket cut. The forgotten bucket
         gets canceled, and each cancellation gets confirmed rather than assumed, since some services require
         an extra step beyond just deciding to stop.
