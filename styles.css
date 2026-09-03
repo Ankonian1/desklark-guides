@@ -278,6 +278,29 @@ article header.article-hero { margin-bottom: 28px; }
 }
 .table-scroll { overflow-x: auto; border-radius: var(--radius); }
 
+/* Confidence badges -- added for the multi-state 1099 threshold guide
+   (2026-09-02) so a reader can tell primary-verified from secondary-sourced
+   or could-not-verify claims at a glance, without reading page text. Reuses
+   the existing palette: teal-light for verified (matches the informational
+   callout accent), gold for secondary-only (matches the quote-box accent),
+   warn for could-not-verify (matches the disclaimer box's regulatory-caution
+   red). Contrast-checked against its own text color: teal-light/cream ~7.6:1,
+   gold/ink ~7.1:1, warn/cream ~5.9:1 -- all clear WCAG AA (4.5:1) for small
+   bold text. */
+.confidence-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.confidence-badge--verified { background: var(--teal-light); color: var(--cream); }
+.confidence-badge--secondary { background: var(--gold); color: var(--ink); }
+.confidence-badge--unverified { background: var(--warn); color: var(--cream); }
+
 /* ---------- related links / promo cards (shared with the calculators) ---------- */
 
 .related-links {
